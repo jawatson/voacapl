@@ -1,0 +1,91 @@
+.\" Process this file with
+.\" groff -man -Tascii voacapl.man
+.\"
+.TH VOACAPL 1 "SEO 2013" Linux "User Manuals"
+.SH NAME
+voacapl \- HF propagation prediction program
+.SH SYNOPSIS
+.B voacapl [\-s] 
+.B voacap_directory
+.I [inputfile]
+\n
+.B voacapl [\-s] 
+.B voacap_directory
+.I [inputfile outputfile]
+\n
+.B voacapl [\-s]
+.I voacap_directory
+.B area calc 
+.I [areafile]
+\n
+.B voacapl [\-s]
+.I voacap_directory
+.B batch 
+\n
+.B voacapl \-v
+.SH DESCRIPTION
+An implementation of VOACAP, the NTIA/ITS professional HF propagation prediction program, originally developed for the Voice of America (VOA).   VOACAP reads an input file and writes point-to-point path or area prediction data to an output file(s). 'voacapl' is a version of the original source that has been modified to enable compilation using GCC/GFortran. 
+Only changes required to enable compilation using GCC have been made, the underlying algorithms remain unchanged. 
+\n
+Voacapl input/output files follow exactly the same format as VOACAP and are not described here.  Details of these file formats may be found at www.voacap.com.
+.SH OPTIONS
+.IP -s
+Silent processing.  Reduces the number of messages printed to the screen while running.
+.IP -v
+Version.  Prints the version number and exits.
+.IP voacap_directory
+Specifies the path to the itshfbc directory, e.g. '~/itshfbc/' or '/usr/share/itshfbc'.  Read/write access is required to the sub-directories below itshfbc. 
+This parameter is required for program operation.(Note: See 'Bugs' section below for guidance on specifying the location of the itshfbc directory.)
+.IP inputfile 
+Filename of the input file to process which should be located in the itshfbc/run directory.  If only the inputfile is specified, the default output filename (voacapx.out) will be used for program output.  
+.IP outputfile
+Filename of the output file produced by the program.  Due to a limitation in the way in which command arguments are parsed, an input file must first be specified if an output file is to be specified, it is not possible to specify an output file only.  Input and output files are located below the "itshfbc/run" directory.
+.IP area
+Used to perform a VOAAREA calculation.  The original version of VOACAP permits the additional arguments CALC, SCREEN or PRINT to define the
+operation of the VOAAREA operation.  voacapl currently only supports the 'calc' option. 
+.IP areafile
+File containing the input data for an area calculation.  The path to the areafile must be given relative to the 'itshfbc/areadata/' directory.
+.SH EXAMPLES
+voacapl ~/itshfbc
+\n
+Reads the default input file (~/itshfbc/run/voacapx.dat) performs a prediction calculation and saves the results in the default output 
+file (~/itshfbc/run/voacapx.out).  In this example, the itshfbc directory is defined as a sub-directory of the users home folder.
+
+voacapl ~/itshfbc infile.dat outfile.out
+
+Reads infile.dat and save the results of the calculations in the file outfile.out.  Both of the files should be located in the directory '~/itshfbc/run'.  
+
+voacapl ~/itshfbc area calc testfile.voa
+
+Performs an area calculation using the file 'testfile.voa' as input.  The output file(s) will be saved as testfile.vg_ in the same directory as testfile.voa.
+
+voacapl ~/itshfbc batch
+
+Performs a batch calculation using the file voacapw.asc as a template file to which the modifications defined in the circuit file (voacap.cir) are applied.
+.SH FILES
+.I itshfbc/
+.RS
+Voacapl requires access to a number of data files found within the 'itshfbc' directory structure.  Input and output files are written to itshfbc/run.
+
+.SH ENVIRONMENT
+VOACAP does not make use of any environmental variables.
+.SH BUGS
+Performance is unpredictable if the path to the itshfbc directory contains spaces or is more than 52 characters long.  This is a limitation of the legacy DOS based file handling procedures and will be addressed in future versions of voacapl.
+.SH AUTHOR
+This program was ported to GFortran by James Watson <jimwatson at mac dot com> using code that was originally developed by the NTIA/ITS 
+and is currently maintained by Greg Hand.
+.SH "ACKNOWLEDGMENTS"
+VOACAP is an improved and corrected version of IONCAP, retaining all of the theory as put forth by John Lloyd, George Haydon, Donald Lucas 
+and Larry Teters in the 1975-1985 time-frame with modifications which were suggested/approved by George Lane, Donald Lucas, George Haydon 
+and A. D. Spaulding.  Major improvements in efficiency, coding corrections and ease of understanding the IONCAP program were made by 
+Franklin Rhoads of the U.S. Navy Research Laboratory under the sponsorship of the Voice of America (1985-1996). Many of the newer 
+features in VOACAP and VOAAREA were designed and implemented by Gregory Hand at the Institute for Telecommunication Sciences who 
+created VOAAREA and made many significant improvements to VOACAP.
+
+Porting this program to GFortran would not be possible without the generous help and assistance of Gregory Hand.
+
+Portions of this man page have been reproduced with permission from the www.voacap.com website, maintained by Jari Perkiomaki.
+
+.SH "SEE ALSO"
+www.voacap.com
+

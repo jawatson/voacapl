@@ -1,0 +1,15 @@
+17 May  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+17 May  2007   1. There was a problem using the OVERLAY option in area coverage 
+                  if you used a 70x70 size grid file. I could not figure out 
+                  why 70x70 does not work when all others seem to work.
+                  I have disabled the ability to use 70x70 grid sizes.
+                  I would never use a grid size that is a multiple of 10.
+                  Add 1 to it. The cell size is the X or Y range divided by (NGRID-1).
+                  Thus, for the whole world, NGRID=61 makes
+                       x_cell_size=360/60=6 degrees
+                       y_cell_size=180/60=3 degrees
+                  NGRID=91 would also be good:
+                       x_cell_size=360/90=4 degrees
+                       y_cell_size=180/90=2 degrees
+

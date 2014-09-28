@@ -1,0 +1,366 @@
+--------------------------------------------------------------------------------
+17 Jan 1996    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+17 Jan 1996    1. This is the first release of the Windows version of the
+                  NTIA/ITS HF Propagation models.
+                  It has been tested and seems to run on:
+                      Windows 3.1
+                      Windows 3.11
+                      Windows-95.
+                  Functionally, everything should work except:
+                  a.) output to color printers. Black & White works.
+                  b.) calculating SSN from vertical incident sounder foF2 data.
+
+               2. For the graphics to look good on the screen, it is suggested
+                  that your display support a minimum of 256 colors.  If you
+                  use the standard default VGA display driver, some of the
+                  colors are performed with dithering and crosshatching.
+                  It is also suggested that a minimum display size of
+                  800x600 pixels be used.  The standard 640x480 does work,
+                  but is not as visually pleasing.  The larger your display
+                  size, the better it will look.
+
+               3. Possible printer problems may include not enough memory
+                  in your printer.  I have a very basic HP IIp with 512K bytes
+                  of memory.  I can only output at 150 dots/inch without a
+                  border drawn around the plot.  I have used other printers
+                  with more memory and can output at 300 dots/inch resolution.
+
+31 Jan 1996    1. Further compatibility with Windows-95 has been tested.
+                  Some minor problems have been solved.
+
+               2. This software should now work for both SMALL and LARGE text
+                  for screen sizes (480x640  600x800  768x1024  1024x1280).
+                  If you notice any problems, let me know.
+
+               3. Output to color printers seems to work.  If it does not
+                  work, it may be due to a problem in the driver.  I have
+                  problems with the HP PaintJet driver.  It displays the
+                  border around each cell when color shading is plotted.
+                  I do not have that problem when using a Tektronix Phaser.
+                  It has not been tested on HP 500C series printers.
+                  They may not have the driver problem that the PaintJet has.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+07 Feb 1996    1. The Point-to-Point programs now produce real graphs for
+                  Methods 11 (MUF-FOT-EsMUF) and 28 (MUF-FOT-LUF).
+                  Previously, these were "line printer" graphs.  These are
+                  accessed by setting METHOD to 11 or 28 and selecting
+                  CIRCUIT (not GRAPH).  Remember, GRAPH always produces
+                  contour plots of parameters.
+
+               2. The Point-to-Point GRAPH output now has the ability to 
+                  allow the user to point to a location with the mouse, and
+                  the UT, FREQ, parameter value at that point will be displayed.
+                  If the LEFT mouse button is used, the point location will
+                  be interpolated to the exact point selected.  If the RIGHT
+                  mouse button is used, the nearest grid point (integer UT
+                  and FREQ) will be selected.
+
+               3. Also, while re-writing the Point-to-Point graphing, the
+                  program PERFORMW.EXE was incorporated into POINTWIN.EXE.
+                  Thus the program file in ..\BIN_WIN\PERFORMW.EXE is no
+                  longer necessary.  This saves about 700,000 bytes of disk.
+
+13 Feb 1996    1. Some problems were discovered in HFANTWIN when changing
+                  data parameter values.  If the program said the range was
+                  [.1 to .9], and you changed the parameter to .9, you would
+                  get a protection fault, or some such fatal error.
+                  If you changed it to .1, it would say not in the range.
+                  These problems have been corrected.
+
+               2. Selecting Transmit Antenna in Point-to-Point models has been
+                  changed so that you may choose 4 different antennas for
+                  frequency ranges.  This makes it the same as the DOS version.
+
+               3. A lot of progress has been made in the HELP/CONTENTS for
+                  the Point-to-Point programs.  Take a look.  It is not yet
+                  complete.  They will be added as they are created.
+
+20 Feb 1996    1. A problem was discovered in Worldwin when plotting Lat/Lon
+                  projections.  That has been fixed.
+
+               2. Point-to-Point HELP should be almost complete.  Also, Area
+                  Coverage HELP is 90% completed.
+
+               3. An error was corrected in VOACAPW.EXE (the propagation
+                  module for VOACAP) that corrected the last line in the
+                  All Modes output (METHOD 25) that reads:
+                          SPROB =    xx.x   yy.y   zz.z
+                  The output for yy.y was wrong.  It represents a variable
+                  named D50S which represents the Median Signal-to-Noise ratio
+                  deviation of the BEST mode, with BEST defined as the mode
+                  with the highest Service Probability.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+05 Mar 1996    1. An error in ICEPAC was corrected.  Setting the SYSTEM
+                  variable Multipath Power tolerance to zero (to not consider
+                  multipath) actually set it to 10dB.  That has been fixed.
+                  The only parameter this affects is MPATH.
+
+               2. A correction was made to the Windows COMBINE module so that
+                  the BIN operation would work correctly.  Look at the HELP
+                  information under COMBINE for a rather lengthy example.
+                  It demonstrates an analysis that can be performed in a matter
+                  of hours now, that organizations previously did in months.
+
+               3. The WORLDWIN plotting program was modified so that it will
+                  Color BINned maps (an output from COMBINE).
+
+               4. All on-line HELP should be "reasonably" complete.
+                  Enhancements (and corrections) will always be made.
+
+14 Mar 1996    1. In HFANT, the ability to set the DESIGN FREQUENCY for
+                  Type 12 (NTIA Report 87-215 Curtain Arrays) was lost.
+                  That has been repaired.
+
+               2. You can now specify Longitude coordinates >180 degrees.
+                  Thus, 340 = -20 = 20 West.
+                       -340 =  20 = 20 East.
+
+               3. REC533 (ITU Recommendation 533) is now available for Windows.
+                  It is obtained from:
+                     elbert.its.bldrdoc.gov/hf_prop/Windows/PKZIPed/recwind.exe
+                  It does not require USERNAME and PASSWORD to execute.
+
+               4. On certain size displays (1024x768 with LARGE text) all of
+                  the data in a TRANSMIT.??? file was not visible.  That has
+                  been fixed.  (Also for RECEIVE.??? files).
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+02 May 1996    1. A new implementation of ICEPAC/VOACAP has been added.
+                  The ability to perform Signal-to-Interference calculations
+                  in Point-to-Point mode has been added.  Essentially,
+                  you specify all the inputs you do for Point-to-Point mode,
+                  with the addition of specifying the interferer data
+                  (location, Method, antenna, path, FPROB).
+                  The HELP information will eventually contain a detailed
+                  description of the S/I algorithm used.
+
+               2. The COMBINE program has been modified to use the same
+                  S/I combine algorithm as the new Point-to-Point S/I
+                  algorithm.  This required the addition of some new input
+                  parameters to allow S/I Probability to be calculated.
+                  This also allows the output parameters SIPGN (S/I power gain),
+                  SIREL (S/I reliability), and SIRxx (S/I at required 
+                  probability) to be plotted.
+
+               3. Repairs were made to HFMUFES antenna calculations.
+                  There was an incompatible COMMON block in the source code
+                  so that results for VOACAP calculations may have been in
+                  error.
+
+               4. Several documents have been added that may be of interest
+                  to the users.  They can be found under the HELP/GENERAL
+                  option.  Then select the line:
+                       Helpful documents on using the propagation models.
+
+15 May 1996    1. This represents the first official release of the Windows
+                  version of the software.  All previous versions may be
+                  considered to be Beta versions.  If you have installed a
+                  previous version, you MUST re-install the DBOS device
+                  driver.  Unfortunately, if you do not re-install it, you
+                  probably will not see this message!
+
+               2. The current version has solved some long standing problems
+                  of printing color maps to print devices.  You must make sure
+                  you have obtained the most recent device driver for your
+                  printer.  Look under the WORLDWIN/HELP/CONTENTS for more
+                  information on Printer Problems and Solutions.
+
+               3. As funding for HF propagation studies has ended at NTIA/ITS,
+                  technical assistance can only be given to those users who have
+                  registered their software.  Anyone interested in contributing
+                  to further enhancements, are encouraged to contact me.
+
+               4. The software has been tested on a variety of display sizes:
+                     640x 480  small text
+                     800x 600  small text
+                     800x 600  large text
+                    1024x 768  small text
+                    1024x 768  large text
+                    1280x1024  small text
+                    1280x1024  large text
+                  If you encounter problems of text not being visible, let me
+                  know what display size you are using, and where in the program
+                  the problem occurs.  The software detects your display size
+                  and some of the displays will be optimized for the higher
+                  resolution displays.
+
+21 May 1996    1. VOACAP METHOD 24 did not work.  That has been fixed.
+
+               2. Selection of Transmitter/Receiver locations has been
+                  slightly changed so that now to accept the city selected,
+                  you either select the ACCEPT button, or DPUBLE CLICK on
+                  the city name.  You can also now use the PAGE UP, PAGE_DOWN,
+                  HOME, END, and arrow keys.  Also, typing in the first letter
+                  will position you at the first city that begins with that
+                  letter.
+
+28 May 1996    1. A slight problem with Windows-95 systems on specifying
+                  contour levels in AREA Coverage was observed.
+                  This should now be corrected.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+06 Jun 1996    1. In HFANT, some of the HFMUFES antennas would create math
+                  errors that would cause the program to about.  That has
+                  been fixed.
+
+               2. The ITSA-1 IONCAP antenna types 23 & 24 had continuity
+                  problems at high elevation angles.  At 90 degress elevation
+                  angle, you would get different gain at different azimuthal
+                  angles.  There appears to be a problem in the equations
+                  that were developed 20 years ago.  Continuity has been forced
+                  with an interpolation procedure.  Use these antennas at your
+                  own discretion.
+
+               3. A problem with the Rec 705 Crossed Dipole antenna (Type 9)
+                  was also fixed.  The design frequency was extracted wrong
+                  from the data file and the calculations were wrong.
+
+               4. Antenna Types 5 & 6 (Horizontal & Vertical Log-periodic)
+                  allowed the number of elements to be 1.  That caused math
+                  errors.  The number of elements MUST now be 2 to 30.
+
+               5. Because of the above problems, the new version will replace
+                  data files in the ..\ANTENNAS\SAMPLES directory.  If you
+                  changed any of these files (which you should not change
+                  because they are MY samples), they will be changed.
+
+               6. The Sanson-Flamsteed projection to view the full antenna
+                  pattern now works in HFANT.
+
+               7. A problem running REC533 Point-to-Point BATCH was fixed.
+
+20 Jun 1996    1. When using the Lat/Long grid type (not Great Circle)
+                  in Area Coverage, the RED HELP information was incorrect.
+                  It was still referring to the Great Circle inputs.  Also,
+                  if you just switched from Great Circle to Lat/Lon, the
+                  Xmin/Xmax, Ymin/Ymax values from the Great Circle were
+                  still there, even though they were really invalid for the
+                  Lat/Lon grid type (e.g. Xmin=-4000 when for Lat/Lon Xmin
+                  is the Longitude of the West plot area boundary).  This
+                  has been fixed.
+               2. The HELP file for AREA has been updated to reflect the
+                  above correction.
+               3. The WORLD map plotting did not work when plots covered
+                  the Longitude 180 line.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+03 July 1996   1. Minor changes occurred with this version that affected almost
+                  all of the executable programs.  Some were required to solve
+                  some problems for Windows-95 systems.  Most were done to
+                  incorporate a new option requested by a sponsor and will be
+                  unnoticed by other users.
+
+               2. A feature implemented that will be of benefit to all users
+                  is in the Area Coverage plot program (WorldWin).  After the
+                  plot is displayed, you may now point to a location with the
+                  mouse and retrieve information about the location selected.
+                  Information includes: 
+                       (x,y) relative to plot center,
+                       (x,y) in Latitude/Longitude
+                       Parameter value at point
+                       Distance from point to plot center
+                       Azimuth from point to plot center (and reverse)
+                  Using the LEFT mouse button, will return the interpolated
+                  value at the exact location selected.
+                  Using the RIGHT mouse button, will return the value at the
+                  nearest calculated grid point, and the mouse cursor will be
+                  placed at that location.
+ 
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+07 Aug  1996   1. A new feature has been added to the ICEPAC Point-to-Point
+                  model.  Under Run, there is now a Distance option.  This will
+                  cause the path from the transmitter to the receiver to be
+                  broken into 51 segments.  The propagation parameters are
+                  calculated at these segments and may be plotted.  The 
+                  advantage to this type of plot is that you may observe how
+                  the most reliable mode changes with distance along the path.
+                  If your type of operation allow the transmitter or receiver
+                  to move, this will give you additional useful information.
+
+               2. Some minor changes have been made to solve some more 
+                  Windows-95 problems that have been identified.
+
+19 Aug  1996   3. The BATCH calculation in Area Coverage has been fixed.
+                  A previous change caused the user to not be able to select
+                  any files.
+
+26 Aug  1996   4. Another Windows-95 incompatibility was found and corrected
+                  in the HFANT program.  Sorry about that.
+
+27 Aug  1996   5. In AREA COVERAGE, if you plotted MAP ONLY and then used the
+                  mouse to obtain coordinates from the plot, a divide by zero
+                  would cause the program to abort.  That has been fixed.
+
+               6. In AREA COVERAGE, if the maximum calculated output variable
+                  was below what was considered unusable, a divide by zero
+                  could occur.  For example, if the maximum calculated DBU for
+                  a map was -10, the automatic scaling will not plot DBU below
+                  zero (this is set in ..\DATABASE\???AREA.GPH).  This would
+                  cause a problem during plotting.  This has been corrected.
+
+28 Aug  1996   7. A new feature has been added to the ICEPAC Point-to-Point
+                  model.  Under Run, there is now a Time option.  This will
+                  allow any of the output parameters to be plotted versus
+                  UT time for any of the frequencies specified.  The
+                  advantage to this type of plot is that you may observe how
+                  the most reliable mode changes with time of day.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+25 Sept 1996   1. A rare division by zero was discovered (and fixed) in ICEPAC.
+                  This would occur when a control point was very close to the
+                  North or South pole.  This would manifest itself with
+                  a COPROCESSOR FAULT.
+
+               2. Version 4.12 of WDBOS.386 is supplied.  The previous version
+                  was 4.09, and you should not notice any difference.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+04 Dec  1996   1. A detailed HELP page was added to the Point-to-Point
+                  HELP/CONTENTS to explain the LUF problems in VOACAP.
+                  This is relevant to VOACAP users and does not affect ICEPAC.
+                  Any value of LUF from VOACAP should NOT be trusted.
+
+               2. The first beta version of the propagation programs that can
+                  be run on Windows-NT systems is now available.  Its version
+                  is 96.11W32.  This stands for Nov 1996 Windows-32-bit version.
+                  It should be valid for Windows-NT and Windows-95, but for now,
+                  I recommend it only be used for Windows-NT.  Everything seems
+                  to work EXCEPT ICEPAC Area Coverage calculations.  I hope to
+                  have that problem solved by January 1997.
+                  It is available from:
+             ftp://elbert.its.bldrdoc.gov/hf_prop/Windows/PKZIPed/hfwin32.exe
+                  or via my HF home page at:
+             http://elbert.its.bldrdoc.gov/hf.html
+
+06 Dec  1996   3. A minor problem was corrected for ICEPAC plots versus Distance
+                  and Time.  If you printed the results and selected a scale
+                  factor < 1.0, shaded polygons would not have lined up.
+
+10 Dec  1996   4. An error in ICEPAC for Effective SSN was corrected.
+                  Only the Win32 version noticed this problem, although it
+                  was also in error in the 16-bit version, but did not
+                  cause any problems.
+
+--------------------------------------------------------------------------------
+--------------------------------- End of 1996 ----------------------------------
+--------------------------------------------------------------------------------

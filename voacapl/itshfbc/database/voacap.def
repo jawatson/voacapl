@@ -1,0 +1,2 @@
+COMMENT    Any VOACAP default cards may be placed in the file: VOACAP.DEF
+LINEMAX      55       number of lines-per-page

@@ -1,0 +1,16 @@
+08 Jul  2012    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+08 Jul  2012   1. A change was made to VOACAP to test a software change
+                  proposed by Alex Shovkoplyas. He believes there is an
+                  indexing error in the routines curmuf, seltxr, settxr,
+                  and sigdis. Using VOACAP or VOAAREA as normal, you will
+                  see no difference. To activate Alex's changes,
+                  change the data file:
+                     ..\database\version.w32
+                  to read:
+                     Version 12.0708A
+                  The original version of the file reads:
+                     Version 12.0708W
+
+                  The "A" will trigger Alex's changes.
+                 

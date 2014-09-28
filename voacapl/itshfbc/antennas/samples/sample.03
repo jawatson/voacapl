@@ -1,0 +1,15 @@
+HR 4/4/.5   :Sample type 03  Dual-Band End-Fed Half-Wave Dipole Array
+11    11 parameters
+ 20.93  [ 1] Max Gain dBi..:
+   3    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+ .01000 [ 4] Conductivity..:
+30.000  [ 5] Operating Freq:
+   4    [ 6] # Row   Elems.:
+   4    [ 7] # Stack Elems.:
+25.000  [ 8] Design    Freq:
+   .50  [ 9] Ht. abv Ground:
+   0    [10] Slew Angle....:
+   .7   [11] Current Ratio.:
+            19.21  21.01  22.34 Max gain @  2MHz
+            18.87  20.74  22.08 Max gain @ 30MHz

@@ -1,0 +1,11 @@
+HX .3   :Sample type 09  Crossed-Dipole Antenna  
+ 7     7 parameters
+  8.07  [ 1] Max Gain dBi..:
+   9    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+ .01000 [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+10.000  [ 6] Design    Freq:
+   .30  [ 7] Ht. abv Ground:
+             7.65   7.65   7.65 Max gain @  2MHz
+             9.11   9.11   9.11 Max gain @ 30MHz

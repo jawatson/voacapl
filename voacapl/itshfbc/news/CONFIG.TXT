@@ -1,0 +1,33 @@
+Suggested system configuration:
+    The software was developed on:
+         Pentium-266 with Windows-95.
+         32 MBytes ram
+         17 inch display using 1280x1024 raster points/256 colors.
+
+Minimum system requirements:
+   
+    System running Windows 3.1
+    4 MBytes ram - 16 MBytes recommended
+        depending on how many applications you have open, you may
+        obtain the message "Insufficient Memory for Application".
+        Closing unnecessary applications or increasing the virtual
+        memory under Control Panel - 386 Enhanced can remove this
+        problem.
+    Hard Disk - 20 Mbytes + lots of extra depending on use
+    VGA graphics card
+        The software will work on a 640x480 display, but if
+        possible, configure your display to use more.
+        A 14 inch display works well with 800x600. If your display
+        uses only 16 colors, the graphics plots will suffer.
+    At least a 486x33MHz processor with math co-processor
+        (a 386 will work but is too slow for any substantial work)
+    Black & White graphic output can me made to any Windows printer.
+        A laser printer with minimum memory (512k bytes) will work
+        but you may need to remove the border from the plot.
+    Color graphic hard copies (does not yet work)
+
+I currently no longer have the ability to re-compile the 16-bit version
+that works under Windows 3.x.  Hopefully, everyone will be soon moving
+to Window-95 or Windows-NT.
+
+You comments are welcomed.

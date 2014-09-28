@@ -1,0 +1,10 @@
+HY/.5/.25       :Sample type 24 ITSA-1 Horizontal Yagi
+ 8     8 parameters
+  0.00  [ 1] Max Gain dBi..:
+  24    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+  -.50  [ 6] Antenna Length:
+  -.25  [ 7] Antenna Height:
+   3.0  [ 8] Gain ab dipole:

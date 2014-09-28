@@ -1,0 +1,155 @@
+--------------------------------------------------------------------------------
+All     2003    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+01 Jan  2003   1. Similar to a change in Run/Distance, a change has been
+                  made to Run/Time so that if shading goes above the
+                  graph, the headings are not hidden.
+               2. Also in the Run/Time and Run/Distance, if more than
+                  3 Tx antennas are used, the text has been reduced
+                  so as to stay above the graph.
+
+
+17 Jan  2003   1. An error was found in REC533 Area Coverage such that values
+                  calculated <-999.9 would cause a read error.
+                  This has been corrected.
+               2. I have modified some of the executable so that they can
+                  be executed from the ..\bin_win directory.
+                  You can directly execute:
+                     pointwin.exe
+                     areawin.exe
+                     areainv.exe
+                     areapltw.exe
+                     si_win.exe
+                     hfantwin.exe
+                     newswin.exe
+                  When you execute these, they will ask which model you
+                  want to use.
+
+
+27 Jan  2003   1. Re-compiling the software with more error checking
+                  caused some of the world area plotting software
+                  to flag possible errors, when none really existed.
+                  The software has been modified so this should not happen.
+
+
+29 Jan  2003   1. The ICEPAC Distance function forced METHOD=20.
+                  That has been changed to allow METHOD = [20,21,22].
+
+
+13 Feb  2003   1. The World plotting program (for area coverage) would
+                  fail when plotting results of the COMBINE option.
+                  This has been fixed.
+
+               2. A new list of cities: ..\GEONATIO\HF-list.geo.
+                  This is a list of transmitter sites used by the ITU
+                  and the HFCC.
+
+               3. I have also added a new directory of antennas.
+                  ..\ANTENNAS\HFCC
+                  These are the antennas associated with the ITU stations.
+                  I got these in Nov 2002, so they may not be up to date.
+                  These ARE NOT included in the installation as I did not
+                  want to "clutter" most of the users.
+                  To obtain these antenna files, go to the web site:
+                     http://elbert.its.bldrdoc.gov/hf.html
+                  and follow the instructions.
+                  As I get newer versions, this ZIP file will be updated.
+
+
+21 Feb  2003   1. Some newer Windows operating systems had problems
+                  finding the antenna files. This has occurred on some
+                  Windows-XP and Windows-NT systems, but not all.
+                  I discovered how to work around the problem and this
+                  affected many of the executable programs.
+                  You would have noticed this problem by not being able
+                  to change the Tx or Rx antennas.
+
+
+24 Feb  2003   1. Because of all the questions I get about problems, I have
+                  added a feature that will send me information about your
+                  computer system so that I might be able to solve your
+                  problems more easily. 
+                  Thus, before sending me an Email that says: "It doesn't run.",
+                  please execute the file:
+                     c:\itshfbc\bin_win\sysinfo.bat
+                  If you did not install the software in the default directory,
+                  the "c:\itshfbc" will be different.
+                  This will create a file that you should include in your Email
+                  to me. The name of the file for a default installation will be:
+                     c:\itshfbc\bin_win\sysinfo.txt
+
+
+08 Apr  2003   1. There have been a few reports recently that the software will
+                  not install on some Windows 2000 systems.  It appears this is
+                  because the system directory c:\WINNT\SYSTEM2 is write protected.
+                  This is a problem because the software installs a DLL there.
+                  I have moved this DLL to be in the ..\bin_win\ directory.
+                  this appears to work and causes no problems.
+                  Please let me know if there are problems.
+
+
+24 July 2003   1. A change was made to the executables VOACAPW.EXE and ICEPACW.EXE
+                  to allow for up to 20 ANTENNA cards in the input deck.
+                  The GUI interface still allows only 4 Tx and 1 Rx antennas.
+                  But a user who runs the propagation programs external to the GUI
+                  requested more ANTENNA cards, and it was a simple change to make.
+                  Hopefully, it should not impact anything else!
+
+               2. A change was made to allow Isotropic antenna gains to be in the
+                  range [-90 to 90]. The previous limits were [-40 to 60].
+
+               3. You can now get the command line execute parameters by 
+                  executing VOACAPW.EXE, ICEPACW.EXE, or REC533W.EXE.
+                  This information is also contained in the file:
+                      ..\news_win\command.txt
+
+
+07 Aug  2003   1. Batch processing in the area coverage programs would no longer
+                  allow you to add any files because it could not find directories.
+                  That has been fixed.
+
+               2. REC533 Point-to-Point may have developed an "infinite loop".
+                  Hopefully it did not fill up your disk!!!
+                  It may have caused the files ..\run\rec533x.out or 
+                  ..\run\rec533g.out to grow until disk space ended.
+                  That has been fixed.
+
+               3. Area Coverage grid size limit has been increased from 61x61 to 
+                  361x361. Be aware how this will affect the size of the files
+                  created and how long it will take to process.
+
+               4. On Point-to-Point graphs, you can now turn on plotting the FOT.
+                  This is done under the "User Lines" menu option.
+
+
+27 Aug  2003   1. When making a change to allow 20 antennas in VOACAP, 
+                  an error crept in that caused area coverage antenna
+                  gain patterns to be "messed up". That has been fixed.
+                  This would have been in versions 03.0722 to 03.0807.
+
+
+20 Oct  2003   1. The HFMUFES type 35 Vertical Dipole antenna can have
+                  execution problems if you specify height in meters
+                  instead of wavelengths. What happens is when the software
+                  is calculating the MUF, it can use a frequency below
+                  what is physically valid for that antenna. Then the
+                  gain code produces an extremely informative error:
+                            TIP > X
+                  Whatever that means!
+                  So now when that happens I print out some information
+                  (similarly informative!!!), but then I set the gain=-30,
+                  so the code will continue.
+                  This would affect HFANTWIN, ICEPAC, VOACAP, & REC533
+                  when using a type 35 antenna.
+
+
+06 Nov  2003   1. There were some error messages in VOACAPW.exe and ICEPACW.exe
+                  that came to the screen during Area Coverage runs in the SILENT
+                  mode.  They have been eliminated.
+
+
+09 Dec  2003   1. REC533 Point-to-Point can now be run with using "Distance"
+                  and "Time" calculation modes. This allows you to observe
+                  how the mode changes by distance and time for a specified
+                  frequency.

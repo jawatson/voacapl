@@ -1,0 +1,17 @@
+LPH 29/.8/31.1/67.1/7/21.60/450 :Sample type 05 Horiz Log-Periodic
+12    12 parameters
+ 10.84  [ 1] Max Gain dBi..:
+   5    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.01000  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+  29    [ 6] # Elements....:
+    .8  [ 7] Shortest Elem.:
+  31.1  [ 8] Longest  Elem.:
+  67.1  [ 9] S/L Center Dis:
+   7.70 [10] Shrtest Height:
+  21.60 [11] Longest Height:
+ 450.0  [12] Feeder Impedan:
+D_Gains =    .00   .00  7.10  8.64 10.37 10.91 11.01 11.06 11.13 10.84
+D_Gains =  10.98 11.62 11.46 11.56 12.15 11.94 12.21 12.03 12.30 12.73
+D_Gains =  12.12 12.20 12.67 11.86 11.92 12.47 11.56 11.72 12.31 12.39

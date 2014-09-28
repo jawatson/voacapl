@@ -1,0 +1,300 @@
+--------------------------------------------------------------------------------
+All    1994    News for NTIA/ITS HF Propagation Models
+--------------------------------------------------------------------------------
+
+04 Jan 1994    1. A new control card has been added to VOACAP & ICEPAC.
+                  The LINEMAX card will set the maximum number of lines
+                  allowed per page of output.  The default is 55.
+                  Format is:LINEMAX   nnnnn
+                  This can be included by adding to the ..\DATABASE\VOACAP.DEF
+                  or ..\DATABASE\ICEPAC.DEF default data files.
+               2. To update the ..\GEO data base files:
+                  EAST & WEST GERMANY have been changed to GERMANY.
+                  EAST & WEST BERLIN  have been changed to BERLIN.
+               3. Some area coverage inputs have been changed at VOA user 
+                  request:
+                  a) Xmax,Ymax now specified instead of deltaX,deltaY.
+                  b) ngrid now specified (before default was 31x31).
+                  c) VOACAP & ICEPAC method now specified (20,21,or 22).
+                  d) Receiver has been placed after transmitter.
+                  e) CIRAF test points have been replaced with the ability to
+                     superimpose a user specified CITIES files (RECEIVE.???).
+                     This CITIES data file is created with VOACAP, ICEPAC,
+                     or REC533 as a receiver file.  The default is RECEIVE.CTY.
+                  f) A special program to convert AREADATA files from the
+                     previous format to the new format is included.  When you
+                     run HFINSTAL, the final step executes BIN\CONVRT1.EXE
+                     which will scan all files in the AREADATA directory and
+                     convert 'a)' above and add 'b)' and 'c)' records.
+               4. HFANT type 12 (NTIA curtain antenna) has been modified.
+                  Maximum bays   is 14 (16 was in error).
+                  Maximum stacks is  8 ( 9 was in error).
+                  Excitation modes ++++ & ++-- can now be specified to include
+                  stacks 7 & 8.
+               5. SCROLL (the program that displays circuit output in yellow),
+                  has a new option that allows you to save the file being
+                  viewed on a new file name.  Press the 's' key, then enter
+                  the file name when requested.  Only <a-z>,<0-9>,[\:.] 
+                  characters are allowed.
+                  <esc> skips save.  
+                  <backspace> allows you to correct spelling errors.
+
+12 Jan 1994    1. For those whose printer is NOT on LPT1, it is now easy to
+                  change the .BAT files to redirect graphics output.
+                  The printer port is specified in only 2 .BAT files.
+                  If your LaserJet printer (or HP color PaintJet) is not on
+                  LPT1, edit the 2 .BAT files below and specify the correct
+                  port.
+                  ..\BIN\HPJETDMP.BAT - Black/White output
+                  ..\BIN\HPXLDMP.BAT  - Color output (area coverage only)
+               2. ICEPAC circuit graphs now display LUF as well as MUF.
+
+21 Jan 1994    1. All text output sent to the printer uses the batch file
+                  ..\BIN\PRINTME.BAT.  The DOS PRINT command was removed
+                  because it loads a TSR into memory.  If the PRINT TSR is
+                  not loaded BEFORE you begin execution, it gets loaded higher
+                  in memory.  Once it is loaded, it is not removed and
+                  causes the propagation programs to fail when they are
+                  executed because not enough (contiguous) memory is available.
+                  If printed output is not to your liking, modify 
+                  ..\BIN\PRINTME.BAT to suit your configuration.
+               2. All programs now have a HELP option.  This should minimize
+                  the necessity of a large user guide, and will facilitate
+                  the ability to keep the HELP files up to date whenever changes
+                  are made.  As users ask questions, the Frequently Asked
+                  Questions (FAQ) section of the HELP will be updated to
+                  respond to those questions.  Since there are many HELP that
+                  need to be created, all files may not exist on your version.
+                  Thus, if you try to view a HELP file and receive the message:
+                        In scroll.exe, could not OPEN file=..\HELP\xxxxx\xxxxxx
+                  This will because that file has not yet been created.
+
+31 Jan 1994    1. A RUNTIME error occurred for 8-high curtain antennas (type12).
+                  I do not know what caused this problem, but when I re-compiled
+                  and re-loaded ANTCALC, it worked. Let me know it occurs again.
+               2. The on-line HELP is 90% complete.  Let me know of any
+                  questions or ambiguities.
+               3. It has been requested to change the antennas to user defined
+                  names and not the CCIR.??? numeric naming that is there now.
+                  That will be done when HFANT is changed to include IONCAP
+                  antennas.  That is a significant change and must be approached
+                  with caution.  In the meantime, DO NOT delete CCIR.000, as
+                  that is a very specific antenna (Isotrope with user defined
+                  gain).
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+10 Feb 1994    1. The HELP files have been completed.  At least the initial
+                  writing of them is done.  They constitute about 7000 lines
+                  of information!  As more input from users is received, some
+                  of the HELP information will be changed and new information
+                  will be added to meet the questions of the user community.
+               2. NEWS has now been sorted from NEWEST (at top) to oldest 
+		  (at bottom), to make it easier to view the most recent NEWS
+		  files.  Also, all NEWS files dated before 1994 have been
+		  combined into the file: 94_XX_XX.TXT, to further reduce the
+		  clutter of NEWS files.
+               3. Some reorganizing in the .BAT files has occurred, which has
+		  reduced the size of memory required to execute the programs.
+		  You now only need 500000 bytes available to largest program
+		  for the software to work.  The only thing the user will
+		  notice is the Flash-Up Runtime copyright will be displayed
+		  a bit more often.  This does not seem to slow down the
+		  processing any, and it saved about 80000 bytes of memory,
+		  which is critical to users on networks.
+               4. The HFINSTAL.BAT file was modified.  The PKZIP self-extracting
+		  files are no longer named *.EXE.  What generally happens is
+		  when someone sees a .EXE file, they execute it!!!  In this
+		  case, it self-explodes, but does not create a directory
+		  structure.  Thus, it clutters up your disk with a lot of files
+		  that are in the wrong locations.  I have therefore renamed all
+		  the PKZIP files to *.EX_.  Then HFINSTAL.BAT will rename them
+		  to the proper .EXE file, execute them properly (-d -o -n), and
+		  rename them back to .EX_ when done.  I hope this solves some
+		  confusion users have had.  Unfortunately, this software is
+		  being used by a variety of computer types.  Some know a lot
+		  about PKZIP and the DOS operating system, and some know very
+		  little.  I am trying to come upon a scheme of installation
+		  that will work for everyone.  If you have suggestions or
+		  comments, please feel free to let me know.
+
+16 Feb 1994    1. A restriction on the number of RASTER files that can be viewed
+		  has been raised.  It was 50, now the limit is 2000.  Since
+		  each raster file is 158402 bytes in size, this will allow
+		  316 MBytes of raster files to be viewed.
+               2. A restriction on the number of files in ..\AREADATA that may
+		  be created has been removed.  The limit was 500, and the
+		  limit now should be only limited by your disk capacity.
+		  The 500 limit was only when you selected PLOT_OLD.  You would
+		  have only seen the first 500 grid files in your ..\AREADATA
+		  directory.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+04 May 1994    1. Occasionally, ICEPAC & ICEAREA may have aborted with a
+                  LOG error.  What happened, was if when a mode is VERY low,
+                  the program does not include it in the power sum.  Thus, if
+                  all modes were below this threshold, none would be combined
+                  and a value was left equal to 0.  This was then put into the
+                  LOG function, and LOG(0) is not defined.  This has been
+                  corrected.
+
+               2. Sometimes in the area coverage program, the MIN/MAX values
+                  displayed were not correct.  This has been corrected.
+
+               3. For Area Coverage maps, the antenna gain is now calculated
+                  for each group (of 9 max).  This is because each group could
+                  be for a different frequency, and the antenna gain may be
+                  dependent on frequency.  Previously, only the frequency of
+                  the first group was correct.  This will slow down execution,
+                  but will produce a more correct answer.
+
+10 May 1994    1. ICEPAC Point-to-Point METHOD 28 (MUF-FOT-LUF) has been
+		  changed.  When calculating LUF, ICEPAC identifies LUFs which
+		  do not meet the required reliability with a negative of the
+		  frequency with the highest reliability.  These are now
+		  plotted in RED on the METHOD 28 plots.  A legend also
+		  informs the user when any LUF < 0.  This was never previously
+		  documented and a negative LUF confused some users.  Hopefully
+		  this will clear up this confusion.
+               2. Similarly, on all the Point-to-Point contour plots for ICEPAC,
+		  whenever LUF is negative (i.e. required reliability not met),
+		  the LUF curve is plotted as dashed and a message will also
+		  be displayed why it is dashed.
+               3. ICEPAC and VOACAP METHOD 11 & 28 plots now contain the VERSION
+		  number of the propagation program being used.
+
+27 May 1994    1. All models have undergone some minor changes and the version
+                  numbers has now been changed to 94.0526.
+                         VOACAP - Version 94.0526
+                         ICEPAC - Version ITS.02
+                         REC533 - ITS VER-2.00  27.May.94
+               2. In all models (Point-to-Point & Area Coverage), the ability
+                  to specify the PATH direction (Short or Long) has been added.
+                  Previously, only REC533 & ICEPAC Point-to-Point models had
+                  this ability.
+                  This required some minor modifications to the propagation
+                  prediction modules.  On Point-to-Point output, the phrase
+                  "<Long>" will appear in the header as:
+                                     AZIMUTHS  <Long>  N. MI.      KM
+                  whenever the LONG path is forced.
+                  Previously, when METHOD 21 (Forced long path) was selected,
+                  VOACAP & ICEPAC (incorrectly) chose the long path (through the
+                  antipode).  Now, these two features are independent, as
+                  they should have been.
+               3. The above changes required a correction to ANTCALC for the
+                  Point-to-Point mode to force the antenna calculation to be
+                  done in the opposite direction if LONG path is selected.
+
+************** 4. Software distribution has formally been authorized for both
+                  ICEPAC & REC533.  They may be obtained (together or separate)
+                  at a cost of $500.  This charge covers the cost of
+                  distribution and (resonable) telephone support to get the
+                  models running.  It also allows access to new versions for
+                  up to 1 year after purchase.
+                  Software distribution for VOACAP will be controlled by VOA.
+                  Contact Lorraine DeBlasio at (202)619-2862 for details.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+17 Aug 1994    1. After much effort, HFANT has been re-written.
+		  IONCAP antennas have been added to the HFANT program.
+                  Also, 2 additional data file type gain files have been added.
+		  TYPE13 is suited to area coverage, being a 360 degree by
+                  90 degree pattern for one frequency.
+                  TYPE14 is suited to Point-to-Point calculations being a
+                  90 degree by 30 frequency pattern.  This is similar to the
+                  old TYPE18 IONCAP external binary antenna pattern, except
+                  the data format is now ASCII for easier compatibility.
+		  The major change has been that the user now specifies the
+		  antenna file name (directory\filename.sfx).  Previously,
+                  the program assigned a 3 digit number to each antenna.
+		  Unfortunately, this change requires a conversion program
+		  to modify your existing data files in the following
+		  directories:
+			..\USERDB\CIRCUITS.???
+			..\SAVED\*.*
+			..\AREADATA\*.*
+		  This conversion program will be automatically run when you
+		  perform the new HFINSTAL.BAT.
+		  Also, old unnecessary files from the ..\BIN directory will
+		  be deleted.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+ 2 Sep 1994    1. The Long Path/Short Path smoothing algorithm in VOACAP has
+                  been activated.  Testing needs to be performed to determine
+                  if the algorithm is functioning correctly.  This method is
+                  activated by selecting METHOD = 30, in either the 
+                  Point-to-Point model or the Area coverage model.
+
+ 8 Sep 1994    2. Save & Retrieve for the Point-to-Point models (ICEPAC, VOACAP,
+                  & REC533) has been changed so that data is no longer stored 
+                  in the directory ..\SAVED.  Storage is now in sub-directories
+                  under ..\SAVED.  The one supplied with the software is
+                  ..\SAVED\DEFAULT\.  You may create your own so as top more
+                  organize your files.  When you install the software
+                  with HFINSTAL.BAT, all files currently residing in the
+                  ..\SAVED directory are copied to ..\SAVED\DEFAULT\.
+
+               3. Similarly, for the Area Coverage programs (ICEAREA, VOAAREA, &
+                  RECAREA), storage of saved data files is now in directories
+                  under ..\AREADATA.  The directory ..\AREADATA\DEFAULT\ is
+                  supplied with the software.  When you install the software
+                  with HFINSTAL.BAT, all files currently residing in the
+                  ..\AREADATA directory are copied to ..\AREADATA\DEFAULT\.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+ 2 Nov 1994    1. There were problems when the area coverage projection was
+                  centered near 180 degrees longitude.  That has been fixed.
+
+               2. Color plots dumped to a PaintJet (not PaintJet XL) did not
+                  work.  Compatibility between PaintJet & PaintJet XL has been
+                  fixed.
+
+ 3 Nov 1994    1. A coefficient error (system loss term) was found to be in
+                  error.  The table was 115.2 and should be 11.52.
+                  This affected the months (MAR, APR, MAY, SEP, OCT, NOV)
+                  for high latitude paths, 2nd local time block (i.e 3,4,5),
+                  distances greater than 2500km, for the value difference
+                  between median and upper decile value.  (To find out what
+                  that last sentence just said, talk to George Lane at VOA)
+                  This will cause several of the coefficient files for ICEPAC
+                  & REC533, and the coefficient file for VOACAP to be changed.
+
+14 Nov 1994    1. SNR90 (the lower decile Signal-to-Noise Ratio) is now
+                  replaced with SNRxx which is the Signal-to-Noise ratio
+                  at the required reliability.  Thus, SNR90 can be created
+                  by setting the Required Reliability to 90.  Required
+                  Reliability equal to 50 will produce SNRxx = SNR (this
+                  is because SNR is the median Signal-to-Noise ratio).
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+29 Dec 1994    1. ICEPAC has been modified to allow for DAILY variation
+                  in the F2 coefficients.  This will allow output for
+                  Jan 01 to be very similar to Dec 31.
+                  This is accomplished with the new MONTH.DAY input.
+                  If DAY = 0, nothing will be different.  The normal
+                  monthly coefficients will be used.  If DAY is not 0,
+                  then a special set of coefficients previously developed
+                  for the Air Force will be used.  The day of the year
+                  is calculated, and a set of coefficients are calculated
+                  that will create a smooth set of F2 coefficients.
+                  Do not expect DAY=15 to produce the same result as DAY=0.
+                  The result will be close, but since the daily coefficients
+                  are created by a Fourier fit to the monthly coefficients,
+                  exact results will not be obtained.
+                  When the DAILY F2 set has been activated, the output
+                  header will indicate the DAY and the phrase "(Daily)".
+
+--------------------------------------------------------------------------------
+------------------------------ End of 1994 -------------------------------------
+--------------------------------------------------------------------------------

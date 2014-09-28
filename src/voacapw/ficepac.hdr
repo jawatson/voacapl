@@ -1,0 +1,56 @@
+C
+C Header file of ICEPAC.FOR
+C to declare fields for data entry screens
+C
+
+      INTEGER*4 method
+      CHARACTER*50 methodname
+      INTEGER*4 icoeffs
+      INTEGER*4 year
+      REAL*8 montha(10)
+      INTEGER*4 ssna(10)
+      REAL*8 qindexa(10)
+      INTEGER*4 ihr1
+      INTEGER*4 ihr2
+      INTEGER*4 ihrinc
+      INTEGER*4 itimecode
+      CHARACTER*10 tlatdeg,tlondeg
+      CHARACTER*20 tname
+      CHARACTER*10 rlatdeg,rlondeg
+      CHARACTER*20 rname
+      INTEGER*4 ipath
+      REAL*4 gcdkm
+      REAL*4 gcdnmi
+      REAL*4 gcdmi
+      REAL*4 TazR
+      integer*4 freq(11)
+      INTEGER*4 noise
+      REAL*4 amind
+      INTEGER*4 xlufp
+      INTEGER*4 rsn
+      REAL*4 pmp
+      REAL*4 dmpx
+      REAL*4 fprob(4)
+      CHARACTER rec_dir*8,rec_file*12
+      REAL*4 rec_bear,rec_gain
+
+      COMMON /FIELDS/method,methodname,icoeffs,year
+     @       ,montha,ssna,qindexa,ihr1,ihr2,ihrinc,itimecode
+     @       ,tlatdeg,tlondeg,tname,rlatdeg,rlondeg,rname
+     @       ,ipath,gcdkm,gcdnmi,gcdmi
+     @       ,TazR,freq,noise
+     @       ,amind,xlufp,rsn,pmp,dmpx,fprob
+     @       ,rec_dir,rec_file,rec_bear,rec_gain
+
+      INTEGER*4 numants,Index_ant
+      INTEGER*4 minfreq
+      INTEGER*4 maxfreq
+      REAL*4 design_freq
+      CHARACTER xmtr_dir*8,xmtr_file*12,xmtr_model*10
+      REAL*4 beam_main
+      REAL*4 TxPower
+
+      COMMON /FIELDSa/numants,Index_ant,
+     +        minfreq(4),maxfreq(4),design_freq(4),
+     +        xmtr_dir(4),xmtr_file(4),xmtr_model(4),beam_main(4),
+     +        TxPower(4)

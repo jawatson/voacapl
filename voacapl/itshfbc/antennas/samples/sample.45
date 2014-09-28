@@ -1,0 +1,9 @@
+SLR28/80        :Sample type 45 ITS-78 Side-Loaded Vertical Half-Rhombic
+ 7     7 parameters
+  0.00  [ 1] Max Gain dBi..:
+  45    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+ 28.00  [ 6] Leg-ground Ang:
+ 80.00  [ 7] Leg Length    :

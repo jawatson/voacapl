@@ -1,0 +1,8 @@
+26 Mar  2012    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+26 Mar  2012   1. ICEPAC had an undefined variable that could cause the
+                  program to think it was in Area Coverage mode when it
+                  was supposed to run in Point-to-Point mode. This appeared
+                  to be a rare occurance and may be computer/operating system
+                  dependent. This has been fixed. 
+                  VOACAP & REC533 were not affected.

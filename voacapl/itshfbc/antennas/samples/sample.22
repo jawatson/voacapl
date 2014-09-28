@@ -1,0 +1,9 @@
+VM/.25          :Sample type 22 ITSA-1 Vertical Monopole
+ 7     7 parameters
+  0.00  [ 1] Max Gain dBi..:
+  22    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+  -.25  [ 6] Antenna Height:
+   0.0  [ 7] Gain ab dipole:

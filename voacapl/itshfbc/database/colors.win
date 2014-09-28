@@ -1,0 +1,34 @@
+Windows colors     cities colors    contour colors
+      17                 7                 8
+Ignore Ignore
+0=Blck Black
+1=Red  Red
+2=Grn  Green
+3=Yell Yellow
+4=Blue Blue
+5=Magn Magenta
+6=Cyan Cyan
+7=Grey Grey
+8=DGry Dark Grey
+9=Orng Orange
+A=Lgrn Lite Green
+B=Brwn Brown
+C=Lblu Lite Blue
+D=Pink Pink
+E=LLbl Pale Blue
+F=Whit White
+Ignore Ignore
+0=BLCK BLACK  with   names
+1=blck black without names
+2=RED  RED    with   names
+3=red  red   without names
+4=BLUE BLUE   with   names
+5=blue blue  without names
+Ignore Ignore
+0=BLCK Black with shading
+1=RED  Red   with shading
+2=blck Black  NO  shading
+3=red  Red    NO  shading
+4=Shad Shading, no contours
+5=Bin  Bin color shading
+6=bin  Bin  B/W  shading

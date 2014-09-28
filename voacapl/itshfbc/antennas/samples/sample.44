@@ -1,0 +1,10 @@
+ATD45/.5/.25    :Sample type 44 ITS-78 Arbitrary Tilted Dipole
+ 8     8 parameters
+  0.00  [ 1] Max Gain dBi..:
+  44    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+ 45.00  [ 6] Tilt from Horz:
+  -.50  [ 7] Length        :
+  -.25  [ 8] Feed Height   :

@@ -1,0 +1,15 @@
+23 Jan  2010    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+23 Jan  2010   1. A user wanted to be able to use Wordpad.exe to view the
+                  output from ICEPAC. Thus, you can now choose what program
+                  is used to view the output. A file now exists that contains
+                  the instructions how to do this:
+                  ..\database\notepad.txt
+                  So now you can use any program you want to view the results.
+                  This will affect any tabular output associated with:
+                  ICEPAC, VOACAP, REC533, HFANT, S_I ICEPAC, & S_I VOACAP.
+
+               2. A header record got removed from REC533 circuit outputs.
+                  This is the record that looks like:
+                    UT  MUF  ....     LUF  FOT OPMUF
+                  This began with version 09_02_14.

@@ -1,0 +1,15 @@
+HR 2/2/.3   :Sample type 2 Dual-Band Center-Fed Half-Wave Dipole Array
+11    11 parameters
+ 14.14  [ 1] Max Gain dBi..:
+   2    [ 2] Antenna Type..:
+  10    [ 3] Dielectric....:
+.01000  [ 4] Conductivity..:
+ 7.125  [ 5] Operating Freq:
+   2    [ 6] # Row   Elems.:
+   2    [ 7] # Stack Elems.:
+ 7.200  [ 8] Design    Freq:
+   .25  [ 9] Ht. abv Ground:
+   0    [10] Slew Angle....:
+   .7   [11] Current Ratio.:
+            12.12  14.32  15.95 Max gain @  2MHz
+            11.42  13.70  15.43 Max gain @ 30MHz

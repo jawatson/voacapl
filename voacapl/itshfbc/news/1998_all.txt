@@ -1,0 +1,277 @@
+--------------------------------------------------------------------------------
+All     1998    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+07 Jan  1998    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+07 Jan  1998   1. The BATCH Point-to-Point discussed in the 97_04_28.txt
+                  news file did not work correctly for ICEPAC in the 32-bit
+                  version of the software.  That has now been fixed.
+                  The news is repeaded below:
+
+                  For those who wish to create their own IONCAP style input
+                  deck, that can now be processed properly with the Windows
+                  versions of ICEPAC and VOACAP.  Perform the following:
+                    a. Create the input deck on a file (NOT named modelX.DAT)
+                              (That means NOT ICEPACX.DAT or VOACAPX.DAT)
+                       The file should be in the ..\RUN directory.
+                    b. Create an icon to execute with the following properties:
+                         Command line:
+                          ..\BIN_WIN\modelW.EXE directory BATCH deckname
+                         Where:
+                               model = ICEPAC or VOACAP
+                               directory = install directory (e.g. C:\ITSHFBC)
+                               deckname = file name used in (a) above.
+                         Working Directory:
+                               directory\RUN
+                                (remember, directory is defined above)
+
+  
+                  For ICEPAC, below are the relevent comment lines directly
+                  from the source code that detail how ICEPACW.EXE may be
+                  executed:
+c Execute with:
+c    ICEPACW.EXE [S] directory ICEPACX.DAT ICEPACX.OUT    (P-P circuit)
+c    ICEPACW.EXE [S] directory ICEPACG.DAT ICEPACG.OUT    (P-P graph)
+c    ICEPACW.EXE [S] directory ICEPACD.DAT ICEPACD.OUT    (P-P distance)
+c    ICEPACW.EXE [S] directory ICEPACT.DAT ICEPACT.OUT    (P-P time)
+c    ICEPACW.EXE [S] directory BATCH                      (P-P batch)
+c    ICEPACW.EXE [S] directory BATCH deckname.dat         (P-P NEW batch)
+c    ICEPACW.EXE [S] directory AREA CALC ICEAREAW.CIR     (AREA batch)
+c    ICEPACW.EXE [S] directory AREA method pathname       (AREA single)
+c    ICEPACW.EXE [S] directory INV  CALC ICEAREAW.CIR     (AREA INVERSE batch)
+c    ICEPACW.EXE [S] directory INV  method pathname       (AREA INVERSE single)
+c where:
+c    [S]       = SILENT, then no messages are written to output window
+c                SILENT must be spelled out completely and in UPPER case.
+c    directory = full pathname to the install directory (e.g. c:\ITSHFBC)
+c    method    = (CALC/SCREEN/PRINT)
+c    pathname  = full pathname of input data file
+c                (e.g. C:\ITSHFBC\AREADATA\DEFAULT\DEFAULT.ICE)
+c
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+06 Feb  1998   1. The version of REC533 has been updated to produce the same
+                  results as the official ITU REC533 Version 3.  This was
+                  done to assist the ITU in developing a HF planning tool
+                  to meet the needs of HF Broadcasters as agreed upon
+                  at WRC 1997.
+
+               2. A minor fix was made to ICEPAC that would, under very
+                  unusual circuits (>10000km) that would cause frequencies
+                  above the MUF to produce no output results.  An array
+                  was not properly initialized.  It is unknown how often
+                  this could have happened, but was probably very difficult
+                  to detect.  This may have also affected VOACAP, and the
+                  correction was also made to that model.
+
+               3. I have had trouble on my Windows-95 system of colors
+                  doing strange things.  This began happening when I
+                  got a new SALFLIBC.DLL that was to fix problems on
+                  Windows-NT systems.  I have therefore reverted to an
+                  older version of the SALFLIBC.DLL until this problem can be
+                  resolved.  If anyone has problems and wants to try the
+                  new SALFLIBC.DLL that can be obtained from my web site:
+                      http://elbert.its.bldrdoc.gov/hf.html
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+04 Mar  1998   1. I have found some more problems with SALFLIBC.DLL for
+                  Windows-95 systems.  Sometime, the area coverage program
+                  seems to hang during calculations.  I have not found that
+                  to happen with the SALFLIBC.DLL packaged with this version.
+                  Sorry for any problems, but ever since migrating to the
+                  32-bit compiler for Windows-95 & Windows-NT, I have had
+                  problems.  I cannot seem to isolate the problem where
+                  Salford can give me a proper solution.  With no funding,
+                  you will just have to bear with me.  Please report problems
+                  so I have some idea how many this is affecting.
+
+               2. A ham operator (Ruediger Anders, AA2HT) has corrected some
+                  of the GEO data files to account for political correctness
+                  and spelling inconsistencies.  These affected the files:
+                        ..\GEOCITY\EUROPE.GEO
+                        ..\GEOCITY\WESTASIA.GEO
+                        ..\GEOCITY\WRLDWIDE.GEO
+                        ..\GEONATIO\EUROPE.GEO
+                        ..\GEONATIO\WESTASIA.GEO
+                  I have included these files in this version of the software.
+                  Thanks Rudi.
+                  Anyone else willing to submit information of use to everyone
+                  is invited to do so.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+20 Apr  1998   1. The Point-to-Point programs would fail if the Tx(0.,0.) and
+                  Rx(0.,180.) was used.  Other antipodal conditions could also
+                  have caused the failure.  I hope this has been fixed (again!).
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+01 May  1998   1. ICEPAC Point-to-Point had a problem when using the DISTANCE
+                  or TIME plot options.  Any percentage plot (e.g. REL), would
+                  plot OK to the screen, but if you printed it, it was scaled
+                  by 100 again.  That has been fixed.
+
+27 May  1998   1. Thanks to Tony Field, the world boundary data base has been
+                  updated to reflect the more recent country borders.
+                  Germany has been united.  The former Soviet Union has been
+                  re-drawn.  Two problems in North Africa have been fixed 
+                  (Eritrea & Yemen).  And some additional lakes and waterways
+                  have been added to Canada.  Thanks again Tony!!
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+14 July 1998   1. In correcting some problems relating to Windows-NT,
+                  I may have created some additional problems when plotting
+                  the Distance and Time options in ICEPAC.  If you obtained
+                  fatal errors indicating a file was not OPEN, this version
+                  should solve that problem.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+12 Aug  1998   1. Some cities names were changed.
+                  The following cities changed countries:
+
+                     Banja Luka   in   BOSNIA AND HERCEGOVINA
+                     Dubrovnik    in   CROATIA 
+                     Ljubljana    in   SLOVENIA (Capital City!)
+                     Maribor      in   SLOVENIA
+
+                  The following cities were renamed:
+
+                     TITOGRAD      to  PODGORICA (Capital of Montenegro, 
+                                                  Yugoslavia)
+                     TITOVO UZICE  to  UZICE (Yugoslavia)
+                     TITOV VELES   to  VELES (Macedonia)
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+22 Sep  1998   1. I have finally gotten time to change the Point-to-Point
+                  GRAPH option to allow more than one GROUP to be calculated
+                  and plotted.
+                  If more than one GROUP (month/SSN) is calculated, when you
+                  go to the GRAPH, a new button called GROUPS will appear.
+                  This will allow you to select data from the other GROUPs
+                  to be plotted.
+               2. *****NOTE:*****
+*****************************************************************************
+       As of Oct 1998, NTIA/ITS can no longer accept funds to register
+       the HF software.  The consequences of this are:
+         1. Software is only available to users via the internet.
+         2. Installation disks can no longer be mailed.
+         3. User assistance will be given through email,
+            and can only be done on a "Time-available" basis.  
+*****************************************************************************
+               3. It is, however, possible for you to contract NTIA/ITS to
+                  modify the software for your needs.  This can be performed
+                  under what is called a CRADA.  See the web page:
+                     http://flattop.its.bldrdoc.gov/index.html
+                  and view the Software Development CRADA for the legal words.
+               4. If you would also like training in how to use the software,
+                  that can probably be performed under the Pay-per-Use CRADA
+                  on the same web page.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+13 Oct  1998   1. The BATCH Point-to-Point discussed in the 98_01_07.txt
+                  news file has been modified again at a user request.
+                  The user can now specify the output file name when BATCH is
+                  used.  The default name is ICEPACB.OUT or VOACAPB.OUT,
+                  depending on which model is used.
+
+                  For those who wish to create their own IONCAP style input
+                  deck, that can now be processed properly with the Windows
+                  versions of ICEPAC and VOACAP.  Perform the following:
+                    a. Create the input deck on a file (NOT named modelX.DAT)
+                              (That means NOT ICEPACX.DAT or VOACAPX.DAT)
+                       The file should be in the ..\RUN directory.
+                    b. Create an icon to execute with the following properties:
+                         Command line:
+                          ..\BIN_WIN\modelW.EXE directory BATCH deckname outname
+                         Where:
+                               model = ICEPAC or VOACAP
+                               directory = install directory (e.g. C:\ITSHFBC)
+                               deckname = file name used in (a) above.
+                               outname = file where output is written.
+                                 If omitted, will be VOACAPB.OUT or ICEPACB.OUT.
+                         Working Directory:
+                               directory\RUN
+                                (remember, directory is defined above)
+
+  
+                  For ICEPAC, below are the relevent comment lines directly
+                  from the source code that detail how ICEPACW.EXE may be
+                  executed:
+c Execute with:
+c    ICEPACW.EXE [S] directory ICEPACX.DAT ICEPACX.OUT    (P-P circuit)
+c    ICEPACW.EXE [S] directory ICEPACG.DAT ICEPACG.OUT    (P-P graph)
+c    ICEPACW.EXE [S] directory ICEPACD.DAT ICEPACD.OUT    (P-P distance)
+c    ICEPACW.EXE [S] directory ICEPACT.DAT ICEPACT.OUT    (P-P time)
+c    ICEPACW.EXE [S] directory BATCH                      (P-P batch)
+c    ICEPACW.EXE [S] directory BATCH deckname.dat         (P-P NEW batch)
+c    ICEPACW.EXE [S] directory BATCH deckname.dat out.out (P-P NEW batch)
+c    ICEPACW.EXE [S] directory AREA CALC ICEAREAW.CIR     (AREA batch)
+c    ICEPACW.EXE [S] directory AREA method pathname       (AREA single)
+c    ICEPACW.EXE [S] directory INV  CALC ICEAREAW.CIR     (AREA INVERSE batch)
+c    ICEPACW.EXE [S] directory INV  method pathname       (AREA INVERSE single)
+c where:
+c    [S]       = SILENT, then no messages are written to output window
+c                SILENT must be spelled out completely and in UPPER case.
+c    directory = full pathname to the install directory (e.g. c:\ITSHFBC)
+c    method    = (CALC/SCREEN/PRINT)
+c    pathname  = full pathname of input data file
+c                (e.g. C:\ITSHFBC\AREADATA\DEFAULT\DEFAULT.ICE)
+c
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+01 Dec  1998   1. You can now do area calculations of the whole world that are
+                  not required to be centered at Longitude=0 degrees.
+                  For example, if you wish the center to be the U.S., you would
+                  specify Xmin=-270 and Xmax= 90.  This would put the center
+                  at Longitude= -90 degrees (90 West Longitude).
+
+               2. You can now create your own external antenna calculation
+                  program.  If one of the internal antennas does not fit your
+                  needs, you can create your own executable program to calculate
+                  the antenna gain files.  Look at the HELP documentation
+                  in the HFANT program for more complete details.
+
+08 Dec  1998   1. Fixed a little problem in Point-to-Point ICEPAC/VOACAP using
+                  Method 23 with the GRAPH output.  MODE is now forced to
+                  always be included.  Even though it cannot be plotted, it
+                  needs to be there for the plotting to work correctly.
+
+21 Dec  1998   1. A small bug was detected in REC533 when plotting the
+                  Point-to-Point output parameters.  This was fixed by adding
+                  some lines to the file ..\DATABASE\REC533.GPH.
+
+22 Dec  1998   1. The ability for you to create antenna files from external
+                  sources is now available.  You can run models such as NEC
+                  and save the results on a data file in a format such as that
+                  defined by:
+                          ..\antennas\samples\sample.90
+                  This particular file contains gain values for frequencies
+                  from 2 to 30 MHz in 2 MHz steps,
+                  from 0 to 355 degrees azimuth in 5 degree steps,
+                  from 0 90 degrees elevation angle in 3 degree steps.
+                  This file is already .5 MBytes in size.
+                  If all the above is in 1 unit steps, the file becomes about
+                  15 MBytes in size.  The program cannot resolve more than
+                  1 unit step sizes. 
+                  I will try to describe this more fully in a HELP file.
+
+--------------------------------------------------------------------------------
+------------------------------- End of 1998 ------------------------------------
+--------------------------------------------------------------------------------

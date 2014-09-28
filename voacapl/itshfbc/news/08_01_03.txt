@@ -1,0 +1,10 @@
+03 Jan  2008    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+03 Jan  2008   1. It has been discovered that if the install directory 
+                  is more than about 27 characters in length, the software
+                  would fail. An example of this would be installing the
+                  software in the directory:
+                     e:\swl\propaga\hfwin32\itshfbc
+                  This has been increased, to at least 46 characters.
+                  Please do not get carried away with the length of your
+                  directory names. This affects almost all of the executables.

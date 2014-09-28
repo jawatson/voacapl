@@ -1,0 +1,22 @@
+Model    :VOACAP
+Colors   :Black    :Blue     :Ignore   :Ignore   :Red      :Black with shading
+Cities   :Receive.cty
+Nparms   :    4
+Parameter:MUF      0
+Parameter:DBU      0
+Parameter:SNRxx    0
+Parameter:REL      0
+Transmit : 35.80N     5.90W   TANGIER, Morocco     Short
+Pcenter  : 35.80N     5.90W   TANGIER, Morocco
+Area     :   -1000.0    6000.0   -1000.0    4000.0
+Gridsize :  242    0
+Method   :   30
+Coeffs   :CCIR
+Months   :   6.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00
+Ssns     :    100      0      0      0      0      0      0      0      0
+Hours    :     18      0      0      0      0      0      0      0      0
+Freqs    : 11.850  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+System   :  145     0.100   90   73     3.000     0.100
+Fprob    : 1.00 1.00 1.00 0.00
+Rec Ants :[default /swwhip.voa  ]  gain=   0.0   0.0
+Tx Ants  :[default /const17.voa ]  0.000  57.0   500.0000

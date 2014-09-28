@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# The following line is modified by the install-data-hook
+# in the Makefile.
+
+SRC_ROOT_DIR=__PREFIX__/share/
+echo $SRC_ROOT_DIR
+
+# Copy across local copies of files that need to be edited by the user
+# Database needs to be reviewed and will probably change after looking at the
+# main code to see which files require read/write access.
+for SUB_DIR in  areadata area_inv run antennas
+do
+	mkdir -p $HOME/itshfbc/$SUB_DIR
+	cp -R $SRC_ROOT_DIR/voacapl/itshfbc/$SUB_DIR/* $HOME/itshfbc/$SUB_DIR 
+done
+
+
+# The correct place to put the antenna files would be /share/ but this 
+# breaks the voaAntennaWalker until the follow sym links is available 
+# on all major distros.
+#
+# Make sym links to read-only antenna files (we can't sym link the directory
+# itself as we need that for local writes to create local/new antennas.
+#mkdir -p $HOME/itshfbc/antennas/
+#for SUB_DIR in default samples
+#do
+#	ln -s $SRC_ROOT_DIR/voacapl/itshfbc/antennas/$SUB_DIR $HOME/itshfbc/antennas/
+#done
+
+
+
+
+# Make sym links to read-only database files (we can't sym link the directory
+# itself as we need that for local writes to the north_pole.txt file.
+mkdir -p $HOME/itshfbc/database/
+for DATABASE_FILE in cirafp.911 colors.dat colors.win version.win
+do
+	ln -s $SRC_ROOT_DIR/voacapl/itshfbc/database/$DATABASE_FILE $HOME/itshfbc/database/
+done
+
+# Copy the files that may require modification...
+mkdir -p $HOME/itshfbc/database/
+for DATABASE_FILE in north_pole.txt version.w32 voacap.def
+do
+	cp $SRC_ROOT_DIR/voacapl/itshfbc/database/$DATABASE_FILE $HOME/itshfbc/database/
+done
+
+# And sym links for evrything else...
+for SUB_DIR in coeffs geocity geonatio geostate
+do
+	ln -s $SRC_ROOT_DIR/voacapl/itshfbc/$SUB_DIR $HOME/itshfbc/
+done

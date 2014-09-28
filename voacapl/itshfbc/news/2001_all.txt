@@ -1,0 +1,92 @@
+--------------------------------------------------------------------------------
+All     2001    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+24 May  2001   1. The printing of Methods 11 & 28 in VOACAP/ICEPAC has been
+                  enhanced.  Previously, if you had more than one group
+                  calculated, you could only print the last group.
+                  That has been fixed so that you can print out a specific
+                  group or all of them.  What will happen is that all of the
+                  graphs will be displayed (each window on top of the last).
+                  Each window will have a menu button that says:
+                       Print
+                         Group #
+                         All Groups
+                  Where the # is replaced by the group in the window.
+                  If you select "All Groups", all of the graphs will be printed.
+
+                  You will still need to close out of all of the windows.
+
+19 June 2001   1. A floating point error when using some HFMUFES antennas
+                  has been corrected.  A specific problem of antenna type 43
+                  when plotting frequencies above 12 MHz produced this error.
+                  This error would also have occurred in any of the 
+                  propagation calculation programs.
+
+23 July 2001   1. There was a problem with the "SILENT" execution if you
+                  are executing the VOACAPW.EXE program module.
+                  It should be silent now, unless you use antenna type 90.
+
+               2. A previous NEWS file detailed how to execute VOACAPW.EXE,
+                  but there may have been a mistake in it. The error was in
+                  the "pathname" parameter.
+                  The proper command lines are below:
+C***********************************************************************
+c Execute with:
+c    VOACAPW.EXE [S] directory VOACAPX.DAT VOACAPX.OUT    (P-P circuit)
+c    VOACAPW.EXE [S] directory VOACAPG.DAT VOACAPG.OUT    (P-P graph)
+c    VOACAPW.EXE [S] directory VOACAPD.DAT VOACAPD.OUT    (P-P distance)
+c    VOACAPW.EXE [S] directory VOACAPT.DAT VOACAPT.OUT    (P-P time)
+c    VOACAPW.EXE [S] directory BATCH                      (P-P batch)
+c    VOACAPW.EXE [S] directory BATCH deckname.dat         (P-P NEW batch)
+c    VOACAPW.EXE [S] directory BATCH deckname.dat nam.out (P-P NEW batch)
+c    VOACAPW.EXE [S] directory AREA CALC VOAAREAW.CIR     (AREA batch)
+c    VOACAPW.EXE [S] directory AREA method pathname       (AREA single)
+c    VOACAPW.EXE [S] directory INV  CALC VOAAREAW.CIR     (AREA INVERSE batch)
+c    VOACAPW.EXE [S] directory INV  method pathname       (AREA INVERSE single)
+c    VOACAPW.EXE [S] directory CIRAF pathname             (CIRAF single)
+c where:
+c    [S]       = SILENT, then no messages are written to output window
+c    directory = full pathname to the install directory (e.g. c:\ITSHFBC)
+c    method    = (CALC/SCREEN/PRINT)
+c    pathname  = pathname below directory\AREADATA\ of input data file
+c                (e.g. DEFAULT\DEFAULT.VOA)
+c
+C***********************************************************************
+
+28 Aug  2001   1. There was a problem in ICEPAC Point-to-Point plotting
+                  Method=28 (MUF-FOT-LUF plots).  The plots would look
+                  correct on the screen, but when printed, the LUF values
+                  were always those of the last group.  This has been corrected.
+     
+               2. A new GEO file containing the DXCC list from ARRL sorted by
+                  prefix now exists in the "by City" (..\GEOCITY) directory.
+                  It is named DXCC1.GEO. This was supplied by Jari from Finland.
+                  (Sorry Jari, but I lost your last name.)
+                  He also fixed the spelling of the cities in Finland and
+                  Sweden so that they include the proper special letters.
+
+10 Sep  2001   1. On Time plots for ICEAPC & VOACAP, if ALL Frequencies
+                  was selected to plot, a fatal error could occur if you
+                  selected a point very close to UT=0 for a mouse readout.
+                  That problem has been fixed.
+
+               2. A user has requested increasing the SSN limits beyond
+                  250.  I have increased it to 300.  Be aware that the
+                  coefficients were never developed to even exceed 150.
+                  Use the results with this in mind.  It would be interesting
+                  to see how the predictions match measured results at these
+                  levels.
+
+29 Nov  2001   1. A slight modification was done to the GEO files and how
+                  they are displayed.
+
+10 Dec  2001   1. VOACAP was not able to save a datafile properly if the
+                  MONTH was in a MONTH.DAY format.  It always used the old
+                  format where the day-of-the-month was 0.
+
+               2. A new option was added on the DISTANCE plotting that allows
+                  you to save the DISTANCE calculation to an ASCII file
+                  in case you want to export the data with some other program.
+                  It is found on the Menu line of the Distance plot windows.
+                  It is called "ASCII file".

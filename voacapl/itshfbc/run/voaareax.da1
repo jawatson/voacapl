@@ -1,0 +1,25 @@
+COMMENT   VOACAP    test/gc01.voa                                                   
+COMMENT       0    4   -1   -1    1    0 receive.cty 
+COMMENT      24.6300   46.7200 RIYADH (AR RIYAD)      57.0 Short
+AREA         24.6300   46.7200  -1000.00   6000.00  -1000.00   6000.00   29   29    0
+COMMENT   Parameters:    4
+COMMENT   MUF      0
+COMMENT   DBU      0
+COMMENT   SNR      0
+COMMENT   REL      0
+COMMENT    Any VOACAP default cards may be placed in the file: VOACAP.DEF
+LINEMAX      55       number of lines-per-page
+COEFFS    CCIR
+TIME         18   18    1    1
+MONTH      1993 6.00
+SUNSPOT    100.
+FREQUENCY $11.850
+LABEL     RIYADH (AR RIYAD)   RIYADH (AR RIYAD)   
+CIRCUIT   24.63N    46.72E    24.63N    46.72E  S     0
+SYSTEM       1. 145. 0.10  90. 73.0 3.00 0.10
+FPROB      1.00 1.00 1.00 0.00
+ANTENNA       1    1    2   30     0.000[default/const17.voa  ] 57.0  500.0000
+ANTENNA       2    2    2   30     0.000[default/swwhip.voa   ]  0.0    0.0000
+METHOD      130    0
+EXECUTE
+QUIT

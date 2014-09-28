@@ -1,0 +1,17 @@
+LPV 12/4/25/56/2/14/450  :Sample type 06 Vertical Lop-Periodic
+12    12 parameters
+  3.09  [ 1] Max Gain dBi..:
+   6    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+ .01000 [ 4] Conductivity..:
+30.000  [ 5] Operating Freq:
+  12    [ 6] # Elements....:
+   4.0  [ 7] Shortest Elem.:
+  25.0  [ 8] Longest  Elem.:
+  56.0  [ 9] S/L Center Dis:
+   2.00 [10] Shrtest Height:
+  14.00 [11] Longest Height:
+ 450.0  [12] Feeder Impedan:
+D_Gains =    .00   .00  1.52  2.92  4.30  4.69  4.38  4.09  3.77  3.09
+D_Gains =   3.41  3.05  3.09  2.48  2.81  2.75  2.52  2.55  2.50  2.05
+D_Gains =   2.02  1.95  1.25  1.41  1.39  1.28  1.13   .20   .47   .52

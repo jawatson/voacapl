@@ -1,0 +1,12 @@
+09 Jul  2012    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+09 Jul  2012   1. I forgot about the version triggering the original IONCAP
+                  absorption model. Thus:
+                     Version 12.0709W = normal code
+                     Version 12.0709I = use old IONCAP absorption model
+                     Version 12.0709A = use Alex's changes with normal absorption
+                     Version 12.0709a = use Alex's changes with IONCAP absorption
+
+                  Remember, you need to change the data file:
+                     ..\database\version.w32
+                 

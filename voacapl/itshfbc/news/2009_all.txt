@@ -1,0 +1,87 @@
+
+--------------------------------------------------------------------------------
+All     2009    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+01 Feb  2009   1. A problem was found in REC533.
+                  If the receive location is in the western hemisphere, such as 90W,
+                  the output file would show a value like 270W.
+                  The calculations were all correct, just the display of the
+                  receive location was wrong. This has been fixed.
+                  A lot of strange things contributed to this.
+                  1. For some unknown reason in REC533, east longitude is NEGATIVE.
+                  2. For noise calculations, a longitude between 0-360 was needed.
+                  I think these conflicting problems arose because REC533 was
+                  created by cannibalizing software from different developers.
+                  
+
+14 Feb  2009   1. This version should only affect REC533.
+                  Chris Behm of NTIA/ITS (behm@its.bldrdoc.gov) has been
+                  modifying REC533 to add digital modulation calculations.
+                  This is in conjuction with the ITU in Geneva.
+                  This required some changes in the input GUI, as you will
+                  notice an extra input line for Modulation.
+                  VOACAP & ICEPAC are not affected.
+                  Currently, this only works for the REC533 Point-to-Point model.
+                  It is being tested, and eventually, will be added to
+                  RECAREA (the area coverage model).
+                  Eventually, I will have Chris write some information about it.
+
+
+04 Mar  2009   1. I made a change to ICEPAC a while ago that has caused
+                  the area calculations to fail if you had inserted
+                  COMMENTS into the data input file. I have fixed this.
+
+
+26 Mar  2009   1. A change was made to VOACAP and ICEPAC in the MPROB parameter.
+                  MPROB is not the probability that multipath exists.
+                  It is rather the reliability of the next most reliable mode
+                  that lies within the multipath parameters on the SYSTEM card.
+                  When there are multiple modes avaliable, both VOACAP & ICEPAC
+                  calculate the Most Reliable Mode (MRM). This may not be
+                  the mode with the highest reliability or highest signal power.
+                  If two modes are close in reliability, a mode with fewer
+                  hops may be selected as the MRM. Thus, a 2F2 mode might be 
+                  selected over a 3F2 mode.
+                  On the SYSTEM card, there are 2 parameters that are used to
+                  determine if multipath might exist.
+                  Multipath Power Tolerance (dB) is the maximum difference in
+                     signal power between modes to determine if multipath exists.
+                     Modes with signal power greater than this value below the 
+                     MRM are examined. Previously, modes with higher signal
+                     power than the MRM could have been ignored because only
+                     modes within +/- this value were examined.
+                  Maximum tolerable time delay (milliseconds) is a value such that
+                     modes within this time delay of the MRM are not considered
+                     to cause multipath problems.
+
+                  Additionally, MPROB is only calculated using the "short path"
+                  model.  Thus, if you use METHOD=30 (the suggested method),
+                  MPROB is only valid for distances less than 7000km.
+                  This is because METHOD=30 uses the short path model for
+                  distances <7000km and the long path model for distances >10000km.
+                  It interpolates between the two models in the 7000km to 10000km.
+                  If you use METHOD=20, MPROB is calculated for distances <10000km.
+                  If you use METHOD=22 (forced short path), MPROB is calculated
+                  for all distances.
+                  If you use METHOD=21 Iforced long path), MPROB is not calculated.
+
+                  This change does not affect any other parameter.
+                  Most users do not use MPROB as it does not tell you if
+                  multipath exists. That information is beyond the scope of
+                  these models and is reserved to The Almighty Spirit (as
+                  mentioned by Klaatu in The Day The Earth Stood Still).
+                  Sorry about that, but the original was such a good movie.
+
+
+08 Dec  2009   1. A change was made in the installation to allow HAMCAP
+                  installations to know where the software was installed.
+                  The uninstall information can be found in the registry under:
+                  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\
+                  uninstall\{1B328085-F1A5-4AB8-8986-0103C5800216}
+                  The strange string:
+                     {1B328085-F1A5-4AB8-8986-0103C5800216}
+                  is called the GUID (Globally Unique IDentifier).
+                  It is generated by the Tarma installer and it has been
+                  set so it will never change.
+

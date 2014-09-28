@@ -1,0 +1,6 @@
+21 Sep  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+21 Sep  2007   1. Somehow the "Swap Tx-Rx" button no longer worked
+                  in the Point-to-Point input window. After looking at
+                  the problem, I don't know how it ever worked.
+                  It has been fixed.

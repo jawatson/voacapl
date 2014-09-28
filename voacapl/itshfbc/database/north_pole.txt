@@ -1,0 +1,49 @@
+79.5 -69.0
+glat glon
+This file specifies the location of the magnetic North pole.
+The values are Latitude and Longitude in decimal degrees.
+(i.e. 79.5 Latitude = 79 degrees 30 minutes North)
+Negative Longitude means West.
+Only the first record of this file is read.
+and should contain the values of glat and glon separated by a space.
+This file is named "north_pole.txt".
+One by this name will exist in the ..\database directory.
+The user may put his own in the ..\run directory, 
+and it will override the one in the ..\database directory.
+Because the location of the magnetic pole has been moving, this will allow some
+research to determine if this is important.
+If you are not involved in this research, you should not make any changes.
+
+Values of the geomagnetic latitude  must be in the range   60 <= glat <=  90.
+Values of the geomagnetic longitude must be in the range -180 <= glon <= 180.
+Values outside these ranges will be ignored and the default values will be used.
+
+--------------------------------------------------------------------------------------------------------
+Here is some information about the geomagnetic north pole from a correspondence with John Goodman:
+    Thanks for the research. It appears that the Geomagnetic Latitude and longitude values were 
+the same as published in the USAF Handbook published in 1985... which were the 1960 values really.  
+In fact the same values are quoted on page 4-3 of the "Handbook of Geophysics and the Space Environment"
+edited by Jursa.
+     There has been a migration of the magnetic DIP pole (the north pole pinpointed on maps of the world) 
+since that time. Many popular articles have described this. The current position of the magnetic 
+north pole is now somewhat further North and westward of the specified VOACAP position you have provided. 
+The magnetic DIP=90 position is about 82 degrees N and 250 degrees E (-110 long). VOACAP is 78.5N and -69E. 
+On the surface, this doesn't sound very close. However VOACAP uses Geomagnetic Coordinates (CGM I believe). 
+The Corrected Geomagnetic Coordinates represents the best fit dipole, and has a different north pole 
+that the magnetic DIP pole.
+     Recently, I have gone to a web site that computes the position of the magnetic North Pole in CGM 
+coordinates and for the current year, it is 81.76 N and -82E. This compares with VOACAP of 78.5 N and -69E. 
+The actual distance is not that much away from the VOACAP value (since longitude changes are exaggerated 
+near the pole). It is about 300 miles or so I believe.
+    My feeling is that if a change were to be made it would be to use 82N and -82E. 
+But I'm not so sure it would be that important in the grand scheme of things. 
+By the way the south pole has also changed. Does that enter into the VOACAP algorithms? 
+(from Greg: VOACAP does not use a location for the magnetic south pole).
+    One thing I am checking is the strategy of using the tilted dipole approximation. 
+This seems to be standard, and it is closer to the CGM model that is commonly used in studies. 
+I'm taking a look at the relationship between the various circumpolar features and the pole. 
+Are these gross features more responsive to the location of the "average" CGM model position 
+of magnetic north, or to the "transient" position. If it is the latter, then this exercise is 
+really academic.
+---------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,94 @@
+
+--------------------------------------------------------------------------------
+All     2008    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+03 Jan  2008   1. It has been discovered that if the install directory 
+                  is more than about 27 characters in length, the software
+                  would fail. An example of this would be installing the
+                  software in the directory:
+                     e:\swl\propaga\hfwin32\itshfbc
+                  This has been increased, to at least 46 characters.
+                  Please do not get carried away with the length of your
+                  directory names. This affects almost all of the executables.
+
+21 Jan  2008   1. It appears that while running ICEAREA for Lat/Lon projection
+                  in the western hemisphere (longitude < 0) the noise calculation
+                  could be wrong. This has been fixed.
+                  It does not appear that this was a problem with VOAAREA or REC533.
+
+10 Apr  2008   1. A result of the previous version (08.0121W) was that the
+                  longitude in the grid file for Lat/Lon calculations could have
+                  looked confusing. I had modified the Longitude so that it would
+                  always be in the range [0 to 360] (as required by ICEPAC).
+                 . 
+                  I have changed this so that if you specify the range to be
+                  [-180 to 180] the output will be that.  This will center the
+                  world plot at Longitude = 0.
+
+                  If you specify the range to be [0 to 360], the output will
+                  also be in that range.  This will center the world plot at
+                  Longitude = 180.
+
+                  This affects all of the area coverage programs.
+
+23 Oct  2008   1. Someone pointed out that while using VOACAP or ICEPAC
+                  Point-to-Point that Method=23 had a problem.
+                  Method 23 (in the original IONCAP) was used to specify different
+                  different output variables in the RUN/CIRCUIT option.
+                  But with the development of Method 30 (Short/Long path smoothing),
+                  certain problems occurred. Thus, Method 23 allowed you to
+                  specify which calculation model to use:
+                         20 = default (<10,000km=short  >10,000km=long)
+                         21 = forced long path model
+                         22 = forced short path model
+                         30 = <7,000km=short  >10,000km=long  smooth in between
+                  Now, if you had selected Method 23 and then 30 for the model,
+                  RUN/CIRCUIT was fine.
+                  But RUN/GRAPH, RUN/DISTANCE, and RUN/TIME used 20 for the calculations.
+                  This has now been fixed to use the calculation model selected.
+
+                  This was never a problem with REC533 because its short/long path
+                  calculation model is fixed.
+
+                2. Let me know if there are any problems with Windows Vista systems.
+
+                3. This is a minor change from the vewsion 081022 that had an install
+                   problem.
+
+15 Nov  2008   1. This change should only affect the ability to install the software
+                  on Windows Vista 64-bit systems. Hopefully I have selected the
+                  proper options to allow this.
+
+26 Nov  2008   1. Let's see if this version solves the installer problems on Windows Vista systems.
+
+02 Dec  2008   1. There was a strange "divide by zero" problem in the Worldmap
+                  plotting program. This was noticed if the plot was a Lat/Lon
+                  projection with the coordinates (-90,-90) to (90,90).
+                  This has been fixed.
+
+19 Dec  2008   1. If you create your own VOACAP/ICEPAC input files and
+                  execute the propagation programs yourself, there can be
+                  a possible problem. Jari Perkiomaki (who maintains
+                  www.voacap.com) discovered this problem while doing some
+                  special analysis. This is ONLY a problem if you change
+                  the ANTENNA card after an EXECUTE card.
+                  To fix this problem, I have written a program to parse
+                  the data file and iteratively execute the propagation
+                  program. To see how to do this, select the icon NEWS,
+                  and view the file hf_parse.txt. This can also be found
+                  directly as the file ..\news_win\hf_parse.txt.
+                  Simply, from a DOS prompt, you would do:
+                    c:\itshfbc\bin_win\hf_parse.exe c:\itshfbc voacap inp out
+                  Where:
+                    c:\itshfbc = directory where sofware was installed.
+                    voacap = process with voacap (use icepac for icepac model).
+                    inp = input data file located in c:\itshfbc\run.
+                    out = resultant output file created in c:\itshfbc\run.
+
+27 Dec  2008   1. A change was made to VOACAP for Method=25.
+                  If more than 10 modes are found, the output used to 
+                  be on multiple pages. But since no one prints the results
+                  anymore and Jari Perkiomaki was doing an analysis that
+                  required the results on one page, he asks for this to be done.
+                  I hope he appreciates it, as I am doing this on my BIRTHDAY!

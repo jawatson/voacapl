@@ -1,0 +1,8 @@
+22 Jul  2012    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+22 Jul  2012   1. A error in the VOACAP smoothing (Method=30) algorithm
+                  was fixed. It has been there a long time and I do not
+                  know why it just surfaced.  There was an undefined
+                  variable and it surfaced as a floating point stack fault.
+                  Initially this fixed caused another problem that I fixed
+                  the next day. Sorry.

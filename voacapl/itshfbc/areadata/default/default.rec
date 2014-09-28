@@ -1,0 +1,18 @@
+Model    :REC533
+Colors   :Black    :Blue     :Ignore   :Ignore   :Red      :Black with shading
+Cities   :receive.cty
+Nparms   :    2
+Parameter:DBU      0
+Parameter:S/N      0
+Transmit : 35.80N     5.90W   TANGIER, Morocco     Short
+Pcenter  : 35.80N     5.90W   TANGIER, Morocco
+Area     :   -1000.0    6000.0   -1000.0    4000.0
+Gridsize :   31    0
+Coeffs   :CCIR
+Months   :   6.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00
+Ssns     :    100     -1     -1     -1     -1     -1     -1     -1     -1
+Hours    :     18     -1     -1     -1     -1     -1     -1     -1     -1
+Freqs    : 11.850 -1.000 -1.000 -1.000 -1.000 -1.000 -1.000 -1.000 -1.000
+System   :    3     3.000   90   73         1
+Rec Ants :[default /swwhip.voa  ]  gain=   0.0   0.0
+Tx Ants  :[default /ccir.003    ]  0.000  57.0   500.0000

@@ -1,0 +1,16 @@
+10 Apr  2008    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+10 Apr  2008   1. A result of the previous version (08.0121W) was that the
+                  longitude in the grid file for Lat/Lon calculations could have
+                  looked confusing. I had modified the Longitude so that it would
+                  always be in the range [0 to 360] (as required by ICEPAC).
+                 . 
+                  I have changed this so that if you specify the range to be
+                  [-180 to 180] the output will be that.  This will center the
+                  world plot at Longitude = 0.
+
+                  If you specify the range to be [0 to 360], the output will
+                  also be in that range.  This will center the world plot at
+                  Longitude = 180.
+
+                  This affects all of the area coverage programs.

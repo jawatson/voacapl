@@ -1,0 +1,88 @@
+
+|------------------------------------------------------------------------------|
+| The propagation modules VOACAPW.EXE, ICEPACW.EXE, or REC533W.EXE cannot be   |
+| executed individually unless you have created the proper formated data input |
+| file. You can execute:                                                       |
+|   POINTWIN.EXE (point-to-point interface)                                    |
+|   AREAWIN.EXE  (area coverage  interface)                                    |
+|   SI_WIN.EXE   (signal-to-interference interface)                            |
+|   AREAINV.EXE  (inverse area coverage interface)                             |
+|   HFANTWIN.EXE (antenna interface)                                           |
+| individually from this directory.                                            |
+|------------------------------------------------------------------------------|
+| If you create your own input files in the proper formats, you can use the    |
+| examples below as to how to execute the various propagation modules.         |
+| The examples below are given for VOACAP.  To make it run for ICEPAC or       |
+| REC533, just substitute the desired model for VOACAP                         |
+|------------------------------------------------------------------------------|
+| Execute with:                                                                |
+|   VOACAPW.EXE [S] directory inputfile outputfile       (P-P circuit)         |
+|   VOACAPW.EXE [S] directory inputfile outputfile       (P-P graph)           |
+|   VOACAPW.EXE [S] directory VOACAPD.DAT VOACAPD.OUT    (P-P distance)        |
+|   VOACAPW.EXE [S] directory VOACAPT.DAT VOACAPT.OUT    (P-P time)            |
+|   VOACAPW.EXE [S] directory BATCH                      (P-P batch)           |
+|   VOACAPW.EXE [S] directory BATCH deckname.dat         (P-P NEW batch)       |
+|   VOACAPW.EXE [S] directory BATCH deckname.dat nam.out (P-P NEW batch)       |
+|   VOACAPW.EXE [S] directory AREA CALC VOAAREAW.CIR     (AREA batch)          |
+|   VOACAPW.EXE [S] directory AREA method pathname       (AREA single)         |
+|   VOACAPW.EXE [S] directory INV  CALC VOAAREAW.CIR     (AREA INVERSE batch)  |
+|   VOACAPW.EXE [S] directory INV  method pathname       (AREA INVERSE single) |
+|   VOACAPW.EXE [S] directory CIRAF pathname             (CIRAF single)        |
+| where:                                                                       |
+|   [S]       = SILENT, then no messages are written to output window          |
+|               [S] means either put in SILENT or nothing.                     |
+|   directory = full pathname to the install directory (e.g. c:\ITSHFBC)       |
+|   method    = (CALC/SCREEN/PRINT)                                            |
+|   pathname  = pathname below directory\AREADATA\ of input data file          |
+|                 (e.g. DEFAULT\DEFAULT.VOA)                                   |
+|   deckname.dat = a proper formated input "card" deck.                        |
+|                                                                              |
+| The input and output files for point-to-point runs will be in the            |
+|            ..\RUN directory.                                                 |
+|                                                                              |
+| You will probably need to also include the full pathname to the EXE file.    |
+| Thus, using the default installation directory, the P-P circuit would be:    |
+|                                                                              |
+|   c:\itshfbc\bin_win\voacapw.exe c:\itshfbc voacapx.dat voacapx.out          |
+|                                                                              |
+| Note: Not all options will work for REC533 (e.g. distance, time, & INVERSE)  |
+|------------------------------------------------------------------------------|
+| The only options you probably want to use are:                               |
+|   VOACAPW.EXE [S] directory inputfile outputfile       (P-P circuit)         |
+|   VOACAPW.EXE [S] directory AREA method pathname       (AREA single)         |
+|   VOACAPW.EXE [S] directory BATCH deckname.dat nam.out (P-P NEW batch)       |
+|------------------------------------------------------------------------------|
+|                                                                              |
+|                                                                              |
+|------------------------------------------------------------------------------|
+| To execute the world map plotting program from a command prompt:             |
+|                                                                              |
+|   worldwin.exe run_directory data_directory filename noplot                  |
+| where:                                                                       |
+|   run_directory = RUN directory (e.g. C:\ITSHFBC\RUN)                        |
+|   data_directory= data sub-directory (e.g. AREADATA)                         |
+|   filename - file in ..\AREADATA\ directory of the                           |
+|              form subdir\????????.mGn   (Grid file)                          |
+|              where:subdir=sub-directory under ..\AREADATA                    |
+|                    m = V = VOACAP                                            |
+|                    m = I = ICEPAC                                            |
+|                    m = R = REC533                                            |
+|                    m = C = COVMAP                                            |
+|                    n = group number of plot [1-9]                            |
+|                   = 'voaareax.da?' means read for filename                   |
+|                   = 'areapltx.dat' means read for filename                   |
+|   noplot = ' ' = do worldwin plot with wait                                  |
+|          = 'n' = do worldwin plot with no wait                               |
+|          = 'b' = do worldwin plot with no wait,force B/W                     |
+|          = 'x' = do not do worldwin                                          |
+|          = 'p' = do worldwin to Printer only                                 |
+|          = 's' = do worldwin to Screen  only                                 |
+|          = 'm' = map only, no contours                                       |
+|   Will create ????????.mxn  (contour file)                                   |
+|          where: x = index [1-9] of parameters contoured                      |
+|                                                                              |
+|   Thus, it can be exeuted with:                                              |
+|     c:\itshfbc\bin_win\worldwin c:\itshfbc\run areadata default\default.ig1  |
+|                                                                              |
+|------------------------------------------------------------------------------|
+|------------------------------------------------------------------------------|

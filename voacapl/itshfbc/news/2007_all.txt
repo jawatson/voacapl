@@ -1,0 +1,132 @@
+
+--------------------------------------------------------------------------------
+All     2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+13 Apr  2007   1. Recent analysis discovered a problem with the combination of
+                  radio noise algorithm developed by Don Spaulding.
+                  This can be viewed at http://www.its.bldrdoc.gov/pub/ntia-rpt/87-212/ .
+                  This has precipitated a modification to the Spaulding algorithm which
+                  will be submitted to the ITU to update Recommendation ITU-R P.372-8
+                  Combination of Radio Noise at the April 2007 meetings. This submission
+                  document and a corresponding computer program which can calculate the
+                  combination of radio noise can be downloaded from:
+                       http://www.greg-hand.com/noise
+                  Note that it is a little complicated to compare the output of this 
+                  program (gh_noise.exe) with the noise power produced by VOACAP and ICEPAC.
+                  This is because of several factors:
+                     1. gh_noise produces results in local time at Rx, VOACAP/ICEPAC is UT at Tx.
+                        This allows gh_noise to produce exactly the world Fam contours found in
+                        ITU-R P.372-8 (and CCIR Report 322-3).
+                     2. VOACAP & ICEPAC will include antenna efficiency in noise power.a
+                        gh_noise has no knowledge of an antenna.
+                        Thus, make sure you use an isotrope for the receive antenna.
+                        If you use SWWHIP.VOA, it has an efficiency of -4.8 dB.
+                     3. Quite often in HF frequencies, Galactic noise is not included because
+                        it cannot penetrate the ionosphere. Thus, you may need to exclude Galactic
+                        noise when using gh_noise.
+                  gh_noise allows the calculation of radio noise to be done three (3) different ways:
+                     1. "new" modified Spaulding algorithm
+                     2. Original Spaulding algorithm
+                     3. Simple power sum (used in REC533)
+
+                  For most HF users, very little difference will be noticed, especially above 7 MHz.
+                  Most differences will be found at lower frequencies when low levels of Man-made
+                  noise are selected (remote and below). In these cases, the new noise calculation
+                  will be slightly higher than those previously.
+
+                  I have left a way to temporarily compare the two algorithms.
+                  In the Point-to-Point model, if you set the year to 2089, it will use the 
+                  original Spaulding. Otherwise, the modified Spaulding will be used.
+                  By the year 2089, I assume this program will no longer be in use. :)
+
+15 Apr  2007   1. The previous version had a bad version of REC533.
+                  I had been making changes to REC533 as per a request by the ITU, but 
+                  problems arose and I had to wait for further clarification.
+                  That will take a while, so I have gone back to before making the changes.
+                  Sorry for the problem.
+
+13 May  2007   1. The previous version of ICEPAC had bad calculation of SNR 
+                  for Es (sporadic E) modes. That has been corrected.
+
+               2. All the main input windows now have the version in the window title.
+
+17 May  2007   1. There was a problem using the OVERLAY option in area coverage 
+                  if you used a 70x70 size grid file. I could not figure out 
+                  why 70x70 does not work when all others seem to work.
+                  I have disabled the ability to use 70x70 grid sizes.
+                  I would never use a grid size that is a multiple of 10.
+                  Add 1 to it. The cell size is the X or Y range divided by (NGRID-1).
+                  Thus, for the whole world, NGRID=61 makes
+                       x_cell_size=360/60=6 degrees
+                       y_cell_size=180/60=3 degrees
+                  NGRID=91 would also be good:
+                       x_cell_size=360/90=4 degrees
+                       y_cell_size=180/90=2 degrees
+
+03 Sep  2007   1. VOACAP and ICEPAC point-to-point programs had a problem
+                  when running Run/Graph with Method=30 and multiple groups.
+                  Only the first group used Method=30, the rest of the 
+                  groups used Method=20.  This has been fixed.
+
+               2. Two new Man-Made noise levels have been added, Noisy & Quiet.
+                  The following are the 6 available levels:
+
+                   Level  Model         Equation              Value @ F = 3MHz
+                      1 = Industrial  = -27.7Log(F) + 76.8 = -140.4 dBw/Hz
+                      2 = Residential = -27.7Log(F) + 72.5 = -144.7 dBw/Hz
+                      3 = Rural       = -27.7Log(F) + 67.2 = -150.0 dBw/Hz
+                      4 = Remote      = -28.6Log(F) + 53.6 = -164.1 dBw/Hz
+                      5 = Noisy       = -37.5Log(F) + 83.2 = -138.7 dBw/Hz
+                      6 = Quiet       = -29.1Log(F) + 65.2 = -152.7 dBw/Hz
+
+                   For some reason in 4/13/07 I changed the value for Remote
+                   from -28.6 to -27.7. I cannot remember why I did that, but
+                   I have a comment that says I did it to match the ITU report.
+                   But the latest ITU report has the value at -28.6.
+                   So I changed it back and made these values more explicit
+                   in the code and the Help information.
+
+16 Sep  2007   1. I forgot to add a file in the install (..\database\fof2var.txt)
+                  that is required by REC533. This is the only change.
+
+21 Sep  2007   1. Somehow the "Swap Tx-Rx" button no longer worked
+                  in the Point-to-Point input window. After looking at
+                  the problem, I don't know how it ever worked.
+                  It has been fixed.
+
+25 Oct  2007   1. This change only affects REC533.
+                  REC533 would fail with a division by zero at the North
+                  pole when the transmitter was far enough away to require
+                  the long path model (FTZ) to be run. 
+                  This would occur if you used the Area Coverage over the
+                  whole world and the transmitter was below the equator.
+                  This has been fixed.
+
+28 Dec  2007   1. A transparent change was made to VOACAP.
+                  Someone pointed out that the goemagnetic north pole moves
+                  and he wants to see what affect moving the pole has.
+                  The geomagnetic north pole coordinates (glat, glon) were
+                  fixed in subroutine geom at (78.50N, 69.00W).
+                  These coordinates are now located in the file:
+                     ..\database\north_pole.txt
+                  If this file does not exist, the location (78.5,-69.0) is used.
+                  For a user to change this, he should copy the file:
+                     ..\database\north_pole.txt
+                  to:
+                     ..\run\north_pole.txt
+                  and then change the first record of this file.
+                  The file in the "run" directory will override the file in the
+                  "database" directory.
+                  Remember that it is your responsibility to remember which
+                  output file corresponds to what values of (glat, glon).
+                  There is currently no information in the output file indicating
+                  the (glat, glon) values.
+                  It is recommended that no one change this location without
+                  knowing what they are doing.
+
+                  Documentation about this change is found in the file:
+                    ..\database\north_pole.txt
+
+                  This change has not been made to ICEPAC or REC533.
+

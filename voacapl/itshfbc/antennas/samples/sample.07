@@ -1,0 +1,13 @@
+RH155/40.3/68   :Sample type 07 Horizontal Rhombic    
+ 8     8 parameters
+ 22.03  [ 1] Max Gain dBi..:
+   7    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+ 9.585  [ 5] Operating Freq:
+154.86  [ 6] Rhombus Length:
+ 40.30  [ 7] Ht. abv Ground:
+ 68.47  [ 8] 1/2 obtuse ang:
+D_Gains =    .00 12.37 13.89 15.45 16.94 18.08 19.30 20.38 21.32 22.02
+D_Gains =  22.59 23.01 23.16 23.01 22.78 22.16 21.36 20.25 18.75 17.12
+D_Gains =  14.98 12.99 13.45 13.84 14.13 14.72 15.94 16.84 17.87 18.72

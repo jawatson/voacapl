@@ -1,0 +1,11 @@
+14 Jul  2011    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+14 Jul  2011   1. The only change in this version is a new SALFLIBC.DLL .
+                  A user was installing the software on a pc ALIX1D mini with
+                  XP operating system. When he tried to execute VOACAP, 
+                  he got:
+                  Fault code with Pointwin.exe error gives no installation(0xc000001d).
+                  I downloaded a new version of SALFLIB.DLL from the compiler
+                  company, and that solved his problem.
+                  Let me know if this causes other problems.
+                  

@@ -1,0 +1,120 @@
+
+--------------------------------------------------------------------------------
+All     2006    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+09 Feb  2006   1. All input programs have been changed to set the default
+                  FPROB for VOACAP to 1,1,1,0. This makes the default for
+                  the sporadic E (Es) to be zero (ignored).
+                  That was always VOA's recommendation. This spells it
+                  out more clearly.
+
+               2. It is also recommended to use Method 30 for ICEPAC and VOACAP
+                  instead of Method 20. Method 30 does a smoothing algorithm
+                  in the 7000-10000km range and also selects the highest
+                  signal strength beyond 10000km between the short and long
+                  path calculation methods.
+
+04 Mar  2006   1. BATCH process for VOACAP and REC533 Point-to-Point models
+                  was not working.  This has probably been a problem since
+                  the 21 July 2005 version.
+                  This has been fixed.
+
+18 Apr  2006   1. A change was made at a request from a user.
+                  He was interested in having the calculations done using
+                  an absorption calculation that used to be in IONCAP.
+                  It was determined in 1993 that this method produced a value
+                  that exceeded the lower limit of an absorption curve.
+                  Thus, it was modified to not exceed that value.
+                  This limitation was incorporated into VOACAP in June 1999,
+                  but I forgot to document it in these news files.
+                  A sizeable difference can occur a low frequencies (<3 MHz)
+                  at night. Very little data was ever collected at these
+                  frequencies when the IONCAP model was developed.
+
+                  It is highly recommended that most users use the "Normal"
+                  default absorption model. It will produce a result that
+                  is more conserative.
+
+                  For those who are "adventuresome" this option is accessed
+                  through the GUI interface by modifying the "SYSTEM"
+                  parameters. Once changed, it remains changed for all
+                  calculations until changed again.
+
+                  This is only accessible using VOACAP, VOAAREA, ICEPAC, ICEAREA.
+                  But will also affect the INVERSE and S/I models.
+                  It does not affect any REC533 calculations.
+
+                  This is (internally) accomplished by modifying the VERSION file.
+                  Normally the software version reads like:
+                       Version 06.0418W
+                  If you change the absorption to the old IONCAP model,it becomes:
+                       Version 06.0418I
+
+                  This information is output on every type of calculation.
+                  Thus, you will know what absorption model was used.
+
+                  If you change the version file by yourself, make sure you
+                  know what you are doing.
+
+                  Whenever you download a new version, the "Normal"
+                  absorption model will again be implemented.
+
+                  More information about this may come at a later time.
+                  Be aware that not everyone involved in the software was
+                  in agreement with the change.
+
+20 July 2006   1. This release is the first version using the Salford F95 compiler.
+                  Previous versions were with the Salford F77 compiler.
+                  If you have problems, please report them to me at:
+                     gregory.hand@gmail.com
+
+               2. Fixed a software error in the Area coverage "Overlay Coverages"
+                  option. There may not have been a problem with the F77 compiler,
+                  but the source code error caused problems with the F95 compiler.
+
+               3. A new "Combine" option "JOINT REL" allows combining
+                  the reliability of coverages. Make sure your coverages are
+                  "independent" as using this method requires that. Thus,
+                  do not combine coverages of different hours or months.
+                  This was an option requested and funded by a user.
+
+30 July 2006   1. A user running the software on a Linux system with Wine
+                  reported a problem in VOACAP area coverage calculations.
+                  This was traced to floating point underflows that Windows
+                  systems let pass. But Wine caused execution failure.
+                  I was able to track the problem to the evaluation of the
+                  geographic variation of the long term prediction maps in
+                  the subroutine VERSY. This was eliminated with some well
+                  placed double precision calculations. Similarly, REC533
+                  had problems in subroutine EVLGOG.  I have been unable to 
+                  solve the problem in ICEPAC. Thus, ICEPAC may not run under
+                  Linux with Wine.
+
+               2. Jari requested an option in the Point-to-Point interface
+                  to allow the Tx and Rx coordinates to be swapped.  Thus,
+                  you will notice a new button to perform this task.
+                  If you have a directional antenna, it will NOT swap the
+                  mainbeam azimuth.
+
+18 Nov  2006   1. A minor change was made to plotting Distance and Time
+                  options in the Point-to-Point models. Previously, if you
+                  plotted a variable that did not change, (e.g TANGLE for
+                  and isotrope antenna), a division by zero could have occurred.
+                  This has been fixed.
+
+               2. It seems that sometime after the 05.0119W version I made a
+                  change that lessened the loss when the frequency was well
+                  above the MUF (and MUFday < .0001). This would sometimes
+                  give rise to a reasonable value of REL, when no communication
+                  would be expected. This was especially true for HAMs that
+                  tend to use very low required SNR values. I corrected this
+                  and added more loss when MUFday < .0001. This will only
+                  affect circuits that are well above the MUF. MUFday is the fraction
+                  of the days of the month that the operating frequency will be 
+                  below the mode MUF.
+                  This change was performed in both VOACAP and ICEPAC.
+
+               3. Look for some changes in REC533 in the future that have been
+                  requested by the ITU meetings held in Geneva in October.
+

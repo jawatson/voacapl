@@ -1,0 +1,61 @@
+--------------------------------------------------------------------------------
+All     2004    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+28 Jan  2004   1. HFANTWIN had a problem where it would not save Type 13 or 14
+                  antenna types properly if you changed a parameter.
+                  This has been fixed.
+                  However, these antenna types are probably easier to change
+                  if you use a text editor.
+               2. Despite warnings during the installation, some users are
+                  installing the software in directories with non-DOS names,
+                  such as c:\Program Files\. Because of the software used
+                  to develop these programs, that can (and will) cause problems.
+                  It is best to try and use a very simple installation
+                  directory. Also, if you create sub-directories under
+                  ..\antennas and ..\areadata, use a name with 8 characters or less.
+                  I have now added a warning when you execute any of the Point-to-Point
+                  models that will detect if you installed the software in
+                  a directory with a possible problem. You will get a non-fatal
+                  warning message.
+                  
+
+02 Feb  2004   1. PC-Install is no longer being used for the software installation.
+                  Tarma Installer is being used.
+                  This should solve the problems with creating desktop icons
+                  on Windows-NT/2000/XP systems.
+                  PC-Install has not been supported for many years.
+
+                  You should still be able to install the software in the same
+                  directory as previous installations and only newer files
+                  will be written to your system.
+
+                  Diskette installion is not supported via Tarma Installer.
+                  However, I will (for a while) continue to create
+                  the diskette installion using PC-Install.
+
+                  Please report any installion problems to me via email.
+
+24 Mar  2004   1. Some minor modification was done for a BBC sponsor and
+                  should not be noticed by anyone else.
+
+12 Apr  2004   1. A problem existed when plotting maps with city files.
+                  City names outside the specified map area were not
+                  clipped and caused the map to look bad.
+                  This has been fixed.
+
+12 Oct  2004   1. A new option to plot coverages was added.
+                  It is called Overlay Coverages.
+                  It was funded by the BBC World Service, London.
+                  It allows you to plot multiple coverages on the same map.
+                  Thus, if you have coverages for 3 different frequencies and
+                  wish to see what it looks like, this is a good way to do it.
+                  It works for all 3 propagation models.
+                  From the Area Coverage input page, just pick:
+                       Run/Overlay Coverages
+
+                  Special thanks to Ian Davey and the BBC for funding this work.
+
+               2. Be aware that I will probably retire between Jan/April 2004.
+                  I will probably still be involved with the software from home
+                  as there is no one remaining to maintain the software.

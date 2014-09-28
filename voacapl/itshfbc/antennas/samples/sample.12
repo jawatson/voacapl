@@ -1,0 +1,23 @@
+HR 4/4/1   :Sample type 12  Curtain Array NTIA Report 87-215          
+15    15 parameters
+   .00  [ 1] Max Gain dBi..:
+  12    [ 2] Antenna Type..:
+  10    [ 3] Dielectric....:
+ .01000 [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+   4    [ 6] # Row   Elems.:
+   4    [ 7] # Stack Elems.:
+10.000  [ 8] Design    Freq:
+ -.500  [ 9] Element Length:
+-1.000  [10] Ht. abv Ground:
+  -.50  [11] Horiz bet Cent:
+  -.50  [12] Vert spacing  :
+  -.25  [13] Reflector Dist:
+   4    [14] Excitation mod:
+   0    [15] Slew Angle....:
+GainNorm =-99999.000   621.598    65.521    17.071     6.686
+GainNorm =     3.416     2.061     1.370     1.017      .834
+GainNorm =      .745      .721      .728      .760      .885
+GainNorm =     1.126     1.386     1.640      .669      .422
+GainNorm =      .411      .326      .352      .476      .703
+GainNorm =     1.083     1.358     1.084      .721      .516

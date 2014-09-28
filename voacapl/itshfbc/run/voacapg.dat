@@ -1,0 +1,20 @@
+COMMENT    Any VOACAP default cards may be placed in the file: VOACAP.DEF
+LINEMAX      55       number of lines-per-page
+COEFFS    CCIR
+TIME          1   24    1    1
+MONTH      1994 6.00
+SUNSPOT    100.
+LABEL     TANGIER, Morocco    BELGRADE
+CIRCUIT   35.80N     5.90W    44.90N    20.50E  S     0
+SYSTEM       1. 145. 0.10  90. 73.0 3.00 0.10
+FPROB      1.00 1.00 1.00 0.00
+ANTENNA       1    1    2   30     0.000[default/CONST17.VOA  ]  0.0  500.0000
+ANTENNA       2    2    2   30     0.000[default/SWWHIP.VOA   ]  0.0    0.0000
+COMMENT   FREQ  6075 7200 9700118501370015350177252165025885    0    0
+COMMENT   GROUP  1   6.00  100ssn
+METHOD       26    0
+EXECUTE
+FREQUENCY -1.00
+METHOD       30    0
+EXECUTE
+QUIT

@@ -1,0 +1,12 @@
+IR/70/114/20/4  :Sample type 30 ITSA-1 Interlaced Rhombic
+10    10 parameters
+  0.00  [ 1] Max Gain dBi..:
+  30    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+ 70.00  [ 6] 1/2 apex angle:
+114.00  [ 7] Leg Length    :
+ 20.00  [ 8] Lower height  :
+  4.00  [ 9] Vertical displ:
+ 33.00  [10] Horiz feed dis:

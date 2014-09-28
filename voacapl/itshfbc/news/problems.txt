@@ -1,0 +1,14 @@
+24 Feb  2003    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+24 Feb  2003   1. Because of all the questions I get about problems, I have
+                  added a feature that will send me information about your
+                  computer system so that I might be able to solve your
+                  problems more easily. 
+                  Thus, before sending me an Email that says: "It doesn't run.",
+                  please execute the file:
+                     c:\itshfbc\bin_win\sysinfo.bat
+                  If you did not install the software in the default directory,
+                  the "c:\itshfbc" will be different.
+                  This will create a file that you should include in your Email
+                  to me. The name of the file for a default installation will be:
+                     c:\itshfbc\bin_win\sysinfo.txt

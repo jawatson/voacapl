@@ -1,0 +1,17 @@
+HR 4/2/.5                                       
+13    13 parameters
+ 18.69  [ 1] Max Gain dBi..:
+   1    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.01000  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+   4    [ 6] # Row   Elems.:
+   2    [ 7] # Stack Elems.:
+10.000  [ 8] Design    Freq:
+   .50  [ 9] Ht. abv Ground:
+   0    [10] Slew Angle....:
+   .25  [11] Reflector Dist:
+   .83  [12] Ref Wire space:
+   4    [13] Ref Wire diam.:
+            16.09  18.84  21.16 Max gain @  2MHz
+            15.43  18.31  20.76 Max gain @ 30MHz

@@ -1,0 +1,153 @@
+--------------------------------------------------------------------------------
+All     1999    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+06 Jan  1999   1. In RECAREA, it was discovered that the coefficients were
+                  being re-read for each grid point.  That has been taken
+                  outside the loop, and the calculations now run 3 times faster.
+                  There was no effect on the answers.
+               2. Also, in REC533 and RECAREA a new parameter has been added.
+                  SNxx is now the Signal-to-Noise ratio at the requested
+                       reliability.
+                  S/N  is now the MEDIAN Signal-to-Noise ratio (i.e. 50%).
+                  SNxx will equal S/N if Required Reliability = 50%.
+                  The parameter FS/N (Reliability) is now unaffected by the
+                  Required Reliability.  It is always the reliability of the
+                  MEDIAN Signal-to-Noise.
+                  This can be quite confusing, but is more in line with how
+                  the IONCAP (ICEPAC/VOACAP) models do it.
+                  Otherwise FS/N makes no sense when you change Req. Rel.
+
+08 Jan  1999   1. If you created a Lat/Lon area plot with the Longitude center
+                  different from zero, using the cursor to read data values
+                  when the map was displayed did not work properly.  
+                  That has been fixed.
+
+11 Jan  1999   1. If you installed the software other than in C:\ITSHFBC,
+                  HFANT may not have worked.  I had left in a file OPEN
+                  statement that was for debugging purposes, and it specifically
+                  OPENed a file in the C:\ITSHFBC\RUN directory.
+
+15 Jan  1999   1. One user did not like it when (in Point-to-Point graph),
+                  you pick a point with the mouse and it interpolates the data,
+                  but displays the time in decimal (e.g. UT=5.75).
+                  That has now been changed to show both decimal and HR:Min,
+                  (e.g. UT= 5.75(05:45)).
+       
+21 Jan  1999   1. In the AREA programs, there was a problem if you did BATCH
+                  runs.  If you had a list of files to run in BATCH, and
+                  wanted to delete one of them, if it was NOT the last item,
+                  the previous file would also get deleted when RUN was
+                  selected.  This has been corrected.
+               2. I would recommend that you DO NOT install the software in
+                  a directory that contains NON-DOS file names.  For example,
+                  DO NOT install the software in the Program Files directory.
+                  The blank in the directory name will cause the software to
+                  not work.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+01 Feb  1999   1. All the graph outputs now have a new menu button:
+                         to Clipboard
+                  Picking this option will write the graphics buffer to the
+                  Windows clipboard.  The advantage of this over Alt+Print Scrn
+                  is that the menu buttons and border around the plot are not
+                  copied.  This can make a cleaner image.
+                  You can then Paste the image into any Windows program that
+                  will accept it.  I have used Word, WordPerfect, WinGIF,
+                  LView, and Paint.
+
+11 Feb  1999   1. This is a beta version to test a new Salford FTN77 compiler.
+                  I only have access to Windows-95/98 systems, so I am very
+                  interested in any information on Windows-NT systems.
+                  The preliminary results on Windows-95/98 are astounding.
+                  A test set of calculations that took 75 seconds before, now
+                  runs in 27 seconds!  And the answers are even the same!!
+                  I believe it should no longer require a different installation
+                  for Windows-NT systems.  
+    
+                  Access the file directly on the HF web page:
+                     http://elbert.its.bldrdoc.gov/hf.html
+                  with the link: HFWIN32-beta (99.0211W).
+
+                  You should install it in the same directory as your previous
+                  installation was done.  If you experience problems and want
+                  to go back to the previous version, you can still download
+                  that and install it.  Before re-installing the older version,
+                  I would recommend deleting all the programs in the
+                       ..\bin_win
+                  directory to make sure you get the correct versions..
+                  You should also delete the file:
+                       C:\WINDOWS\SYSTEM\SALFLIBC.DLL
+                  That is the dll required by the Salford compiler.
+
+                  If any problems occur, try and provide as much information
+                  as possible.
+
+23 Feb  1999   1. This is still a Beta version testing a new compiler. 
+                  See the news file (99_02_11.txt) for discussion of using
+                  the Beta version.
+               2. This version has modified VOACAP, at the request of Falcon
+                  Air Force Base, to be able to use the interpolated daily
+                  URSI 88 foF2 ionospheric coefficients.  Normal users should
+                  always specify the month as an integer.  The results will be
+                  the same as they always were.  If you specify the month as
+                  "6.12", you will get the results interpolated to June 12th.
+                  VOACAP now contains the same ability as ICEPAC does.
+                  This works for all 3 implementations of VOACAP.
+                       VOACAP     - point-to-point model
+                       VOAAREA    - area coverage model
+                       S_I VOACAP - S/I point-to-point model
+                  Remember, when you use the DAILY coefficients, you will be
+                  forced to use the URSI 88 coefficients.  The CCIR coefficients
+                  cannot be interpolated by day of the month.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+08 July 1999   1. There seems to be no problem with the new compiler, so this
+                  is no longer considered to be a beta version.  Some minor
+                  problems have been fixed (I can't remember what they were).
+
+               2. VOACAP has been changed to include the ability to plot
+                  the Point-to-Point model versus distance and time as was done
+                  to the ICEPAC model some time ago.
+
+               3. The USA state boundaries have been added to the area coverage
+                  plotting. By default, this is turned off.  To turn this option
+                  on, select the "BOUNDARIES" menu option when you have a map
+                  displayed. Select (USA states or No USA states). This 
+                  selection will remain in effect until changed.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+28 Sept 1999   1. There have been some internal changes to all the models to
+                  perform some tasks funded by IBB (former VOA).  This will
+                  allow them to perform Area Coverage calculations using
+                  an ITU/HFCC schedule that they use for HF planning.
+                  The first release of the IBB Area Planning software is 
+                  available.  It is installed from a separate file:
+                      ibbplan.exe
+
+               2. As there is not a lot of funding for HF work, I hope it has
+                  not affected other parts of the HF software.  As always,
+                  "let the buyer beware".
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+19 Oct  1999   1. There was a recent problem when using antenna type #90.
+                  That should now be fixed in all of the models.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+10 Nov  1999   1. An error causing VOACAP Point-to-Point to ALWAYS use the
+                  URSI coefficients was discovered.
+                  This may have occurred beginning with the 99.0223 version.
+                  The error has been fixed.
+--------------------------------------------------------------------------------
+------------------------------- End of 1998 ------------------------------------
+--------------------------------------------------------------------------------

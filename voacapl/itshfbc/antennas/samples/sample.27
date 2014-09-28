@@ -1,0 +1,11 @@
+V23/122/15/1.8  :Sample type 27 ITSA-1 Sloping Vee
+ 9     9 parameters
+  0.00  [ 1] Max Gain dBi..:
+  27    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+ 22.50  [ 6] 1/2 apex angle:
+121.90  [ 7] Leg Length    :
+ 15.24  [ 8] Ht. abv Ground:
+ 1.829  [ 9] terminated hite

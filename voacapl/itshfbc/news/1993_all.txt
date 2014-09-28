@@ -1,0 +1,375 @@
+This contains all NEWS files prior to 1994.
+
+17 Dec 1992    News for NTIA/ITS HF Propagation Models
+
+Whenever changes are made to any of the propagation models and a new
+version is sent, the changes will be detailed in a NEWS file dated the
+same as the version date.  Since this is the first NEWS file, I will
+discuss a little of the evolution of some of the changes that may already
+exist in some previous versions.
+
+Antennas:
+   Perhaps the one item that has produced the most significant change has
+   been the incorporation of antennas into the propagation models.  It was
+   desired to add the CCIR HF antenna package into VOACAP, REC533, and HFBC84.
+   Previously, models such as REC533 and HFBC84 had predefined gain tables
+   for antennas.  Thus, when an antenna was chosen, it was valid for all
+   frequencies.  VOACAP (i.e. IONCAP) had a different, and more realistic
+   approach.  For each antenna entered, a range of valid frequencies was
+   also given.  Thus, several antennas can be specified for a given circuit.
+   One valid for 2-9 MHz, another 9-15 MHz, and 15-30 MHz.  Each antenna
+   can be of any type, design frequency, main beam direction, etc.
+
+   To incorporate this ability with the CCIR antenna software became very
+   difficult.  The most inner calculation loop in the propagation models
+   is frequency.  As you change frequencies, you may change antennas.  The
+   CCIR antenna software does initialization the first time you define a
+   new antenna and saves this information to speed up calculations.  Since
+   this information would be lost as frequencies change, it became very 
+   difficult to implement.  I therefore took a major modification to remove
+   all gain calculations from the propagation models.  Since these are
+   point-to-point models, once the off azimuth direction is calculated, the
+   only gain values that need to be calculated are for elevation angle.
+   These gain values are calculated for frequencies 2-30 in 1 MHz and 
+   elevation angles 0-90 degrees by 1 degree.  Further, since one antenna
+   may be valid for 2-9 MHz and another 9-15 MHz, there will be a discontinuity
+   at 9 MHz in this case.  A calculation at 8.5 MHz will have no problem.
+   As 9.1 MHz will have no problem.  The gains for both 9 MHz are saved.
+   A calculation at 9 MHz will use the antenna 2-9 MHz.  There are some major
+   advantages to removing the antenna gains from the propagation models.
+   To add new antennas, the models need not be changed, only the single
+   antenna calculation program.  Measured antenna gains can easily be added.
+   Output from other antenna programs such as NEC can be added.  By taking
+   this approach, I also stumbled upon a limitation of the CCIR antenna 
+   software.  To speed up the processing, the CCIR antenna software 
+   pre-calculates trig functions.  It also truncates the elevation angle
+   to the lower integer degree (very different from rounding).  The end
+   result of this is that for an elevation angle of 15.9 degrees, the gain
+   will be calculated at 15 degrees.  This can produce quite a difference.
+   By using my external calculation method, I calculate gains at every
+   degree (no problem with rounding or truncation) and then the gain is
+   interpolated in the propagation model.  Thus a more accurate result is
+   obtained.
+
+   While incorporating this new scheme into REC533, I noticed a problem
+   in the E-modes calculations.  Since REC533 (and precursor REP894) only
+   ever used gain tables independent of frequency, the use of antenna gain
+   for the E-modes had been removed from the frequency loop to speed up
+   processing.  I have corrected this problem and I will notify CCIR of
+   what must be done.
+
+   The method of defining the antennas is very similar between the 3 models.
+   The only difference is that VOACAP transfers you to a different screen
+   to define the parameters.  This perhaps is a bit more difficult, but
+   VOA required an ability to have 10 antennas defined and there was not
+   enough room on the main input screen.  In REC533 and HFBC84, I allow a
+   maximum of 5 antennas to be defined, and this is done on the main input
+   screen.  Also, VOACAP can mix IONCAP and CCIR antennas.  This is not
+   allowed with REC533 or HFBC84, because they have no knowledge of IONCAP!
+
+CIRCUITS.DAT
+   This is the data file containing valid Transmitter-Receiver coordinates
+   and antenna information.  It should be customized by each user.  To
+   accommodate the multiple antennas as discussed above, each circuit may
+   now define multiple antennas.  Look at the new format of this file and
+   it should be quite obvious.  One problem though, is that this file defines
+   transmitter power for each antenna.  However, power (by IONCAP convention)
+   has always been separate from the antenna definition.  It is my perception
+   that at a transmitter site with 2 antennas valid for different frequency
+   ranges, even different main beam directions, that they may actually have
+   different power.  The users may wish to let me know if they would like
+   power tied to each antenna, or separate as it is.  If it is linked to
+   each antenna (hence frequency), then some additional changes in the
+   propagation models will need to be made.
+
+BATCH execution
+   This option is selected from the OPTIONS menu after you accept the input
+   data.  What it allows is for you to select a sub-set of circuits from
+   the CIRCUITS.DAT data file.  This sub-set will then be run using the
+   other parameters defined on the input screen (e.g. month, ssn, system
+   parameters) in a non-interactive GRAPH mode.  What this means is it
+   will calculate all frequencies (2-30 MHz) and all hours (1-24) for one
+   month and SunSpot number and produce the graphs for Field Strength,
+   Reliability, and S/N ratio and the table of Field Strength.  This will
+   allow you to produce a book of results on an overnight basis.  Since
+   this may produce much output and requires an HP LaserJet on LPT1, the
+   actual printing has been commented out of the .BAT file.  Thus, to
+   activate this, you need to edit the appropriate .BAT file (VOACAP.BAT,
+   REC533.BAT, HFBC84.BAT) and remove the "rem" from the proper place.
+   Since BATCH is a new concept and I am not yet quite sure how the users
+   wish to use it, I think this is the easiest approach so far.
+
+VIEW LAST CIRC
+   I have written a new program called SCROLL that now controlls the viewing
+   of the circuit calculations.  This program allows forward/backward and
+   even left/right (for output greater than 80 columns) scrolling of the
+   output files.  The arrow keys, HOME, END, PageUP, PAgeDOWN, TAB, and
+   ENTER keys control your movement. The <esc> key exits the program.
+   If desired, I could include a capability to search for character strings
+   to greater flexibility.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+14 Jan 1993    News for NTIA/ITS HF Propagation Models
+
+ 4 Jan 1993  changed VOACAP so that when MULTIPATH POWER TOLERANCE or
+             MULTIPATH TIME DELAY are set = 0., multipath probability
+             (MPROB) is not computed.  Previously, setting these values to
+             zero caused them to be set to their defaults (10 dB & .85 msec).
+             This was a holdover from the card image format days when a
+             blank value was used to set default values.
+
+ 8 Jan 1993  changed all RETRIEVE DATA options so that a 1 line summary of
+             the data file is displayed. It includes the file name,
+             Transmitter name, Receiver name, Month, SSN, and Time.
+
+11 Jan 1993  You can now quickly display the CCIR vertical & horizontal
+             antenna patterns to the screen during the antenna selection
+             process. Press the <F2> key to display to screen.
+
+14 Jan 1993  Changes made to REC533 calculations as per correspondence
+             with Mike Dick, correcting NOISE and FADING calculations.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+22 Apr 1993    News for NTIA/ITS HF Propagation Models
+
+
+22 Apr 1993  Many changes have been made since the first delivery of this
+             software to accommodate user requests and to make some aspects
+             more flexible.
+
+             Users may now maintain libraries of TRANSMIT, RECEIVE, and
+             CIRCUITS files.  While selecting transmitter or receiver
+             coordinates, pressing the <F2> key will allow you to change
+             the name of the file you are selecting from.  The names
+             TRANSMIT, RECEIVE, and CIRCUITS are suffixed with a 3 character
+             name of your choosing.  Please maintain the .DAT name for the
+             default files supplied.  You may also build your data files
+             by inputting the coordinates and names and pressing the
+             <F6> to store the transmitter, <F7> to store the receiver, or
+             <F8> to store the circuit information.  These files will
+             automatically be maintained in alphabetical order.  Exact
+             duplicates will be removed.  Upper/lower case is ignored.
+             You may remove unwanted records with the <DELETE> key.
+
+	     Also new is a vast selection of city coordinates from a
+	     geographic data base. Pressing the <F4> key while in either
+             the transmitter or receiver fields, allows access to these
+             files. All but one of the files are ASCII and may be added
+             to or new files in the same format may be created. They are
+             located in the ..\GEO directory. Only the file USA_ONLY.GEO
+             is not ASCII and can not be changed. It contains 32028 city
+             names in the United States.
+
+             The HFANT program has been changed to include a TYPE 11 which
+             is a user supplied gain table versus elevation angle.  Currently
+             these values are omni-directional and frequency independent.
+             As the need arises, these features can also be added.
+             For types 5,6,7,10, the directivity gain calculations in the past
+             were not extensive enough, resulting in incorrect results. This
+             has been fixed. Also a TYPE 12 which is a more general set of
+             curtain arrays from NTIA Report 87-215. This allows for non-
+             standard element spacing (e.g. not .5 wavelength).
+
+             VOACAP has a completely new graphics output program.  You are now
+             allowed to plot contours of any parameter on the output file.
+             Thus, selecting different methods, (e.g. 16 thru 23) will allow
+             you to plot different results.  The default parameters plotted
+             in the batch more are DBU, REL, SNR, FDAYS.  To change these
+             requires a simple change in the VOACAP.BAT files.
+
+	     Also new for VOACAP, methods 11 & 28 will now produce graphics
+	     plots on the screen and printer instead of the old line printer
+	     graphics with +,*,. symbols. Try it and see if you like it.
+
+             REC533 still only allows Field strength, Reliability, S/N, and
+             a table of field strengths to be plotted.
+
+             The cursor can now "wrap" from the top of the input screen to
+             the bottom (using UP arrow), or from the bottom to the top
+             (using DOWN arrow).
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+18 May 1993    News for NTIA/ITS HF Propagation Models
+
+18 May 1993  VOACAP fixes/enhancements :
+             1. The following variables have been added to VOACAP:
+                TGAIN - Transmitter gain of strongest mode
+                RGAIN - Receiver gain of strongest mode
+                SNR90 - Signal-to-Noise ratio attained 90% of time.
+                DBM   - Power Density (dBu - 30)
+                They may be printed with METHOD 20 (all parameters), or
+                by using the METHOD 23 modifications below.
+             2. Using METHOD 23 of VOACAP, you may now choose the order
+                and number of variables sent to the output file. The other
+                methods are unaffected. Read the HELP window for the METHOD
+                parameter.
+             3. Median/Lower Decile S/N parameter removed because of new
+                parameter SNR90 from above is calculated. To plot this
+                parameter, either select METHOD 23 and choose SNR90, or
+                select METHOD 20 (all parameters).
+
+18 May 1993  VOACAP & REC533 fixes/enhancements :
+             1. BEGINNING/ENDING HOURS may now wrap around midnight.
+                You may now specify hours 22 to 04. Previously, this would
+                have produced hours 04 to 22.
+             2. MONTHs & SUNSPOTs are now taken as pairs. This was a major
+                departure and very important to frequency planners.
+                To run testing such as benchmarks, you are allowed to make
+                12 pairs.
+             3. The NOISE parameter was changed to avoid math errors.
+                You now specify either levels 1,2,3,4 or -dBW values in
+                the range [100 to 200]. Levels are no longer negative and
+                you cannot specify -dBW values below 100 as these were 
+                deemed inappropriate.
+             4. A few problems were corrected concerning the Geo city database
+                files.  The major problem corrected had to do with the amount
+                of memory required to access the .GEO files. This has been
+                reorganized and should cause no more problems.
+             5. The TRANSMIT.*, RECEIVE.*, CIRCUITS.* files no longer reside
+                in the DATABASE directory. Since they have become user specific
+                data files, they now will have their own sub-directory called
+                USERDB. This should make it easier for users to maintain.
+
+18 May 1993  REC533 fixes/enhancements :
+             1. The contour plotting for REC533 has been converted to
+                the same as VOACAP.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+24 May 1993    News for NTIA/ITS HF Propagation Models
+
+
+24 May 1993  VOACAP & REC533 fixes/enhancements :
+             1. Whenever you view a CIRCUITS.??? file (either in
+                choosing circuit coordinates or in BATCH selection),
+                you now can view all of the parameters associated with each
+                circuit.  Previously, you could only see the lat/long/name
+                of transmitter & receiver.  Now you can see all of the
+                antenna parameters.
+             
+24 May 1993  HFANT fixes/enhancements :
+             1. Type 10 (Vertical Monopoles) now save the vertical gain
+                pattern for frequencies 2-30 MHz.  Since this is an
+                omni-directional antenna, the horizontal gain pattern
+                is not necessary.  This is saved because vertical monopoles
+                have a large overhead during initialization (i.e. when the
+                frequency changes).  Thus during propagation calculations,
+                too much time was lost.  
+             2. Dipole arrays (type 1,2,3,4,8,9) are not valid below the
+                frequency ratio .7 or above 1.4.  Frequency Ratio (Fr) is
+                Operating/Design Frequency.  In the propagation models,
+                if you specify a design frequency (not 0.0), for any operating
+                frequency outside these limits, the gain will be -30.  If you
+                specify the design frequency=0.0, the design frequency will
+                be set to the operating frequency.  This allows studies to be
+                done when you do not know all of the antenna information.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+09 Jun 1993    News for NTIA/ITS HF Propagation Models
+
+               1. Antenna types 5 & 6 (Horizontal & Vertical Log Periodic)
+                  have been changed to allow up to 30 (from 20) elements.
+
+               2. Under advisement from Keith Edwards and Mike Dick, the
+                  useable frequency range for Vertical Monopole (Type 10)
+                  is now limited to [.05 to .35 times the wavelength].
+                  What this means is .05*300/Height of monopole in meters to
+                  .35*300/Height. Frequency is in MHz.
+
+               3. Antenna type 1 (Multiband Aperiodic) is limited to the
+                  Frequency Ratio (Fr=Operating/Design) of .7 to 1.4.
+                  Antenna types 2,3,4,8,9 are limited to .85 <= Fr <= 1.2.
+
+               4. Corrections to the Atmospheric Noise variability with
+                  frequency have been made. The routine GENFAM in both
+                  VOACAP and REC533 was incorrect. The change will 
+                  probably not be noticed because ManMade Noise is dominate
+                  at the HF frequencies involved. Occasionally you may
+                  notice a 1 or 2 dB change in SNR and N DBW.
+    
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+09 Jul 1993    News for NTIA/ITS HF Propagation Models
+
+               1. ANTCALC has been modified to now create a FORMATTED file
+                  rather than an unformatted one. This should allow you to
+                  create your own antenna file with any compiler and not
+                  have a read error in the HF model.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+14 Jul 1993    News for NTIA/ITS HF Propagation Models
+
+               1. ICEPAC has been added as a model.
+               2. With ICEPAC, you can make short term predictions by
+                  specifying current foF2 values at known lat/long/time
+                  locations.  The program will calculate an "effective"
+                  SunSpot Number, and you can use this "instantaneous"
+                  SSN to make the predictions for the next hour or so.
+                  Anything beyond a few hours should be suspect.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+20 Jul 1993    News for NTIA/ITS HF Propagation Models
+
+               1. ICEPAC BATCH mode has been fixed.
+               2. a NEWS.BAT facility has been made to allow easy viewing
+                  of all the NEWS files.
+               3. HFBC.BAT has been updated to include access to the NEWS.BAT
+                  batch file.  Just type in HFBC and you have access to all
+                  of the propagation programs on your system, HFANT, and the
+                  NEWS facility.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+08 Oct 1993    News for NTIA/ITS HF Propagation Models
+
+               1. This version of VOACAP (called 93.1001) has now been
+                  benchmarked against the VOA NRL version 93.04 distributed
+                  at IES 93 in Washington, D.C.  Differences were originally
+                  discovered because of 2 reasons.  First, the FORTRAN
+                  compiler used uses 80-bit registers for intermediate results.
+                  When that was changed to save in 32-bit registers, the
+                  results matched.  Second, 93.04 uses what has been found
+                  to be an incorrect noise routine (GENFAM).  When this noise
+                  routine was inserted, results between 93.1001 and 93.04 were
+                  identical (within allowed tolerances).  The version now
+                  employed, is called 93.1001, and includes the corrected noise
+                  routine GENFAM.  You may therefore expect differences in the
+                  results for frequencies above 10MHz.  Frequencies below 10MHz
+                  should be unaffected.
+
+               2. An error was corrected in the geographical data base search
+                  routines.  Previously, if you specified a NATION or STATE to
+                  search for, and you gave a name that did not exist, the 
+                  program would abort.
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+05 Nov 1993    News for NTIA/ITS HF Propagation Models
+
+               1. Area coverage calculations and plots has been added to
+                  VOACAP, REC533, and ICEPAC.  Since the inputs are different,
+                  these are controlled by 3 new .BAT files (VOAAREA.BAT,
+                  RECAREA.BAT, & ICEAREA.BAT).  To access all models installed
+                  on your system, execute ITSHFBC.BAT.  This will detect which
+                  programs exist and display a menu for you to select from.
+
+               2. New self-extracting files are now being supplied.
+                  READ.ME     - describes point-to-point models
+                  HFBC1.EXE   - general files for all models
+                  VOAPK.EXE   - specifics for VOACAP point-to-point
+                  RECPK.EXE   - specifics for REC533 point-to-point
+                  ICEPK.EXE   - specifics for ICEPAC point-to-point
+                  RDAREA.ME   - describes area coverage models
+                  WORLD.EXE   - world political data base for plotting
+                  VAREA.EXE   - additional files for VOACAP area coverage
+                  RAREA.EXE   - additional files for REC533 area coverage
+                  IAREA.EXE   - additional files for ICEPAC area coverage
+
+               3. The current version of the appropriate propagation model
+                  is now listed on all plots (point-to-point & area coverage).
+                  This should avoid probelms if the results change.  You will
+                  know which version was used.  The current naming convension
+                  of the versions for the different models is:
+                      VOACAP - Version 93.1001          (Year.month_day)
+                      REC533 - ITS VER-1.43 09.Jul.93
+                      ICEPAC - Version ITS.01           (Numerical number only)
+--------------------------------------------------------------------------------
+-------------------------------- End of 1993 -----------------------------------
+--------------------------------------------------------------------------------

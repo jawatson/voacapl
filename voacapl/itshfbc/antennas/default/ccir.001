@@ -1,0 +1,17 @@
+HR 4/4/1
+13    13 parameters
+  0.00  [ 1] Max Gain dBi
+   1    [ 2] Antenna Type
+   4    [ 3] Ground Dielectric Constant (1-80)
+0.01000 [ 4] Ground Conductivity (.00003-5.0 mhos/m)
+10.000  [ 5] Operating Freq
+   4    [ 6] # Elements in same ROW (1-9)
+   4    [ 7] # Elements in same STACK (1-9)
+10.000  [ 8] Design    Freq
+  1.00  [ 9] Height above ground (0.10-9.99)
+   0    [10] Slew Angle (+/-30 degrees)
+  0.25  [11] Reflector Distance      (0.15-0.35 wavelengths)
+  0.83  [12] Reflector Wire Spacing  (0.10-9.99 meters)
+   4    [13] Reflector Wire Diameter (1-9 millimeters)
+            19.72  22.13  23.86 Max gain @  2MHz
+            19.39  21.89  23.69 Max gain @ 30MHz

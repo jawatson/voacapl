@@ -1,0 +1,19 @@
+28 Nov  2011    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+28 Nov  2011   1. REC533 Point-to-Point did not work in the Batch mode.
+                  That has been fixed.
+
+               2. REC533 also had a problem if you selected a Noise level [1-6]
+                  on the System card. There was a variable spelled wrong in the
+                  source code (MA instead of MAN). I think this had been there
+                  for many years. How it ever worked is beyond me.
+
+               3. HFANT had a problem for Type 11 (gain table vs elevation angle) antennas.
+                  If you plotted the pattern, it would identify the Elevation
+                  angle at Gmax (maximum gain) wrong. It was off by 1 degree.
+
+               4. HFANT also had a problm with Type 14 (Point-to-point gain table
+                  vs elev/freq) antennas. It would produce the elevation angle
+                  at maximum gain for the whole set of frequencies. It should be
+                  producing the elevation angle at maximum gain for the specified
+                  frequency in the plot.

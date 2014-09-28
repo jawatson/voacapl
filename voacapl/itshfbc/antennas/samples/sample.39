@@ -1,0 +1,11 @@
+SR/23/88/17/8   :Sample type 39 ITS-78 Terminated Sloping Rhombic
+ 9     9 parameters
+  0.00  [ 1] Max Gain dBi..:
+  39    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+ 22.50  [ 6] 1/2 apex angle:
+ 88.39  [ 7] Leg Length    :
+ 16.76  [ 8] Ht. abv Ground:
+ 8.382  [ 9] terminate hite:

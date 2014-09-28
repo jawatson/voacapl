@@ -1,0 +1,111 @@
+--------------------------------------------------------------------------------
+13 Jan  1997    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+13 Jan  1997   1. Several changes to the Win32 version were made because
+                  Windows-95 and Windows-NT systems use file names that
+                  have the first character upper case and the rest lower case.
+                  This only affects those using the HFWIN32.EXE version.
+
+               2. A minor change was made to VOACAP.  Occasionally, no valid
+                  modes were found and it was linked to a small programming
+                  error.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+27 Feb  1997   1. The ability to point the receive antenna at the transmitter
+                  location has been added to the Point-to-Point data input.
+                  There is now a button "at Tx" that is similar to the "at Rx"
+                  button that already existed in the Tx antenna input screen.
+
+               2. If you input Required Signal-to-Noise ratio at -10 dB,
+                  the calculations would fail because of a data input field
+                  problem.  That is now corrected, although I am not sure why
+                  I ever allowed negative values to be input!
+
+               3. Windows-95 users should now be able to see the whole plot
+                  on their screens if you use the 32-bit version. On Windows-95,
+                  there is an area at the bottom of the screen that is used for
+                  the TASK BAR.  This would obscure some of the screen plots
+                  because on Windows 3.x, I had access to the whole screen.
+                  I have shrunk the plots down slightly in the 32-bit version
+                  to try to solve this problem.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+13 Mar  1997   1. Due to a previous misunderstanding, the Help documentation
+                  defined the UT time a being centered on the half hour.
+                  For example, 1UT, it was stated was centered at 1:30am.
+                  That is wrong.  All time is centered on the specified hour.
+                  Thus, 1UT covers the time from 0:30 to 1:30am and is centered
+                  at 1:00am GMT.  This affected minor changes in help messages
+                  and some of the Help files.
+
+27 Mar  1997   1. HFANT 32-bit for Windows-NT and Windows-95 systems may have
+                  a problem OPENing antenna files.  This is caused by the fact
+                  that these systems return the file name in lower case, 
+                  whereas the 16-bit version always returned UPPER case.
+                  I had fixed Point-to-Point and Area Coverage, but I forgot
+                  to fix HFANT to correct this.  This should now be fixed.
+                  It was only a problem with the 32-bit version.
+
+               2. On REC533, if your circuit is >9000 km, no MODE or ANGL are
+                  calculated because this is the LONG PATH algorithm.  This
+                  would cause problems if your selected the GRAPH option and
+                  tried to plot ANGL.  The Minimum and Maximum values would
+                  both be 0, and this caused some auto scaling problem.
+                  This has been fixed in both the 16 & 32-bit versions.
+
+               3. The HELP file for the SI_ICEPAC and SI_VOACAP now contains
+                  a description on the S/I algorithm that is used.  It is
+                  in a paper titled:
+                       Predicting Signal-to-Interference Probability in the
+                       High Frequency Band
+                  It was written to be presented in July 1997 in the UK, but
+                  there probably (99.9%) is no travel funds to present it.
+
+               4. There were some problems with ICEPAC & VOACAP if Tx & Rx
+                  were the same point.  I have internally adjusted Rx if it
+                  is too close to Tx, so it will be about 3km away.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+28 Apr  1997   1. For those who wish to create their own IONCAP style input
+                  deck, that can now be processed properly with the Windows
+                  versions of ICEPAC and VOACAP.  Perform the following:
+                    a. Create the input deck on a file (NOT named modelX.DAT)
+                              (That means NOT ICEPACX.DAT or VOACAPX.DAT)
+                       The file should be in the ..\RUN directory.
+                    b. Create an icon to execute with the following properties:
+                         Command line:
+                          ..\BIN_WIN\modelW.EXE directory BATCH deckname
+                         Where:
+                               model = ICEPAC or VOACAP
+                               directory = install directory (e.g. C:\ITSHFBC)
+                               deckname = file name used in (a) above.
+                         Working Directory:
+                               directory\RUN
+                                (remember, directory is defined above)
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+11 Nov  1997   1. A problem was discovered in the REC533 Area Coverage
+                  program.  Directional antennas always pointed North.
+                  This has been corrected.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+16 Dec  1997   1. The software may not have worked on some Windows-NT systems.
+                  The problem was traced to the \WINDOWS\SYSTEM\SALFLIBC.DLL
+                  that is supplied with the software.  A new version was
+                  obtained from the Fortran compiler developer (Salford) and
+                  seems to have solved the problem.
+
+--------------------------------------------------------------------------------
+---------------------------- End of 1997 ---------------------------------------
+--------------------------------------------------------------------------------

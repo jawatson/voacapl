@@ -1,0 +1,39 @@
+13 Apr  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+13 Apr  2007   1. Recent analysis discovered a problem with the combination of
+                  radio noise algorithm developed by Don Spaulding.
+                  This can be viewed at http://www.its.bldrdoc.gov/pub/ntia-rpt/87-212/ .
+                  This has precipitated a modification to the Spaulding algorithm which
+                  will be submitted to the ITU to update Recommendation ITU-R P.372-8
+                  Combination of Radio Noise at the April 2007 meetings. This submission
+                  document and a corresponding computer program which can calculate the
+                  combination of radio noise can be downloaded from:
+                       http://www.greg-hand.com/noise
+                  Note that it is a little complicated to compare the output of this 
+                  program (gh_noise.exe) with the noise power produced by VOACAP and ICEPAC.
+                  This is because of several factors:
+                     1. gh_noise produces results in local time at Rx, VOACAP/ICEPAC is UT at Tx.
+                        This allows gh_noise to produce exactly the world Fam contours found in
+                        ITU-R P.372-8 (and CCIR Report 322-3).
+                     2. VOACAP & ICEPAC will include antenna efficiency in noise power.a
+                        gh_noise has no knowledge of an antenna.
+                        Thus, make sure you use an isotrope for the receive antenna.
+                        If you use SWWHIP.VOA, it has an efficiency of -4.8 dB.
+                     3. Quite often in HF frequencies, Galactic noise is not included because
+                        it cannot penetrate the ionosphere. Thus, you may need to exclude Galactic
+                        noise when using gh_noise.
+                  gh_noise allows the calculation of radio noise to be done three (3) different ways:
+                     1. "new" modified Spaulding algorithm
+                     2. Original Spaulding algorithm
+                     3. Simple power sum (used in REC533)
+
+                  For most HF users, very little difference will be noticed, especially above 7 MHz.
+                  Most differences will be found at lower frequencies when low levels of Man-made
+                  noise are selected (remote and below). In these cases, the new noise calculation
+                  will be slightly higher than those previously.
+
+                  I have left a way to temporarily compare the two algorithms.
+                  In the Point-to-Point model, if you set the year to 2089, it will use the 
+                  original Spaulding. Otherwise, the modified Spaulding will be used.
+                  By the year 2089, I assume this program will no longer be in use. :)
+

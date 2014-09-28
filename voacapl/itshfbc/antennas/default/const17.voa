@@ -1,0 +1,15 @@
+Const 17dB transmit antenna used by VOA
+ 3     3 parameters
+ 17.00  [ 1] Max Gain dBi..:
+  11    [ 2] Antenna Type..: 91 values gain in elevation angle follows
+  0.0   [ 3] Efficiency (for IONCAP)
+  -43.0   -12.0    -7.0    -2.0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0      .0      .0      .0      .0      .0      .0      .0      .0      .0
+     .0

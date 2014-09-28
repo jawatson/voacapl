@@ -1,0 +1,29 @@
+28 Dec  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+28 Dec  2007   1. A transparent change was made to VOACAP.
+                  Someone pointed out that the goemagnetic north pole moves
+                  and he wants to see what affect moving the pole has.
+                  The geomagnetic north pole coordinates (glat, glon) were
+                  fixed in subroutine geom at (78.50N, 69.00W).
+                  These coordinates are now located in the file:
+                     ..\database\north_pole.txt
+                  If this file does not exist, the location (78.5,-69.0) is used.
+                  For a user to change this, he should copy the file:
+                     ..\database\north_pole.txt
+                  to:
+                     ..\run\north_pole.txt
+                  and then change the first record of this file.
+                  The file in the "run" directory will override the file in the
+                  "database" directory.
+                  Remember that it is your responsibility to remember which
+                  output file corresponds to what values of (glat, glon).
+                  There is currently no information in the output file indicating
+                  the (glat, glon) values.
+                  It is recommended that no one change this location without
+                  knowing what they are doing.
+
+                  Documentation about this change is found in the file:
+                    ..\database\north_pole.txt
+
+                  This change has not been made to ICEPAC or REC533.
+

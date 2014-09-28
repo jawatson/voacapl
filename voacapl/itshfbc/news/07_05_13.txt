@@ -1,0 +1,6 @@
+13 May  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+13 May  2007   1. The previous version of ICEPAC had bad calculation of SNR 
+                  for Es (sporadic E) modes. That has been corrected.
+
+               2. All the main input windows now have the version in the window title.

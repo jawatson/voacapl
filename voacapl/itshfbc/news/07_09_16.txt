@@ -1,0 +1,4 @@
+16 Sep  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+16 Sep  2007   1. I forgot to add a file in the install (..\database\fof2var.txt)
+                  that is required by REC533. This is the only change.

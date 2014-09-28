@@ -1,0 +1,28 @@
+
+|------------------------------------------------------------------------------|
+| The propagation modules VOACAPW.EXE or ICEPACW.EXE cannot be executed        |
+| individually unless you have created the proper formated data input file.    |
+| If you change the ANTENNA card after an EXECUTE card, you MUST use HF_PARSE  |
+| to do the calculations. This is because of how the antenna calculations are  |
+| performed. This problem was discovered in Dec 2008 by Jari Perkiomaki of     |
+| Finland while doing some special analysis.                                   |
+| If you do not have extra ANTENNA cards, this is not a problem.               |
+|------------------------------------------------------------------------------|
+|------------------------------------------------------------------------------|
+| Execute with:                                                                |
+|   hf_parse.exe [S] directory model inputfile outputfile                      |
+| where:                                                                       |
+|   [S]       = SILENT, no messages are written to screen                      |
+|             = QUIET, only 1 message written for each EXECUTE card            |
+|   directory = full pathname to the install directory (e.g. c:\ITSHFBC)       |
+|   model     = VOACAP or ICEPAC                                               |
+|                                                                              |
+| The input and output files will be in the ..\RUN directory.                  |
+|                                                                              |
+| You will probably need to also include the full pathname to the EXE file.    |
+| Thus, using the default installation directory:                              |
+|                                                                              |
+|   c:\itshfbc\bin_win\hf_parse.exe c:\itshfbc voacap filein fileout           |
+|                                                                              |
+|------------------------------------------------------------------------------|
+|------------------------------------------------------------------------------|

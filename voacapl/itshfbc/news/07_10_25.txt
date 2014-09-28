@@ -1,0 +1,9 @@
+25 Oct  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+25 Oct  2007   1. This change only affects REC533.
+                  REC533 would fail with a division by zero at the North
+                  pole when the transmitter was far enough away to require
+                  the long path model (FTZ) to be run. 
+                  This would occur if you used the Area Coverage over the
+                  whole world and the transmitter was below the equator.
+                  This has been fixed.

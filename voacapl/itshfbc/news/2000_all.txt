@@ -1,0 +1,92 @@
+--------------------------------------------------------------------------------
+All     2000    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+02 May  2000   1. A "to Clipboard" button was added to Method 11 & 28 
+                  circuit plots for ICEPAC & VOACAP.
+
+23 May  2000   1. Some minor problems have been solved for Point-to-Point VOACAP
+                  when calculating multiple groups.  It may have been unable to
+                  find the proper set of data to plot.  That should work now.
+
+               2. Also, the previous version (00.0502) probably had fixed
+                  contours set for VOACAP DBU plots.  That should be back to
+                  its original scaling using the maximum value.
+
+05 June 2000   1. A problem was corrected in ICEPAC & VOACAP Point-to-Point
+                  when plotting parameters using the Run/Time option.
+
+05 July 2000   1. VOACAP Point-to-Point did not function correctly when you
+                  specified a day-of-the-month when the RUN/GRAPH was selected.
+                  The results calculated would have been for URSI coefficients
+                  without the daily coefficients used.  That has been corrected.
+
+24 July 2000   1. I have increased the allowable SSN to be in the range 0-250.
+                  The previous limit of 200 was recently exceeded.
+
+               2. The zip code for our address has changed.
+                  Thus, all the ABOUT windows have been changed to reflect
+                  the new zip code of 80305.
+
+26 July 2000   1. There were problems running VOACAP from the command line if
+                  you wanted to use the SILENT option so nothing is shown on
+                  the screen.  That has now been fixed.  It should function
+                  the same as ICEPAC as described in the 98_all.txt news file.
+
+14 Aug  2000   1. These current modification to the HF propagation software
+                  should only be of use to VOA for their Planning software.
+                  Other broadcast administrations may be interested in these
+                  modifications when the software has been completed.
+                  It is currently in the development stage.
+
+01 Sep  2000   1. These current modification to the HF propagation software
+                  should only be of use to VOA for their Planning software.
+                  Other broadcast administrations may be interested in these
+                  modifications when the software has been completed.
+                  It is currently in the development stage.
+
+                  Minor changes have been made to the general HF programs,
+                  but they should not be noticed by the normal user.
+
+08 Sep  2000   1. The HELP files for IBB_PLAN have been completed.
+                  This should only affect users of IBB_PLAN which are the VOA
+                  and perhaps members of the HFCC.
+
+04 Oct  2000   1. Saving a data file in ICEPAC that used METHOD 23 could not
+                  be OPENed and read.  That has been fixed.
+
+11 Nov  2000   1. Some Help files were left off previous installations.
+                  They have been added.
+
+04 Dec  2000   1. A new SALFLIBC.DLL has been obtained from Salford.
+                  That is a file that gets put into your C:\WINDOWS\SYSTEM
+                  directory.  Hopefully it causes no one problems.
+
+               2. You can now specify up to 16 character file names in the
+                  Area Coverage versions of the software.  This will NOT work
+                  if you want to use the names in the COMBINE option, however.
+                  Someday that may be fixed.
+
+               3. Thanks to Brenton Vogelsang of Australia, the ICEPAC
+                  Technical Manual and old User's Manual have been converted
+                  to Word 7.0 format.  That allowed us to also provide them
+                  in PDF format.  These are available from the web site where
+                  you download the software.
+
+               4. At the request of our lawayers, a DISCLAIMER has been added
+                  to all the Help/About windows and in the README.TXT file.
+                  It is:
+
+            ******************************************************************
+            Disclaimer:
+
+            The software contained within was developed by an agency of the 
+            U.S. Government. NTIA/ITS has no objection to the use of this
+            software for any purpose since it is not subject to copyright 
+            protection in the U.S.
+
+            No warranty, expressed or implied, is made by NTIA/ITS or the
+            U.S. Government as to the accuracy, suitability and functioning 
+            of the program and related material, nor shall the fact of 
+            distribution constitute any endorsement by the U.S. Government.
+            ******************************************************************

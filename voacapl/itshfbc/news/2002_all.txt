@@ -1,0 +1,186 @@
+--------------------------------------------------------------------------------
+All     2002    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+--------------------------------------------------------------------------------
+
+10 Jan  2002   1. HFANTWIN did not OPEN files properly if the software
+                  was installed in a directory path name with too many
+                  characters in the path, such as C:\test\itshfbc.
+                  This restriction has been increased by 40 characters.
+                  But don't get carried away with using lots of characters,
+                  other parts of the software might fail.  You are still
+                  better off using the default installation.
+
+               2. The Default frequencies #3 have been set to amateur
+                  frequencies (2., 3.7, 7.05, 10.075, 14.175, 18.1, 21.225,
+                  24.950, 28.230).
+
+               3. Some modifications to spelling and order of some
+                  Scandinavian cities has been made (courtesy of Jari
+                  Perkiomaki). These are reflected in the europe.geo files.
+
+
+11 Jan  2002   1. Selecting Tx or Rx from the TRANSMIT.DEF or RECEIVE.DEF
+                  files was not working.  That should be fixed.
+
+
+08 Feb  2002   1. Two small code errors were discovered.
+                  a. GENOIS routine of VOACAP.
+                  b. BESTF routine of REC533
+                
+                  I doubt if the changes will be noticable.
+
+
+05 Mar  2002   1. There was a problem in the BATCH execution of VOACAP & ICEPAC.
+                  This is, if you executed:
+                      ..\bin_win\voacapw.exe c:\itshfbc BATCH deck.dat deck.out
+                  It would not calculate the antennas properly if you changed
+                  antenna cards within the batch data file.
+                  This has been corrected.
+                  This would have been noticed only by someone developing
+                  their own user interface.
+
+
+01 Apr  2002   1. There was an error in Method 30 (Long/Short path smoothing)
+                  of VOACAP that could cause overflow problems.
+                  That has been corrected.
+
+
+16 May  2002   1. It was possible in VOACAP if you put in Tx & Rx too close
+                  together (closer than .03 deg), that calculation errors
+                  could occur. Now, if they are too close, Rx latitude is moved
+                  to be .03 degree from Tx latitude.
+
+               2. Three changes were made in the DXCC1.geo file under GEOCITY.
+
+
+07 June 2002   1. A minor change was made to HFANT in the File/Summarize
+                  option to allow capturing the information displayed.
+
+
+18 June 2002   1. A minor change was made to HFANT in the Plot pattern option.
+                  When specifying Operating or Design frequencies, it would
+                  accept values up to 360.  The maximum should be 30.
+                  If you put in values larger than 30, problems could occur.
+
+               2. Some minor coordinate changes were made to the 
+                  ..\geocity\ncdxf.geo file.
+
+
+03 July 2002   1. A problem was discovered in VOACAP on long path (>10000km)
+                  calculations. One routine performed a comparison of takeoff
+                  angle using radians and a subsequent routine did a comparison
+                  using degrees.  The "IF" statement should have been using
+                  the same variables so the same comparison would result.
+                  When it performed the conversion of DEGREES to RADIANS,
+                  very small differences could occur so the "IF" statement
+                  would not work the same.  This has been fixed.
+                  The previous result would have shown an extra loss of 1000 dB.
+
+
+21 Aug  2002   1. A problem was discovered in VOACAP on long path (>10000km)
+                  using the short path model.  This could also occur if
+                  using Method=30 (Short/Long path smoothing).
+                  Through somw anomaly, the 10% and 90% deciles for signal
+                  (SIG LW & SIG UP) and SNR (SNR LW & SNR UP), could go bad.
+                  This would in turn cause the REL to be calculated bad.
+                  A limit on these parameters has been set at .2 to 30.
+
+
+22 Oct  2002   1. A new option called "Area Inverse Coverage" has been
+                  developed for ICEPAC and VOACAP.  The normal Area Coverage
+                  is done using a Tx location to a grid of receivers.
+                  The "Inverse" calculation is done using a grid of transmitters
+                  to a Rx location.  The results are saved ina directory named:
+                       ..\AREA_INV\
+                  instead of:
+                       ..\AREADATA\
+                  where the normal Area Coverage results are saved.
+
+               2. As always, since there is no funding for this effort, nothing
+                  is guaranteed to work.  It is wise for you to do some
+                  testing to make sure the answers are consistent with the
+                  Point-to-Point models.
+
+
+25 Oct  2002   1. The VOAAREA_INV program did not work if you selected the
+                  automated plot to the screen.  That has been fixed.
+
+               2. The AREAINV.HLP (HELP) file was bad.  That has been fixed.
+
+
+29 Oct  2002   1. There were problems with both the ICEPAC & VOACAP Inverse
+                  Area calculations.  I think I have it working now.
+                  Remember some parameters do not depend on the receive
+                  antenna (such as MUF & DBU).
+
+               2. You can also now specify the METHOD in the Inverse Area.
+
+
+04 Nov  2002   1. In creating the Inverse Area Coverage for VOACAP, some
+                  other problems were created in the *.VG? files.
+                  The Lat/Long values were not correct.
+                  Hopefully this has been fixed.
+
+               2. There were still more problems in making the area & inverse
+                  area calculation match when they should for both ICEPAC
+                  and VOACAP. We hope this version has solved those problems.
+
+
+15 Nov  2002   1. A few other problems in VOAAREA Inverse have been fixed.
+                  It would not run multiple groups, it does now.
+                  The MONTH did not allow MONTH.DAY format.
+
+
+18 Nov  2002   1. Two little cosmetic changes were made to the Area Coverage
+                  plotting program.
+
+                  1. More of the file name is now plotted to make it more
+                     obvious if this is normal area coverage or inverse.
+                     Thus, the file for normal Area Coverage looks like:
+                        AREADATA\DEFAULT\MYNAME.VG1
+                     The name for Inverse Area Coverage would look like:
+                        AREA_INV\DEFAULT\MYNAME.VG1
+                  2. Because this might "collide" with the descriptions:
+                        "Transmitter location to grid of Receivers"
+                        "Receiver location from grid of Transmitters"
+                     They has been changed to:
+                        "Tx location to grid of Rx"
+                        "Rx location from grid of Tx"
+
+
+09 Dec  2002   1. A change was made to the Worldmap plotting program to allow
+                  multiple maps to be plotted.  It can also be resized.
+                  It has some interesting features, and this function may
+                  change as I understand it more.
+
+10 Dec  2002   2. There was an error in VOAAREA INVERSE batch calculations.
+                  It would not work properly.  That should be fixed.
+
+
+18 Dec  2002   1. I discovered a small problem in getting Lat/Lon values from
+                  the GEO data files.  No one ever complained, so no one
+                  probably even knew it was not working properly.
+                  Since this is used by almost all the programs, most had
+                  to be re-compiled.  Hopefully, fixing this problem has not
+                  caused 10 other problems! :)
+
+20 Dec 2002    2. When the area programs read an old datafile, the variable
+                  for the Receiver bearing was misspelled and was therefore
+                  not set correctly.  That has been fixed.
+
+
+31 Dec  2002   1. In VOACAP, with very short distances, (which can occur
+                  when using the Run/Distance option), VOACAP may have
+                  produced a mode of "-1F2".  This has been changed to
+                  " 1F2".
+               2. When viewing Run/Distance plots, if you picked the
+                  "ASCII File" option (to create tables of the values),
+                  then the ability to use the mouse to obtain values
+                  would fail.  That has been fixed.
+               3. In the Run/Distance plots, if the shading went above
+                  the graph (e.g. in MUF plots), the headings would
+                  get hidden.  The headings are now displayed last
+                  so they will appear.  The other option was to clip
+                  the shading at the graph limits, but I liked how
+                  the plot looks when it goes above the graph,
+                  especially for the MUF plots.

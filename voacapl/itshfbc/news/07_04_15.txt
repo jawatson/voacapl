@@ -1,0 +1,7 @@
+15 Apr  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+15 Apr  2007   1. The previous version had a bad version of REC533.
+                  I had been making changes to REC533 as per a request by the ITU, but 
+                  problems arose and I had to wait for further clarification.
+                  That will take a while, so I have gone back to before making the changes.
+                  Sorry for the problem.

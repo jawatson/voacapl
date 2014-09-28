@@ -1,0 +1,24 @@
+03 Sep  2007    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+03 Sep  2007   1. VOACAP and ICEPAC point-to-point programs had a problem
+                  when running Run/Graph with Method=30 and multiple groups.
+                  Only the first group used Method=30, the rest of the 
+                  groups used Method=20.  This has been fixed.
+
+               2. Two new Man-Made noise levels have been added, Noisy & Quiet.
+                  The following are the 6 available levels:
+
+                   Level  Model         Equation              Value @ F = 3MHz
+                      1 = Industrial  = -27.7Log(F) + 76.8 = -140.4 dBw/Hz
+                      2 = Residential = -27.7Log(F) + 72.5 = -144.7 dBw/Hz
+                      3 = Rural       = -27.7Log(F) + 67.2 = -150.0 dBw/Hz
+                      4 = Remote      = -28.6Log(F) + 53.6 = -164.1 dBw/Hz
+                      5 = Noisy       = -37.5Log(F) + 83.2 = -138.7 dBw/Hz
+                      6 = Quiet       = -29.1Log(F) + 65.2 = -152.7 dBw/Hz
+
+                   For some reason in 4/13/07 I changed the value for Remote
+                   from -28.6 to -27.7. I cannot remember why I did that, but
+                   I have a comment that says I did it to match the ITU report.
+                   But the latest ITU report has the value at -28.6.
+                   So I changed it back and made these values more explicit
+                   in the code and the Help information.

@@ -1,0 +1,67 @@
+c###syssy.for
+      SUBROUTINE SYSSY(G, PT, NN, FM, SU, SL, FMP, SUP, SLP)
+C--------------------------------
+C     SYSSY IS A TABLE LOOK-UP FOR DECILE VALUES OF THE DISTRIBUTION OF
+C     EXCESS SYSTEM LOSS AND THE LIKELY PREDICTION OF ERRORS OF THE
+C     SYSTEM LOSS IS DETERMINED.
+C     G --- GEOMAGNETIC LATITUDE OF THE REFLECTION AREA
+C     I --- MONTH
+C     PT --- REFLECTION AREA LOCAL TIME
+C     NN --- REFLECTION AREA
+C     FM --- EXCESS SYSTEM LOSS
+C     SU --- UPPER DECILE OF DISTRIBUTION OF SYSTEM LOSS
+C     SL --- LOWER DECILE OF DISTRIBUTION OF SYSTEM LOSS
+C     FMP --- PREDICTION ERRORS IN EXCESS SYSTEM LOSS
+C     SUP --- UPPER DECILE LIMIT ASSOCIATED WITH PREDICTION ERROR IN
+C     EXCESS SYSTEM LOSS
+C     SLP --- LOWER DECILE LIMIT ASSOCIATED WITH PREDICTION ERROR IN
+C     EXCESS SYSTEM LOSS
+      COMMON / TWO /   F2D(16,6,6), P(29,16,8), ABP(2,9), DUD(5,12,5),
+     1                 FAM(14,12), SYS(9,16,6), PERR(9,4,6)
+C     CHECK IF DATA FILE READ
+      IF(F2D(1,1,1) ) 90,90,95
+C    NO DATA TAPE USE FIRST VALUES IN ITSA-1 TABLES
+   90 FM=9.
+      DL=4.
+      DU=9.
+      FMP=5.6
+      SUP=.60
+      SLP=1.63
+      SU=DU/1.28
+      SL=DL/1.29
+      RETURN
+   95 CONTINUE
+      LJ = 1
+      J = PT + .5
+      GG = ABS (G) * 5.729577E1
+      KJ = ((GG - 40.) / 5.) + 1.5
+      IF (KJ)100, 100, 105
+  100 KJ = 1
+      GO TO 115
+  105 IF (KJ - 9)115, 115, 110
+  110 KJ = 9
+      GO TO 115
+  115 IF (G)125, 120, 120
+  120 KK = 0
+      ND = 0
+      GO TO 130
+  125 KK = 8
+      ND = 3
+  130 LJ = FLOAT (J) / 3. + .67
+      IF (LJ - 1)135, 140, 140
+  135 LJ = 8
+  140 LOL = LJ + KK
+      LD = FLOAT(J) / 6. + .67
+      IF (LD - 1)145, 150, 150
+  145 LD = 4
+  150 FM = SYS (KJ, LOL, NN)
+      DU = SYS (KJ, LOL, NN + 1)
+      DL = SYS (KJ, LOL, NN - 1)
+      FMP = PERR (KJ, LD, ND + 1)
+      SUP = PERR (KJ, LD, ND + 2)
+      SLP = PERR (KJ, LD, ND + 3)
+      SU = DU / 1.28
+      SL = DL / 1.28
+      RETURN
+      END
+C--------------------------------

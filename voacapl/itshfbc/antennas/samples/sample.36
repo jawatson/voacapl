@@ -1,0 +1,14 @@
+H/2/4           :Sample type 36 ITS-78 Curtain
+12    12 parameters
+  0.00  [ 1] Max Gain dBi..:
+  36    [ 2] Antenna Type..:
+   4    [ 3] Dielectric....:
+.00100  [ 4] Conductivity..:
+10.000  [ 5] Operating Freq:
+   2.0  [ 6] # of bays     :
+  22.0  [ 7] element length:
+  16.0  [ 8] element height:
+   4.0  [ 9] # elements/bay:
+  26.0  [10] dist bet elements
+  13.0  [11] vertical space:
+   7.0  [12] dist from screen

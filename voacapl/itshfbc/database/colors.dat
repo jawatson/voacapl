@@ -1,0 +1,20 @@
+        DOS
+Black     0  0=Blck
+White    15  F=Whit
+Red       1  1=Red
+Green     2  2=Grn
+Yellow    3  3=Yell
+Blue      4  4=Blue
+Magent    5  5=Magn
+Cyan      6  6=Cyan
+Grey      7  7=Grey
+Dark G    8  8=DGry
+Orange    9  9=Orng
+LtBlue   14  E=LLbl
+Pink     13  D=Pink
+LtGrey    7  7=Grey
+Tan       9  9=Orng
+LtGree   10  A=Lgrn
+L_Blue   12  C=Lblu
+Brown    11  B=Brwn
+Ignore   -1  Ignore

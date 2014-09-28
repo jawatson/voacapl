@@ -1,0 +1,212 @@
+--------------------------------------------------------------------------------
+All    1995    News for NTIA/ITS HF Propagation Models
+--------------------------------------------------------------------------------
+
+09 Jan 1995    1. VOACAP & ICEPAC have been changed so that the default 
+                  Man-Made NOISE levels correspond to the new CCIR accepted
+                  levels as defined in CCIR Report 258 below:
+                            1 = -140.4 dBW = Industrial (Business)
+                            2 = -144.7 dBW = Residential
+                            3 = -150.0 dBW = Rural
+                            4 = -163.6 dBW = Remote
+
+               2. All models have been changed so that each time it is executed,
+                  the parameters that are read as the current data is by the
+                  following order:
+                      1. Read "..\RUN\model.BIN" if it exists.
+                      2. ELSE read "..\SAVED\DEFAULT\DEFAULT.model"
+                                   "..\AREADATA\DEFAULT\DEFAULT.model" (area)
+                      3. ELSE use internal defaults
+                 Previously, step 2 above did not exist.
+                 This way, each organization can create their own DEFAULT data
+                 file the way they want it.
+
+               3. Check out the HELP file HISTORY1 under ITSHF for a brief
+                  historical letter on HF models at ITS up to 1978.
+                  I will try and create one for 1978-present.
+
+               4. All models have been modified so that the same coefficient
+                  files are used.  The coefficients were all the same except
+                  when the URSI 88 coefficients for foF2 were used in ICEPAC.
+                  All models now have the option to use the URSI 88 foF2
+                  coefficients.  REC533 does not use many of the coefficients,
+                  therefore, they have been re-ordered to put those values used
+                  by REC533 at the end.  The ASCII coefficient files have been
+                  annotated with text so that they are no longer a mystery.
+                  It is SUGGESTED that you SHOULD use the URSI 88 coefficients
+                  as they were created with data over the oceans and the
+                  curve fit by SSN was corrected so as to not be a problem
+                  for SSN > 180.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+22 Feb 1995    1. ICEPAC has been modified so that for method 25 (ALL MODES),
+                  the final column now has the title "Most REL" to indicate
+                  that this is the most reliable mode.  Previously, this was
+                  assumed.
+
+               2. SNR calculations in ICEPAC and VOACAP have been corrected
+                  under contract by Don Lucas.  It was previously felt that
+                  the signal and noise distributions were combined incorrectly.
+                  It has now been changed to be more technically correct.
+
+               3. Additionally, the output parameter FDAYS has been renamed
+                  to MUFday.  It is the percent of days of the month that the
+                  HOP MUF is predicted to occur.
+
+               4. A post-processor for area coverage maps has been developed.
+                  You will notice a new option in the area coverage programs
+                  that is titled "cOmbine maps".  This allows you to 
+                  mathematically combine map grid files using operators such
+                  as: MINIMUM, MAXIMUM, AVERAGE, POWERSUM, SUBTRACT, MEDIAN,
+                  DECILExx.
+
+               5. All AREA COVERAGE programs (ICEAREA, VOAAREA, RECAREA) have
+                  been modified so that you may specify the FREQUENCY =0.
+                  What this will do is run the frequency complement defined in
+                  ..\RUN\AREAFREQ.DAT (or ..\DATABASE\AREAFREQ.DAT) and save
+                  the maximum value of the parameters [DBU SDBW SNR REL SPROB
+                  SNRxx] and write them to the grid file (*.mG?).  This allows
+                  efficient analysis of coverage areas where multiple
+                  frequencies are allowed.
+
+               6. Area coverage transmitter main beam bearing can now be = -1,
+                  which will identify the transmitter as an omni-directional 
+                  antenna.  Therefore, the tranmsitter location can be 
+                  identified without the main beam direction being drawn.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+14 Mar 1995    1. A driver has been written for HP DeskJet 5xxC series color
+                  printers.  The default color driver supplied will work for
+                  HP PaintJet and HP PaintJet XL printers.
+                  To change to the color printer driver,
+                  while in the ..\RUN directory, type:
+                     DESKJET   - for HP DeskJet driver for x3 pixel expansion.
+                     DESKJET4  - for HP DeskJet driver for x4 pixel expansion.
+                     PAINTJET  - for HP PaintJet (& XL) driver.
+
+                  If the printer is not on the LPT1 port, change the file:
+                     ..\BIN\HPXLDMP.BAT to reflect the correct port.
+                  Similarly, the file ..\BIN\HPJETDMP.BAT controls output to
+                  the LaserJet printer.
+                  Black/White output formatted for a LaserJet printer is
+                  compatable on DeskJet and PaintJet printers.
+
+27 Mar 1995    1. In the area coverage input programs(ICEAREA,VOAAREA,RECAREA),
+                  the minimum angle is supposed to default to 3 degrees if you
+                  set it to 0.  The program would not let you set a value below
+                  .01 degrees.  That has been fixed.
+
+               2. The COMBINE program for area coverage maps continues being
+                  enhanced.  A S/I operation and a BIN (turn ranges into
+                  discrete values) have been added.  Also, since COMBINE
+                  allows you to combine the output from many area coverage
+                  calculations, there may be many transmitters used.  When
+                  you plot the resultant plot, only 1 transmitter was being
+                  plotted.  Now all of the tranmitter locations are saved
+                  on a file (named ********.mXT), where m=[I,V,R for model].
+                  This file is then read by the plotting program if it exists,
+                  and all of the transmitter locations are marked and their
+                  main beam directions are drawn.  Remember, if the antenna
+                  is non-directional, set its main beam direction to -1.
+
+               3. A simple method has been developed to allow you to configure
+                  you printer port, and also choose between color printer
+                  drivers.  If you begin program execution with ITSHF, there
+                  is a new option called SETUP (Set up printer ports).
+                  If you have configurations that are not allowed, please
+                  Email me your specifics.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+11 Apr 1995    1. A correction was made to HFANT. 
+                  Type 12 antennas (NTIA 87-215 Curtain arrays) did not
+                  produce the correct directivity gain on the plot.  The
+                  gains in the propagation routine were correct.
+                  This has been corrected.
+
+28 Apr 1995    1. COMBINE was changed so that you do not require to specify
+                  both the *.mCB filename and the *.mG1 filename.  Now
+                  you only specify one, and both are named the same.
+                  Since I always suggested you use the same name, this now 
+                  forces that and makes it simpler.
+
+               2. IONCAP antenna type HORIZONTAL-DIPOLE had a problem where
+                  the gain at 90 degrees elevation angle was a function of
+                  the off-azimuth angle.  Since 90 degrees is straight up,
+                  the answer should be the same.  That appeared to be a
+                  function of the internal equations.  They do not converge
+                  when logically they should.  To make the result consistent
+                  at 90 degrees elevation angle, I changed the gain routine
+                  to produce the same answer.  However, it produces quite a
+                  difference at 89.5 degrees.  If anyone has better gain
+                  calculation for Horizontal-Dipoles, please send it and I
+                  will incorporate it.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+12 May 1995    1. The area coverage input screen was changed to allow for
+                  non-directional receive antennas.  It was previously
+                  assumed that all area coverage calculations were performed
+                  using non-directional receive antennas.  However, a user
+                  requested the ability to model a directional antenna.
+                  A sample of that might be an antenna on board an aircraft.
+                  Of course, in this application, you must view the output
+                  map with some knowledge of the flight path of the aircraft.
+                  See the HELP file REC_BEAM under the area coverage programs
+                  for more information.
+
+               2. The default colors used for drawing Point-to-Point graphs
+                  exists in the file ..\DATABASE\COLORS.GPH.
+                  This allows users to select the colors of their choice.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+01 Jun 1995    1. Area coverage calculations may now be performed using
+                  either the GREAT CIRCLE projection (previously the only
+                  option), or in Cylindrical Latitude/Longitude coordinates.
+                  This was added to allow the data to be converted into GRIB
+                  format as was required by a sponsor.  If data is to be
+                  converted to the GRIB format, one of the predefined
+                  latitude/longitude projections must be used.  These are
+                  identified numerically as [21,22,23,24].  Other users can
+                  specify the projection type [1] and specify any latitude/
+                  longitude coordinates desired.  The Great Circle projection
+                  is the normal default used and it is identified a projection
+                  type [0], which allows old data files to require no changes.
+
+                  Cylindrical Latitude/Longitude coordinates can allow users
+                  to perform calculations and plot the results for the whole
+                  world.  Currently, there is no mechanism to allow maps
+                  to be "merged", but it is relatively simple and may be
+                  undertaken if the need arises.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+25 Oct 1995    1. A problem with slewed antennas in HFANT was corrected.
+                  The slew angle could not be set to a value between 0 and -30.
+                  Only positive values we allowed.  This has been corrected.
+
+               2. A change has been made to the area coverage plotting.
+                  It should not be noticed as it was an internal change to
+                  make it compatible with the Windows version that is being
+                  developed.  Let me know if any problems occur.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+21 Nov 1995    1. A problem with Quadrant (type 8) antenna was discovered.
+                  The design frequency could not be changed from 10 MHz.
+                  This affected both HFANT and and propagation calculations
+                  when the quadrant antenna was used.
+                  This has been corrected.
+--------------------------------------------------------------------------------
+----------------------------- End of 1995 --------------------------------------
+--------------------------------------------------------------------------------
