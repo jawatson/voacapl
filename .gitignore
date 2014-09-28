@@ -30,6 +30,9 @@
 # build files
 *.in
 
+# temporary files
+*~
+
 # voacapl specific files
 Makefile
 aclocal.m4

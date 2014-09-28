@@ -3,7 +3,7 @@ voacapl
 
 A port of VOACAP for Linux
 
-This seeks to maintain a port of the VOACAP code base that may be compiled using GFortran and run on Linux.  
+This seeks to maintain a port of the VOACAP code base that may be compiled using GFortran and run on Linux.  The code is based on the material made publicly available by Greg Hang at [http://www.greg-hand.com/hfwin32.html](http://www.greg-hand.com/hfwin32.html).
 
 # Installation
 The application requires the gfortran compiler which is present in the repositories most, if not all, modern Linux distributions. 
