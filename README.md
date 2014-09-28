@@ -16,6 +16,11 @@ On Ubuntu, the following command may be used
 
     $ sudo apt-get install gfortran
 
+Initialise the build with the following commands;
+
+    $ automake --add-missing
+    $ autoreconf
+
 ##Build
 Building the application follows the normal configure / make / install cycle followed by the command 'makeitshfbc' to create the data files required by voacap;
 

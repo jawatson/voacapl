@@ -10,9 +10,9 @@ SUBDIRS = src/modules\
 	voacapl/itshfbc/coeffs\
 	voacapl/itshfbc/bin/anttyp90
 	
-dist_doc_DATA = README\
+dist_doc_DATA = README.md\
 		NEWS\
-        COPYING\
+        	COPYING\
 		ChangeLog\
 		AUTHORS\
 		logo.png

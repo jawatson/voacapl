@@ -24,5 +24,33 @@
 
 # Executables
 *.exe
-*.out
+#*.out
 *.app
+
+# build files
+*.in
+
+# voacapl specific files
+Makefile
+aclocal.m4
+ar-lib
+autom4te.cache/
+compile
+config.log
+config.status
+configure
+missing
+src/hfmufesw/Makefile
+src/modules/Makefile
+src/voa_lib/Makefile
+src/voacapw/Makefile
+src/voacapw/voacapl
+src/wp10dwin/Makefile
+voacapl/itshfbc/bin/anttyp90/Makefile
+voacapl/itshfbc/bin/anttyp90/anttyp90
+voacapl/itshfbc/coeffs/Makefile
+voacapl/itshfbc/coeffs/coefbinw
+voacapl/itshfbc/coeffs/coeffbin
+voacapl/itshfbc/coeffs/fof2bin
+voacapl/itshfbc/coeffs/fof2binw
+
