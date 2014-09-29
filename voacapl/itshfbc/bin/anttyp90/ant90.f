@@ -151,7 +151,7 @@ ccc      write(*,'('' OPENing file='',a)') filename(1:nch)
       else if(alf(1:9).eq.'frequency') then
 	 nfreq=nfreq+1
 	 read(alf(10:),*) frequency(nfreq)
-         write(*,21) nfreq,frequency(nfreq)
+c         write(*,21) nfreq,frequency(nfreq)
 21       format(' Reading frequency #',i3,'=',f8.3,' MHz')
 	 dbi(nfreq)=0.
 	 eff(nfreq)=0.

@@ -31,12 +31,12 @@ C***********************************************************************
       
 C.....START OF PROGRAM
       call GET_COMMAND_ARGUMENT(1, run_directory) !jw
-      write(*,'('' Run Directory      : '',a)') trim(run_directory)
+c      write(*,'('' Run Directory      : '',a)') trim(run_directory)
       nch_run=len(trim(run_directory))
       if(nch_run.lt.3) go to 930
       
       call GET_COMMAND_ARGUMENT(2, mode)
-      write(*,'('' Mode arg           : '',a)') mode
+c      write(*,'('' Mode arg           : '',a)') mode
 
       open(21,file=run_directory(1:nch_run)//'/anttyp90.dat', status='old',err=900)
       rewind(21)
