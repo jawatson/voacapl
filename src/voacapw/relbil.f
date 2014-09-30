@@ -112,16 +112,34 @@ C
 C.....END OF RELIABILITY CALCULATION FOR EACH MODE
 C  MOST RELIABLE  MODE
 C
-      IR =1
-      XREL = RELY(1)
-      XHN  = HN(1)
-      XSN  = SN(1)
+ccc      IRmethod=1       !  original - if RELs are within .05 of each other
+      IRmethod=2       !  if RELs are within 5% of each other
+ccc      IRmethod=3       !  original, but if MRM REL is < .01, use mode with max REL
+      IRmax=1
+c          the original way of looking for the MRM in the 140 loop could
+c          produce an improper mode.
+c          Thus, first find the max REL mode
+      do 10 im=2,inum
+      if(RELY(IM).gt.RELY(IRmax)) IRmax=IM     !  IRmax will be the mode with max REL
+10    continue
+
+      IR=IRmax
+      XREL = RELY(IR)
+      XHN  = HN(IR)
+      XSN  = SN(IR)
 C.....IF ONLY ONE MODE USE IT........................................
-      DO 140 IM= 2,INUM
+ccc      write(luo,311) ir,rely(ir),hn(ir),sn(ir)
+      DO 140 IM= 1,INUM
+      if(im.eq.IRmax) go to 140       !  don't compare this mode
+ccc      write(luo,311) im,rely(im),hn(im),sn(im)
+ccc311   format('mode=',i5,3f10.5)
 C.....MAKE SELECTION BASED ON RELIABILITY FIRST BUT IF CLOSE SELECT ON
 C.....LOWER NUMBER OF HOPS (IF THE NUMBER OF HOPS ARE EQUAL SELECT BY
 C.....MEDIAN SNR)
-      IF( ABS(RELY(IM)-XREL) .LT. XEPS )THEN
+      if(xrel.lt..00000001) xrel=.00000001
+      RELtest=ABS(RELY(IM)-XREL)
+      if(IRmethod.eq.2) RELtest=RELtest/XREL        !  use percentage
+      IF(RELtest .GE. XEPS ) go to 140              !  REL not close to max REL
 C.......CLOSE SO TEST IF NUMBER OF HOPS ARE EQUAL.....................
         IF(ABS(XHN - HN(IM)).LE.XEPS)THEN
 C.........NUMBER OF HOPS ARE EQUAL SO TEST MEDIAN SNR.................
@@ -132,10 +150,6 @@ C.........NUMBER OF HOPS ARE EQUAL SO TEST MEDIAN SNR.................
 C.........THIS ONE HAS FEWER HOPS.....................................
           GO TO 139
         ENDIF
-      ELSE IF(RELY(IM).GT.XREL)THEN
-C.......THIS ONE IS MORE RELIABLE TRY IT..............................
-        GO TO 139
-      ENDIF
       GO TO 140
 C.....THIS MODE IS BETTER SO TRY IT...................................
   139 IR = IM
@@ -143,9 +157,13 @@ C.....THIS MODE IS BETTER SO TRY IT...................................
       XSN=SN(IM)
       XREL = RELY(IM)
   140 CONTINUE
+c          if REL is small (<.01) use mode with highest REL
+      if(IRmethod.eq.3 .and. RELY(IR).lt..01) IR=IRmax
       NREL = IR
       IS = NMODE(IR)
       MR=HN(IR)
+ccc      write(luo,141) nrel
+ccc141   format('nrel=',i5)
       IF(INUM.eq.1)THEN
 C.......ONLY ONE MODE SO SET MOST RELIABLE VALUES....................
         RELIAB(IF) = RELY(IR)
@@ -233,6 +251,8 @@ c%lc:gsp 28-DEC-1994:end change ***************************************
         end if
         RELIAB(IF) = 1. - FNORML(Z)
       ENDIF
+ccc      write(luo,777) if,reliab(if)
+ccc777   format('if=',i5,'     REL=',f10.6)
       gaint(if)=TGAIN(IR)              !  save transmitter gain
       gainr(if)=RGAIN(IR)              !  save receiver    gain
       SNRLW(IF) = D10R

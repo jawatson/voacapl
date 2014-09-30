@@ -222,7 +222,7 @@ c            call yieldit       !  yield for windows operations
             azimuth=iazim
             do 205 ielev=0,90
             delev=float(ielev)
-205         call invcon(30,freqarea(1),elev,areagain(ielev+1))
+205         call invcon(30,freqarea(1),delev,areagain(ielev+1))
 210         call antsave(idx,iazim,freqarea(1),eff,areagain)
          else if(jant.ge.90) then      !  Harris modifications (Area coverage)
             close(22)
