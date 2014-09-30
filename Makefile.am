@@ -13,7 +13,7 @@ SUBDIRS = src/modules\
 dist_doc_DATA = README.md\
 		NEWS\
         	COPYING\
-		ChangeLog\
+		ChangeLog.md\
 		AUTHORS\
 		logo.png
 
