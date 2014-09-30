@@ -4,7 +4,7 @@
 # in the Makefile.
 
 SRC_ROOT_DIR=__PREFIX__/share/
-echo $SRC_ROOT_DIR
+#echo $SRC_ROOT_DIR
 
 # Copy across local copies of files that need to be edited by the user
 # Database needs to be reviewed and will probably change after looking at the
@@ -36,7 +36,9 @@ done
 mkdir -p $HOME/itshfbc/database/
 for DATABASE_FILE in cirafp.911 colors.dat colors.win version.win
 do
-	ln -s $SRC_ROOT_DIR/voacapl/itshfbc/database/$DATABASE_FILE $HOME/itshfbc/database/
+        if [ ! -f "$HOME/itshfbc/database/$DATABASE_FILE" ]; then
+            ln -s $SRC_ROOT_DIR/voacapl/itshfbc/database/$DATABASE_FILE $HOME/itshfbc/database/
+        fi
 done
 
 # Copy the files that may require modification...
@@ -49,5 +51,7 @@ done
 # And sym links for evrything else...
 for SUB_DIR in coeffs geocity geonatio geostate
 do
-	ln -s $SRC_ROOT_DIR/voacapl/itshfbc/$SUB_DIR $HOME/itshfbc/
+        if [ ! -d "$HOME/itshfbc/$SUB_DIR" ]; then
+            ln -s $SRC_ROOT_DIR/voacapl/itshfbc/$SUB_DIR $HOME/itshfbc/
+        fi
 done
