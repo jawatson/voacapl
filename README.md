@@ -31,6 +31,22 @@ Building the application follows the normal configure / make / install cycle fol
     $ sudo make install
     $ makeitshfbc
 
+##Running voacapl
+The following command will run voacapl from the command line using the contents of the default input file, saving results to itshfbc/run/voacapx.out;
+
+    $ voacapl ~/itshfbc 
+
+###Absorption Model
+Most users will be happy with the dafault absorption model.  Some user's may 
+however wish to experiment with alternative models which may be selected
+by modifying the contents of the file itshfbc/database/version.w32
+
+*  Version 14.0905W = normal code
+*  Version 14.0905I = use old IONCAP absorption model
+*  Version 14.0905A = use Alex's changes with normal absorption
+*  Version 14.0905a = use Alex's changes with IONCAP absorption
+
+
 73's
 
 Jim (M0DNS / HZ1JW)
