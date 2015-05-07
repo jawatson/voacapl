@@ -46,6 +46,7 @@ c         character VERSN*8
      A ,XNOISE,ZNOISE,NF
       COMMON /CON /D2R, DCL, GAMA, PI, PI2, PIO2, R2D, RZ, VOFL
 c------------------------------------------------------------------------
+      iquiet=0
 C.....START OF PROGRAM
 C.....SET THE LOGICAL UNITS FOR SYSTEM INPUT AND OUTPUT FILES.
 C     THE USER MUST INCLUDE AN "AUXIN" AND/OR AN "AUXOUT" CARD IF THE
@@ -78,8 +79,8 @@ c*******************************************************
 20    nfreqs=nfreqs-1
       meth=method
       if(mspec.eq.121) meth=30
-      write(*,21) meth,IMON(MONTH),nint(SSN),(frel(if),if=1,nfreqs)
-21    format(' Method',i3,1x,a3,i4,'ssn  Freqs=',11f5.1)
+      write(*,21)meth,mspec,IMON(MONTH),nint(SSN),(frel(if),if=1,nfreqs)
+21    format(' Method',2i4,1x,a3,i4,'ssn  Freqs=',11f5.1)
 c*****************************************************************
       if(ndistance.ne.1) then       !  plots vs DISTANCE
          write(48,'(i5,'' distances'')') ndistance
@@ -91,6 +92,7 @@ c*****************************************************************
      +              'SIGLW SIGUP SNRLW SNRUP TGAIN RGAIN SNRxx DBM   ')
          if(iquiet.eq.0) then
             write(*,'('' Calculating Distance plot'')')
+c            call soua@(' UT[')
          end if
       end if
       if(ntime.ne.0) then       !  plots vs TIME
@@ -104,6 +106,7 @@ c*****************************************************************
       JT=ihours(ihr)
       if(ndistance.ne.1 .and. iquiet.eq.0) then
          write(alf,'(i3)') JT
+c         call soua@(alf)
       end if
       do 400 idistance=1,ndistance
       if(idistance.eq.1) then
@@ -172,17 +175,26 @@ C.......FORCE LONG PATH MODEL IF PATH LENGTH .GT. SPECIFIED LIMIT
         IPFG=100
         IF(MSPEC.ne.121 .and. GCDKM.GE.GCDLNG) IPFG=200
       ENDIF
-ccc      if(mspec.eq.121) write(12 ,111) method,npsl,gcdkm,frel(12)
-ccc111   format(' method,npsl,gcdkm,muf=',2i5,f10.1,f10.3)
+
+      IF(meth.eq.30   .and. GCDKM.GE.GCDLNG) IPFG=200
+      IF(GCDKM.GE.GCDLNG) IPFG=200
+ccc      IF(GCDKM.GE.GCDLNG) mspec=0
+      IF(meth.eq.21) IPFG=200      !  forced long path
+      IF(meth.eq.22) IPFG=100      !  forced short path
+ccc      write(* ,111) method,meth,mspec,npsl,ipfg,gcdkm,frel(12)
+ccc111   format(' method,meth,mspec,npsl,gcdkm,muf=',5i5,f10.1,f10.3)
       CALL LUFFY(IPFG)
       CALL SETLUF
 C
       CALL OUTLIN
   400 CONTINUE             !  end of DISTANCE loop
   405 CONTINUE             !  end of   HOUR   loop
+      method=meth          !  reset METHOD
       GO TO 100
 C.....END OF RUN
   600 CONTINUE
+ccc      write(*,601) meth,method,mspec,gcdkm,gcdlng
+ccc601   format('601=',3i5,2f10.2)
       WRITE(LUO,1504) VERSN
  1504 FORMAT(1H ,'*****END OF RUN*****',5X,'VOACAP ',a8)
       RETURN

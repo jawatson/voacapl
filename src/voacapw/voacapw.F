@@ -237,7 +237,7 @@ c****************************************************************
 c      iharris=it_exist(run_directory(1:nch_run-3)//'bin_win/anttyp99.exe')
       inquire(file=run_directory(1:nch_run-3)//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
 c      The Harris code is not available so the check is pointless...
-      iharris = .false.
+c      iharris = .false.
 c****************************************************************
 c      call del_abt     !  delete the voaarea.abt & voacap.abt files
       listing='Y'

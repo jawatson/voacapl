@@ -4,6 +4,8 @@ C--------------------------------
 C
 C     THIS SUBROUTINE PUTS THE LONG PATH MODE TOGETHER
 C
+      COMMON / FILES / LUI, LUO, LU2, LU5, LU6, LU15, LU16, LU20, LU25,
+     A LU26, LU35
       COMMON/ANOIS/ATNU,ATNY,CC,TM,RCNSE,DU,DL,SIGM,SxGU,SxGL,KJ,JK
       COMMON/MUFS/EMUF(24),F1MUF(24),F2MUF(24),ESMUF(24),ALLMUF(24),FOT
      A (24),XLUF(24),HPF(24),ANGMUF(24),MODMUF,SIGL(4),SIGU(4),DELMUF(4)
@@ -82,8 +84,15 @@ C.....AVERAGE GROUND LOSS
       FHOP = AMAX1(FHOP,1.)
       NMMOD=1
 C.....TRANSMISSION LOSS
+ccc      write(luo,108) df,di,dm,gcd,dt,dr,dikm
+ccc108   format('df=',6f10.6,f10.3)
+ccc      write(luo,109) xlf,af,df,rz
+ccc109   format('xlf=',f10.3,f10.6,f10.6,f10.3)
+ccc      write(luo,111) FREE,XLT,XLM,XLF,XLR,FHOP,GLOSS,ASM
+ccc111   format('free=',8f10.3)
       TLOSL = FREE + XLT + XLM + XLF + XLR + (FHOP - 1.) * GLOSS + ASM
      A        - TGAINX(LTXRGM(2),ITXRCP(2)) - TGAINX(LTXRGM(1),1)
+ccc      write(luo,'(''tlosl='',f10.3)') tlosl
       GRLOS (1) = GLOSS
       HN(1) = 0.5 * GCD / (DR + DT)
 C.....NUMBER OF HOPS

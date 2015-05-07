@@ -6,6 +6,7 @@ C     THIS ROUTINE FINDS ALL MODES FOR THE CURRENT FREQUENCY AND THE
 C     DISTANCE FROM THE IONOGRAM (NO SPORADIC E MODES - SEE SUBROUTINE
 C     ESMOD) THIS IS FOR A GIVEN HOP DISTANCE SET IN SUBROUTINE LUFFY
 c
+      common /gh_ipfg/ ipfg
       COMMON / FILES / LUI, LUO, LU2, LU5, LU6, LU15, LU16, LU20, LU25,
      A LU26, LU35
       COMMON / CONTRL / IELECT(3), KTOUT(12), MONTHS(12), SUNSP(12),
@@ -53,6 +54,8 @@ C  MAY BE MISSED THIS WAY.
 C  SELECT SAMPLE AREA TO BE USED BY CRITICAL FREQUENCIES.
 C  SET BY CALL TO SUBROUTINE SANG FROM SUBROUTINE LUFFY
 C  RELATE 3 IONOSPHERES TO 5 SAMPLE AREAS
+
+ccc      if(gcdkm.gt.10000. .and. mspec.eq.121) return
       K = JMODE
       L = LX(K)
 C.....USE AVERAGE ABSORBTION INDEX FROM SUBROUTINE SIGDIS
@@ -218,7 +221,17 @@ c%lc begin change
 c          add more loss when MUFday gets very low but put a limit on it.
 c          Extra loss goes from 0 to 24dB for MUFday .0001 to .0000001
 c          this was added 11/11/2006 for problems posed by Jim Tabor
+ccc      if(prob(im).le..000001) prob(im)=.000001       !  put a limit on low probability (GRH 5/12/2005)
       if(prob(im).lt..0001) then
+      if(prob(im).le.0.) then
+         write(*,1116) prob(im)
+1116     format('prob(im)=',f10.3)
+         write(*,1111) tlatd,tlongd,rlatd,rlongd,gcdkm
+1111     format('lat,lon=',4f10.4,f10.2)
+         write(*,1112) ipfg,mspec
+1112     format('ipfg=',2i5)
+         stop
+      end if
          xfac=alog10(prob(im))
          if(xfac.gt.-4.) xfac=-4.
          if(xfac.lt.-7.) xfac=-7.
@@ -288,6 +301,11 @@ C.....B(IM) IS RADIATION ANGLE
 C.....NMODE(IM) IS MODE
 C.....HP(IM) IS VIRTUAL HEIGHT
 C.....HN(IM) IS NUMBER OF HOPS
+      if(freq.le.0.) then
+         write(*,1117) freq
+1117     format('freq=',f10.3)
+         stop
+      end if
       FLDST(IM) = 107.2 + PWRDB(FREQ) + 20.*ALOG10(FREQ)-XTLOS-RGAIN(IM)
       SIGPOW (IM) = PWRDB(FREQ) - XTLOS
 C------------    CHANGED 9/24/91  (LONG PATH RCVR EFF CORRECTION)  FJR

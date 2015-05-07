@@ -1,5 +1,5 @@
 c###relbil.for
-      SUBROUTINE RELBIL (IF)
+      SUBROUTINE RELBIL (IF,freq)
       COMMON / FILES / LUI, LUO, LU2, LU5, LU6, LU15, LU16, LU20, LU25,
      A LU26, LU35
 C--------------------------------
@@ -112,8 +112,8 @@ C
 C.....END OF RELIABILITY CALCULATION FOR EACH MODE
 C  MOST RELIABLE  MODE
 C
-ccc      IRmethod=1       !  original - if RELs are within .05 of each other
-      IRmethod=2       !  if RELs are within 5% of each other
+      IRmethod=1       !  original - if RELs are within .05 of each other
+ccc      IRmethod=2       !  if RELs are within 5% of each other
 ccc      IRmethod=3       !  original, but if MRM REL is < .01, use mode with max REL
       IRmax=1
 c          the original way of looking for the MRM in the 140 loop could
@@ -261,6 +261,9 @@ ccc777   format('if=',i5,'     REL=',f10.6)
       VHIGH(IF)=HP(IR)
       DELAY(IF)=TIMED(IR)
       DBLOS (IF)= TLOSS(IR)
+c         new LOSS calculation 11/13/2014
+c         since we have summed the signal powers, need to adjust transmission loss
+      dblos(if)=pwrdb(freq)-dbw(if)     !  recalculate transmission loss
       CPROB(IF)=PROB(IR)
       MODE  (IF)= LAYTYP(IS)
       NHP   (IF)= HN(IR)

@@ -11,6 +11,7 @@ C           200        LONG PATH SYSTEM PERFORMANCE
 C           300        SHORT PATH LUF
 C           400        LONG PATH LUF
 C
+      common /gh_ipfg/ ipfg
       COMMON/ANOIS/ATNU,ATNY,CC,TM,RCNSE,DU,DL,SIGM,SxGU,SxGL,KJ,JK
       common /cgains/ gaint(13),gainr(13)    !  transmitter & receiver gains
       common /sncom/ snxx(13)
@@ -83,10 +84,12 @@ C.....TEMPORARY STORAGE
       CHARACTER MFLG(3)*3,ITF*1
       ITF=CHAR(12)
       IPFG=IPFLAG
-ccc      write(*,'('' In LUFFY('',2i5,'')  gcdkm='',2f10.2)') 
+      mspec_temp=mspec
+ccc      write(luo,'('' In LUFFY('',2i5,'')  gcdkm='',2f10.2)') 
 ccc     +      mspec,ipfg,gcdkm,gcd
-ccc      if(mspec.eq.121 .and. gcdkm.gt.10000.) ipfg=200   !  use long path method
-ccc      write(*,'('' In luffy('',2i5,'')  gcdkm='',2f10.2)') 
+      if(mspec.eq.121 .and. gcdkm.gt.10000.) ipfg=200   !  use long path method
+      if(mspec.eq.121 .and. gcdkm.gt.10000.) mspec=0    !  beyond smoothing distance
+ccc      write(luo,'('' In luffy('',2i5,'')  gcdkm='',2f10.2)') 
 ccc     +      mspec,ipfg,gcdkm,gcd
       IF(IPFG.GT.200)THEN
 C.......FREQUENCY COMPLEMENT
@@ -287,6 +290,7 @@ C````````````````````````````````````````````````````````````````````````
 C.......SELECT OPTIMUM AT TRANSMITTER/RECEIVER ENDS
         CALL SELTXR
 C.......DO MODE CALCULATIONS
+ccc      write(luo,'(''calling LNGPAT'')')
         CALL LNGPAT
         IF(IHLNG.GT.0)THEN
           WRITE(99,'(1x,66(1h-))')
@@ -296,8 +300,8 @@ C125PC      IF(MSPEC.EQ.125)GO TO 265
 C.....COMBINED RELIABILITY
 ccc      write(*,'(''before genois2'')')
       call genois
-ccc      write(*,'(''before relbil'')')
-      call relbil(IFX)
+ccc      write(luo,'(''before relbil'')')
+      call relbil(IFX,freq)
       IF(IPFG.LT.300)THEN
 C.......CHECK TO SEE IF SERVICE PROBABILITIES ARE TO BE OUTPUT
         IF( LINBOT(14) ) 285,285,280
@@ -320,11 +324,13 @@ C.......TEST RELIABILITY
         IF(RELIAB(IFX).GE.PLUF)GO TO 165
       ENDIF
 C121PC      ******************************************************
-ccc      write(*,'(''before IF, mspec,ipflag='',2i5)') mspec,ipflag
+ccc      write(luo,'(''before IF, mspec,ipflag='',2i5)') mspec,ipflag
+ccc      write(luo,'(''angle('',i2,'')='',2f10.3)') 
+ccc     +        ifx,angle(ifx),dblos(ifx)
       IF(MSPEC.EQ.121)THEN
         idx=(ipflag+1)/100
 ccc        idx=(ipfg+1)/100
-ccc      write(*,'(''ifx,idx,ipflag,ipfg='',4i5)') ifx,idx,ipflag,ipfg
+ccc      write(luo,'(''ifx,idx,ipflag,ipfg='',4i5)') ifx,idx,ipflag,ipfg
         yangle(IFX,idx)=angle(IFX)
         ycprob(IFX,idx)=cprob(IFX)
         ydblos(IFX,idx)=dblos(IFX)
@@ -345,9 +351,9 @@ ccc      write(*,'(''ifx,idx,ipflag,ipfg='',4i5)') ifx,idx,ipflag,ipfg
         xprobmp(IFX,idx)=probmp(IFX)
         ytgain(ifx,idx)=tgain(1)
         yrgain(ifx,idx)=rgain(1)
-ccc        write(*,'('' saving gains('',2i3,2h)=,5f10.4)') 
+ccc        write(luo,'('' saving gains('',2i3,2h)=,5f10.4)') 
 ccc     +    ifx,idx,tgain(1),rgain(1),angle(ifx)!  ,tgain(ifx),rgain(ifx)
-ccc      if(ipflag.eq.200) write(*,1234) du,dl,angler(ifx)
+ccc      if(ipflag.eq.200) write(luo,1234) du,dl,angler(ifx)
 ccc1234  format('ipflag=200=',3f10.3)
        
         IF(IPFLAG.EQ.200)THEN
@@ -355,7 +361,7 @@ C.........SAVE LONG PATH PARAMETERS
           ZDU(IFX)=DU
           ZDL(IFX)=DL
           INMODE(IFX)=NMODE(1)
-ccc      write(*,'(''save long path='',i5,f10.3)') ifx,angler(ifx)
+ccc      write(luo,'(''save long path='',i5,f10.3)') ifx,angler(ifx)
           zangler(IFX)=angler(IFX)
 ccc          ZRGAIN(IFX)=RGAIN(1)
           zmoder(IFX)=moder(IFX)
@@ -385,14 +391,14 @@ C125SPLP        ENDIF
 C ADD IAND(INFO,16) HERE, IF L/S OUTPUT DESIRED FOR MSPEC 125
 C125PC        RETURN
 C125PC      ENDIF
-      IF(method.eq.25)RETURN
+      IF(method.eq.25) go to 999    !  done
       IF(IPFG.ge.300) go to 300
 C121PC  ************************************************************
 c           Smoothing ONLY for distances  7000 - 10000 km
-        IF(MSPEC.ne.121) return
-ccc      write(*,'(''smoothing?'',f10.2)') gcdkm
-        IF(gcdkm.lt.7000.) return
-ccc        IF(gcdkm.gt.10000.) return
+        IF(MSPEC.ne.121) go to 999    !  done
+ccc      write(luo,'(''smoothing?'',f10.2)') gcdkm
+        IF(gcdkm.lt.7000.) go to 999   !  done
+        IF(gcdkm.gt.10000.) go to 999  !!  why was this commented out?
 c.........Do LONG and Short Path Model
           if(IPFLAG.EQ.100)THEN
             IPFLAG=200
@@ -403,7 +409,7 @@ ccc            call outlin
 ccc            call outlin
 c...........Use LONG Path/Short Path Smoothing From VOA Memo  15 Jan 1991
             MDL(13)='M'
-ccc      write(*,111)
+ccc      write(luo,111)
 ccc111   format(' Path     gcdkm      if  Freq    ydbw    ',
 ccc     +       'ydblosl   s?pld   delpow')
             DO 290 IF=1,12
@@ -413,9 +419,9 @@ ccc     +       'ydblosl   s?pld   delpow')
             SLpld=YDBW(IF,2)-abs(YDBLOSL(IF,2))   !  abs added 9/14/94 per VOA
             SSpld=YDBW(if,1)-abs(YDBLOSL(if,1))   !  abs added 9/14/94 per VOA
             Delpow=slpld-sspld
-ccc      write(*,112) gcdkm,if,freq,ydbw(if,1),ydblosl(if,1),sspld,delpow
+ccc      write(luo,112) gcdkm,if,freq,ydbw(if,1),ydblosl(if,1),sspld,delpow
 ccc112   format(' Short=',f10.2,i5,f7.3,4f9.3)
-ccc      write(*,113)               ydbw(if,2),ydblosl(if,2),slpld
+ccc      write(luo,113)               ydbw(if,2),ydblosl(if,2),slpld
 ccc113   format(' Long =',22x,3f9.3)
 
 ccc            if(delpow.lt.0. .and. gcdkm.le.10000.)then
@@ -431,7 +437,7 @@ C.............Use short path
               gaint(if)=tgain(if)      !  this is what is really printed
               gainr(if)=rgain(if)      !  this is what is really printed
               snxx(if)=RSN - xsnpr(if,1)   !  save short path for printing
-ccc              write(*,'('' short smoothing gains='',2f10.4,i5)') 
+ccc              write(luo,'('' short smoothing gains='',2f10.4,i5)') 
 ccc     +                   tgain(if),rgain(if),if
             else
 C.............Use LONG Path or Use Smoothing if Dist LT 10000
@@ -452,7 +458,7 @@ C.............Use LONG Path or Use Smoothing if Dist LT 10000
 ccc              rgain(1)=ZRGAIN(IF)
               tgain(1)=ytgain(IF,2)
               rgain(1)=yrgain(IF,2)
-ccc              write(*,'('' long smoothing gains='',2f10.4,i5)') 
+ccc              write(luo,'('' long smoothing gains='',2f10.4,i5)') 
 ccc     +                   tgain(1),rgain(1),if
               EFF(1)=RNEFF(if)
 ccc      write(luo,'(''eff='',f10.3)') eff(1)
@@ -496,7 +502,7 @@ ccc      write(*,'(''delx='',e15.7)') delx
      +                                                    rgain(1)
               NMMOD=1
               call genois
-              CALL RELBIL(if)
+              CALL RELBIL(if,freq)
               IF( LINBOT(14).gt.0) CALL SERPRB(IF)
             ENDIF
             IF(IAND(INFO,16).GT.0)THEN
@@ -515,7 +521,7 @@ ccc      write(*,'(''delx='',e15.7)') delx
             ENDIF
   290       CONTINUE
 C121PC  ************************************************************
-        RETURN
+        go to 999    !  done
 C     NO LUF FOUND. ,FIND HIGHEST RELIABILITY AND QUIT.
 300   IG =1
       REL = RELIAB(1)
@@ -526,7 +532,7 @@ C     NO LUF FOUND. ,FIND HIGHEST RELIABILITY AND QUIT.
   160 CONTINUE
       XLUF(IT) = -FREA(IG)
       FREA(13) =  FREA(IG)
-      RETURN
+      go to 999     !  done
 c********************************************************
 165   IF=IFX
       IF(IF.eq.1) then            !  1st frequency is good
@@ -541,6 +547,7 @@ C.....USE LINEAR INTERPOLATION
          XLUF(IT) = FLOW + (FHIGH-FLOW)*(PLUF-RLOW)/(RHIGH-RLOW)
       end if
       FREA(13) = XLUF(IT)
+999   mspec=mspec_temp
       RETURN
       END
 C--------------------------------
