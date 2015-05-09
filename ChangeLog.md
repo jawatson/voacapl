@@ -1,4 +1,6 @@
 ##Changelog
+###v0.6.7 (09/05/15)
+Fixes a bug that I introduced when changing the iharris variable to a logical type.  The output files are now closer to the Windows version.
 ###v0.6.6 (07/05/15)
 Multiple changes using the latest available code from Greg's website.  This should align with the Windows version v15.0605.
 ###v0.6.5 (30/09/14) 
