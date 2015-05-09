@@ -86,7 +86,7 @@ ccc       changes made at VOA request 9/8/95
 cc      WRITE(LUO,1502)GMT,ALLMUF(IT),(FREL(IQ),IQ=1,ND)
 cc 1502 FORMAT(/,' ',1X,F4.1,12F5.1,' FREQ')
 C*****Begin HARRIS RF Mod by CJK 8/1/96************************************
-      if(.not.iharris) then
+      if(iharris) then
          WRITE(LUO,1502)GMT,ALLMUF(IT),(FREL(IQ),IQ=1,ND)
 c1502  FORMAT(/,' ',1X,F4.1,12F5.1,' FREQ')
       else
