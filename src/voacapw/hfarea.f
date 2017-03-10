@@ -196,8 +196,8 @@ C.........FORCE LONG PATH MODEL
       ELSE
 C.......FORCE LONG PATH MODEL IF PATH LENGTH .GT. SPECIFIED LIMIT
         IPFG=100
-        IF(MSPEC.ne.121 .and. GCDKM.GE.GCDLNG)IPFG=200
-        IF(GCDKM.GE.GCDLNG)IPFG=200
+        IF(MSPEC.ne.121 .and. GCDKM.GT.GCDLNG)IPFG=200
+        IF(GCDKM.GT.GCDLNG)IPFG=200
       ENDIF
 ccc      write(luo,111) ix,iy,method,npsl,ipfg,gcdkm,frel(12)
 ccc111   format(5i5,f10.1,f10.3)
