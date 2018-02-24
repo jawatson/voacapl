@@ -43,7 +43,7 @@ c    directory = full pathname to the install directory (e.g. ~/itshfbc)
 c    method    = (CALC/SCREEN/PRINT)
 c    pathname  = pathname below directory /areadata/ of input data file
 c                (e.g. DEFAULT/DEFAULT.VOA)
-c    deckname  = where raw input deck is found. 
+c    deckname  = where raw input deck is found.
 c                cannot be named VOACAPX.DAT.
 c    a         = append results to output file
 c
@@ -70,8 +70,8 @@ c  differences need to be addressed ( e.g. getting filein,fileout).
 C--------------------------------
 c%lc:gsp 28-DEC-1994:1st change, program voacapw   *********************
 c%lc    .Changes made affecting "MUF DAYS" calculation in REGMOD
-c%lc    .Changes made in reliability calculation in RELBIL        
-c%lc            
+c%lc    .Changes made in reliability calculation in RELBIL
+c%lc
 c%lc    comments regarding changes may be collected by stripping lines
 c%lc    with this 'c%lc' prefix. Should be insensitive to case to be safe.
 c%lc            George Scott Pinson
@@ -160,7 +160,7 @@ c *******************************************************************
       character(len=256) :: cmd
 
 C
-C SET PREDEFINED CONSTANTS:      
+C SET PREDEFINED CONSTANTS:
 C
       DIMENSION IIA (6), IIB (6)
 C
@@ -213,14 +213,14 @@ c      call ucase(run,nch)
       iquiet=0
       if(run(1:2).eq.'-s') then
          iquiet=1
-         call get_command_argument(argCtr, run) 
-         argCtr = argCtr + 1   
+         call get_command_argument(argCtr, run)
+         argCtr = argCtr + 1
          nch=lenchar(run)
          if(nch.le.3) go to 940
       end if
-      
+
 c******************************************************
-c     check that the itshfbc directory exists, quit with 
+c     check that the itshfbc directory exists, quit with
 c     a message about creating one if not.
 c******************************************************
       inquire(file=run(1:len(trim(run)))//'/.', exist=doesit)
@@ -242,7 +242,7 @@ c****************************************************************
 c      call del_abt     !  delete the voaarea.abt & voacap.abt files
       listing='Y'
       areach=' '
-      call get_command_argument(argCtr, filein) 
+      call get_command_argument(argCtr, filein)
       argCtr = argCtr + 1 !jw
       if(filein(1:1).eq.' ') filein='voacapx.dat'
 c todo check voacapx.dat exists
@@ -257,7 +257,7 @@ c      call lcase(filein,20)
          argCtr = argCtr + 1 !jw
 c        Check the area input file exists and is readable
          inquire(file='../areadata/'//filein, exist=doesit)
-         if(.NOT.doesit) goto 944 
+         if(.NOT.doesit) goto 944
 
 c         call lcase(filein,20)
          if(filein(1:12).eq.'voaareaw.cir') then    !  batch area coverage
@@ -292,14 +292,14 @@ ccc         write(*,'(''before areamap, filein='',a)') filein
          argCtr = argCtr + 1 !jw
          if(fileout(1:1).eq.' ') fileout='voacapb.out'
          nch_out=lcount(fileout,64)
-         call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_out), istat)  
+         call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_out), istat)
 c         if(istat.ne.0 .and. iquiet.eq.0) then
 c to insert an error mesage and exit here
 c            call dos_error_message@(istat,message)
 c         end if
       else
          call get_command_argument(argCtr, fileout) !jw
-         argCtr = argCtr + 1 
+         argCtr = argCtr + 1
          if(fileout(1:1).eq.' ') fileout='voacapx.out'
 c         call lcase(fileout,20)
       end if
@@ -309,7 +309,7 @@ c      append=cmnam()       !  should we append to output file
       if(append.eq.'A') append='a'
 c*****Check that the input file exists here...
 c      inquire(file=filein,exist=doesit)
-c      if(.NOT.doesit) goto 942 
+c      if(.NOT.doesit) goto 942
 
       listing=areach
       if(listing.eq.'n') listing='N'
@@ -328,7 +328,7 @@ C                THIS IS THE USER-GENERATED INPUT FILE
 40    continue
 ccc      write(*,'(''after 40, area='',a)') areach
       if(areach.eq.'A' .or. areach.eq.'I') then  !  get real file name of output
-         open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein, status='OLD', iostat=ios,err=943) 
+         open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein, status='OLD', iostat=ios,err=943)
          rewind(lu5)
          read(lu5,'(20x,a)') areafile
          close(lu5)
@@ -411,6 +411,8 @@ c***********************************************************
       rewind LU35
 c***********************************************************
       if(ndistance.gt.1) then
+         open(47,file=run_directory(1:nch_run)//'/voacapd.asc')
+         rewind(47)
          open(48,file=run_directory(1:nch_run)//'/voacapd.idx')
          rewind(48)
          call unlink(run_directory(1:nch_run)//'/voacapd.dst',istat)
@@ -418,6 +420,8 @@ c***********************************************************
      +        access='direct',form='unformatted',recl=108)
       end if
       if(ntime.ne.0) then
+         open(47,file=run_directory(1:nch_run)//'/voacapd.asc')
+         rewind(47)
          open(48,file=run_directory(1:nch_run)//'/voacapt.idx')
          rewind(48)
          call unlink(run_directory(1:nch_run)//'/voacap.dst',istat)
@@ -447,8 +451,8 @@ c****************************************************************
       close(LU35)
       close(LU5)
       close(lu6)
-      
-c The following section has been modified from the original to 
+
+c The following section has been modified from the original to
 c permit longer file extensions to be used (e.g. 'da12')
       if(listing.eq.'A' .or. listing.eq.'I') then   !area coverage, are there more files to process
          ich=filein(nch3:nch3)
@@ -457,14 +461,14 @@ c permit longer file extensions to be used (e.g. 'da12')
             go to 950
          else                    !  process next file in order
             if (fileNumCtr <= 9) then
-                write (filein,'(A11I1)') "voaareax.da", fileNumCtr 
+                write (filein,'(A11I1)') "voaareax.da", fileNumCtr
                 write (fileout, '(AI1)') fileout(1:index(fileout, '.vg')+2),fileNumCtr
-            else 
-                write (filein,'(A11I2)') "voaareax.da", fileNumCtr 
+            else
+                write (filein,'(A11I2)') "voaareax.da", fileNumCtr
                 write (fileout, '(AI2)') fileout(1:index(fileout, '.vg')+2),fileNumCtr
-            endif  
-            filein = trim(filein) 
-            fileout = trim(fileout)         
+            endif
+            filein = trim(filein)
+            fileout = trim(fileout)
             go to 50                 !  calculate another area file
          end if
       else if(listing.eq.'B') then   !Batch point-to-point, next circuit
@@ -497,7 +501,7 @@ c*****This error is no longer called
 940   write(*,'('' Error: voacapl not executed properly.'')')
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       call exit(EC_EXEC_ERROR)
-      
+
 c*****itshfbc directory not found
 941   write(*,'('' Error: itshfbc directory not at specified path: '',a)') trim(run)
       write(*,'('' Run the command "makeitshbc" to create a copy of the'')')
@@ -642,8 +646,8 @@ c          read the user values from ../run/north_pole.txt
       rewind(lu)
       read(lu,*,err=150) glat,glon
       close(lu)
-      if(glat.lt.60. .or. glat.gt.90.) go to 200       !  bad values of latitude 
-      if(glon.lt.-180. .or. glon.gt.180.) go to 200    !  bad values of longitude 
+      if(glat.lt.60. .or. glat.gt.90.) go to 200       !  bad values of latitude
+      if(glon.lt.-180. .or. glon.gt.180.) go to 200    !  bad values of longitude
       write(*,'('' ** Using user defined coordinates for North Pole **'')')
       go to 500     !  use these values
 c***********************************************************
@@ -655,8 +659,8 @@ c          read the default values from ../database/north_pole.txt
       rewind(lu)
       read(lu,*,err=250) glat,glon
       close(lu)
-      if(glat.lt.60. .or. glat.gt.90.) go to 300       !  bad values of latitude 
-      if(glon.lt.-180. .or. glon.gt.180.) go to 300    !  bad values of longitude 
+      if(glat.lt.60. .or. glat.gt.90.) go to 300       !  bad values of latitude
+      if(glon.lt.-180. .or. glon.gt.180.) go to 300    !  bad values of longitude
       go to 500     !  use these values
 c***********************************************************
 250   close(lu)

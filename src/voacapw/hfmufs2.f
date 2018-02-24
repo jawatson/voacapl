@@ -83,6 +83,14 @@ c*******************************************************
 21    format(' Method',2i4,1x,a3,i4,'ssn  Freqs=',11f5.1)
 c*****************************************************************
       if(ndistance.ne.1) then       !  plots vs DISTANCE
+
+         write(47,'(i5,'' distances'')') ndistance
+         write(47,'(i2,11f7.3)') nfreqs,(frel(i),i=1,nfreqs)
+         write(47,'(25i3)') nhours,(ihours(i),i=1,nhours)
+         write(47,102)
+ 102     format('    id       gcdkm    Lat.     Lng.    Mode     MUF     FOT   ANGLE   DELAY   VHITE  ',
+     +              'MUFday    LOSS     DBU    SDBW    NDBW     SNR   RPWRG     REL  M PROB    ',
+     +              'SPRB   SIGLW   SIGUP   SNRLW   SNRUP   TGAIN   RGAIN   SNRxx      DBM')
          write(48,'(i5,'' distances'')') ndistance
          write(48,'(i2,11f7.3)') nfreqs,(frel(i),i=1,nfreqs)
          write(48,'(25i3)') nhours,(ihours(i),i=1,nhours)
