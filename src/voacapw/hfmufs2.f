@@ -93,6 +93,7 @@ c*****************************************************************
          if(iquiet.eq.0) then
             write(*,'('' Calculating Distance plot'')')
 c            call soua@(' UT[')
+            write(*,"(a)",advance='no') " UT["
          end if
       end if
       if(ntime.ne.0) then       !  plots vs TIME
@@ -117,7 +118,7 @@ c         call soua@(alf)
      +               npsl,RLATD,RLONGD)
          tlongdx=tlongd
          if(tlongdx.lt.0.) tlongdx=tlongdx+360.    !  between 0 & 360
-         if(abs(RLATD-TLATD).lt..02 .and. 
+         if(abs(RLATD-TLATD).lt..02 .and.
      +      abs(RLONGD-TLONGDx).le..02) then  !  Tx & Rx cannot be same point
             RLONGD=TLONGDx+.02
             if(RLONGD.ge.360.) RLONGD=RLONGD-360.
