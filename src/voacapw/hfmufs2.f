@@ -89,7 +89,7 @@ c*****************************************************************
          write(47,'(25i3)') nhours,(ihours(i),i=1,nhours)
          write(47,102)
  102     format('    id       gcdkm    Lat.     Lng.    Mode     MUF     FOT   ANGLE   DELAY   VHITE  ',
-     +              'MUFday    LOSS     DBU    SDBW    NDBW     SNR   RPWRG     REL  M PROB    ',
+     +              'MUFday    LOSS     DBU    SDBW    NDBW     SNR   RPWRG     REL   MPROB    ',
      +              'SPRB   SIGLW   SIGUP   SNRLW   SNRUP   TGAIN   RGAIN   SNRxx      DBM')
          write(48,'(i5,'' distances'')') ndistance
          write(48,'(i2,11f7.3)') nfreqs,(frel(i),i=1,nfreqs)
