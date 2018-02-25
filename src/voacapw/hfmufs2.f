@@ -207,8 +207,8 @@ ccc      write(*,601) meth,method,mspec,gcdkm,gcdlng
 ccc601   format('601=',3i5,2f10.2)
       WRITE(LUO,1504) VERSN
  1504 FORMAT(1H ,'*****END OF RUN*****',5X,'VOACAP ',a8)
-      write(*,"(a)",advance='no') " ]"
-      write(*,"(/)") ! newline
+      write(*,"(a)") " ]"
+c      write(*,"()") ! newline
       RETURN
       END
 C--------------------------------
