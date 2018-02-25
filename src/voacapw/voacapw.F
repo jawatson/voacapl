@@ -411,8 +411,6 @@ c***********************************************************
       rewind LU35
 c***********************************************************
       if(ndistance.gt.1) then
-         open(47,file=run_directory(1:nch_run)//'/voacapd.asc')
-         rewind(47)
          open(48,file=run_directory(1:nch_run)//'/voacapd.idx')
          rewind(48)
          call unlink(run_directory(1:nch_run)//'/voacapd.dst',istat)
@@ -420,8 +418,6 @@ c***********************************************************
      +        access='direct',form='unformatted',recl=108)
       end if
       if(ntime.ne.0) then
-         open(47,file=run_directory(1:nch_run)//'/voacapd.asc')
-         rewind(47)
          open(48,file=run_directory(1:nch_run)//'/voacapt.idx')
          rewind(48)
          call unlink(run_directory(1:nch_run)//'/voacap.dst',istat)
