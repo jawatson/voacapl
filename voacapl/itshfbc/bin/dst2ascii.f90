@@ -9,7 +9,7 @@ program dst2ascii
     CHARACTER(4) :: xmode
     print *, "Opening DST file"
     open(20,file='voacapd.dst',status='old', form='unformatted',access='direct',recl=108)
-    open(30,file='voacapj.asc')
+    open(30,file='voacapd.asc')
     rewind(30)
     DO utcPtr = 1, 24
         write(30, '(AI2)') "UTC=", utcPtr
