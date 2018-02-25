@@ -378,8 +378,8 @@ ccc      irec=((ihr-1)*nfreqs + ifreq-1)*ndistance + idistance
       xlat=rlat*r2d
       xlon=rlong*r2d
       write(49,rec=irec) gcdkm,xlat,xlon,xmode,xmuf,xfot, (vals(i),i=1,nvals)
-      write(47, 900) irec, gcdkm,xlat,xlon,xmode,xmuf,xfot, (vals(i),i=1,nvals)
-900   format(I6, F12.3, F8.3, F9.3, A8, F8.3, F8.3, 20(F8.3), F9.3)
+      write(47, 900) irec, gcdkm,xlat,xlon,xmode,xmuf,xfot, (vals(i),i=1,nvals) !jw to print an ascii version
+900   format(I6, F12.3, F8.3, F8.3, A8, F8.3, F8.3, 21(F8.3))
 ccc      write(LUO,99) ifreq,ihr,idistance,irec,xlat,xlon,
 ccc     +            xmode,xmuf,(vals(i),i=1,6)
 ccc 99   format(3i3,i5,1h=,f6.2,f7.3,1h=,a4,f8.3,2f5.1,f5.0,f5.3,2f6.1)
