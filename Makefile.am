@@ -2,8 +2,7 @@
 #  Top Level Makefile for VOACAPL
 #
 
-SUBDIRS = src/modules\
-	src/hfmufesw\
+SUBDIRS = src/hfmufesw\
 	src/voa_lib\
 	src/wp10dwin\
 	src/voacapw\
@@ -12,7 +11,7 @@ SUBDIRS = src/modules\
 	
 dist_doc_DATA = README.md\
 		NEWS\
-        	COPYING\
+        COPYING\
 		ChangeLog.md\
 		AUTHORS\
 		logo.png
