@@ -1,8 +1,15 @@
 ##Changelog
+
+###v0.7.0 26Feb18
+
+A number of bugs have been found in the recent releases that were easier to fix by simply returning to the latest available code released by Greg and making the smallest amount of changes possible to get the code running on Linux. This release should be regarded as a fresh start and it's recommended that all users update to this version.
+
 ###v0.6.7 (09/05/15)
 Fixes a bug that I introduced when changing the iharris variable to a logical type.  The output files are now closer to the Windows version.
+
 ###v0.6.6 (07/05/15)
 Multiple changes using the latest available code from Greg's website.  This should align with the Windows version v15.0605.
+
 ###v0.6.5 (30/09/14) 
 Modified files antcalc.f and relbil.f using source files kindly supplied by Greg Hand to bring this version into line with VOACAP 14.0905
 
