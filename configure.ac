@@ -3,6 +3,7 @@ m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_F77([gfortran])
 AC_PROG_LN_S
+AC_PROG_FC([gfortran])
 AC_PROG_RANLIB
 AC_CONFIG_FILES([
  	Makefile
@@ -12,6 +13,7 @@ AC_CONFIG_FILES([
  	src/voacapw/Makefile
 	voacapl/itshfbc/coeffs/Makefile
 	voacapl/itshfbc/bin/anttyp90/Makefile
+	voacapl/itshfbc/bin/dst/Makefile
 ])
 AC_OUTPUT
 
