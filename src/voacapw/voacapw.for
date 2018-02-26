@@ -201,7 +201,7 @@ c*******************************************
          call exit(0)
       else if (run(1:2).eq.'-h') then
 c TODO reinstate the help menu
-c jw         call print_help()
+         call print_help()
          call exit(0)
       end if
       iquiet=0
@@ -755,3 +755,15 @@ ccc      close(lu)
       return
       end
 c----------------------------------------------------------------------
+
+c----------------------------------------------------------------------
+
+      subroutine print_help()
+      print *, ' Usage:'
+      print *, ' voacapl [-s] voacap_directory [inputfile]'
+      print *, ' voacapl [-s] voacap_directory [inputfile outputfile]'
+      print *, ' voacapl [-s] voacap_directory area calc [areafile]'
+      print *, ' voacapl [-s] voacap_directory batch'
+      print *, ' voacapl -v (prints the version number)'
+      print *, ' voacapl -h (prints this help message)'
+      end
