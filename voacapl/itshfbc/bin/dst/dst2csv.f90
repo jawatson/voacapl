@@ -27,22 +27,23 @@ program dst2csv
 
     num_args = command_argument_count()
     
-    if (num_args .ne. 1) then
-        STOP 'Usage: dst2csv itshfbc_path'
-    else
+    if (num_args == 1) then
         CALL get_command_argument(1, itshfbc_path)
+        idx_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.idx'
+        dst_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.dst'
+    else
+        idx_path = 'voacapd.idx'
+        dst_path = 'voacapd.dst'
     end if
     
-    idx_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.idx'
     inquire(file=idx_path, exist=file_exists)
     if (.NOT.file_exists) then
-        stop 'Unable to open IDX file at '//idx_path
+        stop 'Unable to open IDX file '//idx_path
     end if
 
-    dst_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.dst'
     inquire(file=dst_path, exist=file_exists)
     if (.NOT.file_exists) then
-        stop 'Unable to open DST file at '//idx_path
+        stop 'Unable to open DST file '//idx_path
     end if
 
     !print *, "Opening IDX file"
