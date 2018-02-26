@@ -3,9 +3,12 @@
 ! J.Watson, February 2018
 !
 program dst2csv
+    logical*1 file_exists
     REAL :: gcdkm, xlat, xlon, MUF, FOT, ANGLE, DELAY, VHITE, MUFday, LOSS
     REAL :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     REAL :: TGAIN, RGAIN, SNRxx, DBM
+    INTEGER :: num_args
+    CHARACTER(len=128) :: itshfbc_path = ""
     INTEGER :: ios
     INTEGER :: NUMDIST
     INTEGER :: NUMFREQ
@@ -18,9 +21,32 @@ program dst2csv
     INTEGER :: ptr, utcPtr, freqPtr, offset, id = 0
     CHARACTER(200) :: index_buffer
     CHARACTER(4) :: xmode
+    CHARACTER(120) :: RUN_DIR
+    CHARACTER(len=1), parameter :: PATH_SEPARATOR ='/'
+    CHARACTER(len=128) :: idx_path, dst_path
+
+    num_args = command_argument_count()
+    
+    if (num_args .ne. 1) then
+        STOP 'Usage: dst2csv itshfbc_path'
+    else
+        CALL get_command_argument(1, itshfbc_path)
+    end if
+    
+    idx_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.idx'
+    inquire(file=idx_path, exist=file_exists)
+    if (.NOT.file_exists) then
+        stop 'Unable to open IDX file at '//idx_path
+    end if
+
+    dst_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.dst'
+    inquire(file=dst_path, exist=file_exists)
+    if (.NOT.file_exists) then
+        stop 'Unable to open DST file at '//idx_path
+    end if
 
     !print *, "Opening IDX file"
-    Open(IDX_FILE, file='voacapd.idx', status='old')
+    Open(IDX_FILE, file=idx_path, status='old')
     read(IDX_FILE, '(I5A)') NUMDIST, index_buffer
     !print *, NUMDIST
     read(IDX_FILE, '(I3A)') NUMFREQ, index_buffer
@@ -35,7 +61,7 @@ program dst2csv
     HOURBLK = NUMDIST * NUMFREQ
     close(IDX_FILE)
     !print *, "Opening DST file"
-    open(DST_FILE,file='voacapd.dst',status='old', form='unformatted',access='direct',recl=108)
+    open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
     open(CSV_FILE,file='voacapd.csv')
     rewind(CSV_FILE)
     write(CSV_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS, &
