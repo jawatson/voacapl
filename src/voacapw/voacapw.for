@@ -37,7 +37,7 @@ c    directory = full pathname to the install directory (e.g. c:\ITSHFBC)
 c    method    = (CALC/SCREEN/PRINT)
 c    pathname  = pathname below directory\AREADATA\ of input data file
 c                (e.g. DEFAULT\DEFAULT.VOA)
-c    deckname  = where raw input deck is found. 
+c    deckname  = where raw input deck is found.
 c                cannot be named VOACAPX.DAT.
 c    a         = append results to output file
 c
@@ -64,8 +64,8 @@ c  differences need to be addressed ( e.g. getting filein,fileout).
 C--------------------------------
 c%lc:gsp 28-DEC-1994:1st change, program voacapw   *********************
 c%lc    .Changes made affecting "MUF DAYS" calculation in REGMOD
-c%lc    .Changes made in reliability calculation in RELBIL        
-c%lc            
+c%lc    .Changes made in reliability calculation in RELBIL
+c%lc
 c%lc    comments regarding changes may be collected by stripping lines
 c%lc    with this 'c%lc' prefix. Should be insensitive to case to be safe.
 c%lc            George Scott Pinson
@@ -146,7 +146,7 @@ c Integer added by JW to emulate the function of the cmnam() function
 c using the get_command_argument() function
 c *******************************************************************
       integer argCtr !jw added by JW to emulate the function of cmnam()
-      integer fileNumCtr !jw File Number Counter used for naming area files
+      integer fileNumCtr !jw File Number Counter used for nameing area files
       character(len=5)  :: ci
       character(len=256) :: cmd
 
@@ -350,7 +350,7 @@ c jw      append=cmnam()       !  should we append to output file
       listing=areach
       if(listing.eq.'n') listing='N'
       if(listing.eq.'a') listing='A'
-      if(filein (1:1).eq.' ' .or. fileout(1:1).eq.' ') 
+      if(filein (1:1).eq.' ' .or. fileout(1:1).eq.' ')
      +      stop 'Execute with: voacapw filein fileout'
       iabort=0
 c jw      call del_abt      !  delete the voacap.abt & voaarea.abt files
@@ -362,7 +362,7 @@ C                THIS IS THE USER-GENERATED INPUT FILE
 40    continue
 ccc      write(*,'(''after 40, area='',a)') areach
       if(areach.eq.'A' .or. areach.eq.'I') then  !  get real file name of output
-         open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,STATUS='OLD',iostat=ios,err=942) 
+         open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,STATUS='OLD',iostat=ios,err=942)
          rewind(lu5)
          read(lu5,'(20x,a)') areafile
          close(lu5)
@@ -438,7 +438,7 @@ c jw         formfeed=''
          formfeed='\n\f'
       else if(fileout(1:2).eq.'..') then
          nchf=lcount(fileout,64)
-ccc         write(*,'('' opening area file='',a)') 
+ccc         write(*,'('' opening area file='',a)')
 ccc     +                 run_directory(1:nch_run-3)//fileout(4:nchf)
 ccc         write(*,'(''areafile='',a)') areafile
          open(LU6,file=run_directory(1:nch_run-3)//fileout(4:nchf),
@@ -452,7 +452,7 @@ c jw         formfeed=''
          formfeed='\n\f'
 ccc         write(*,'('' file opened OK'')')
       else
-ccc         write(*,'('' opening file='',a)') 
+ccc         write(*,'('' opening file='',a)')
 ccc     +                 run_directory(1:nch_run)//'\'//fileout
          open(LU6,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
          rewind(lu6)
@@ -727,8 +727,8 @@ c          read the user values from ..\run\north_pole.txt
       rewind(lu)
       read(lu,*,err=150) glat,glon
       close(lu)
-      if(glat.lt.60. .or. glat.gt.90.) go to 200       !  bad values of latitude 
-      if(glon.lt.-180. .or. glon.gt.180.) go to 200    !  bad values of longitude 
+      if(glat.lt.60. .or. glat.gt.90.) go to 200       !  bad values of latitude
+      if(glon.lt.-180. .or. glon.gt.180.) go to 200    !  bad values of longitude
       go to 500     !  use these values
 c***********************************************************
 150   close(lu)
@@ -739,8 +739,8 @@ c          read the default values from ..\database\north_pole.txt
       rewind(lu)
       read(lu,*,err=250) glat,glon
       close(lu)
-      if(glat.lt.60. .or. glat.gt.90.) go to 300       !  bad values of latitude 
-      if(glon.lt.-180. .or. glon.gt.180.) go to 300    !  bad values of longitude 
+      if(glat.lt.60. .or. glat.gt.90.) go to 300       !  bad values of latitude
+      if(glon.lt.-180. .or. glon.gt.180.) go to 300    !  bad values of longitude
       go to 500     !  use these values
 c***********************************************************
 250   close(lu)
