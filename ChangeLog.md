@@ -1,6 +1,6 @@
-##Changelog
+## Changelog
 
-### v0.7.2 (Proposed)
+### v0.7.2 (In Progress)
 Fixed a bug that was preventing antenna type 90 file from working correctly.
 
 ### v0.7.1 26Feb18
