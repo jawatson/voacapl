@@ -117,7 +117,7 @@ ccc      write(*,'('' alf='',a)') alf
      +               antfile,beam_main,rgain
 3        format(10x,4i5,f10.3,1x,a21,1x,f5.1,f10.4)
          if(itr.eq.2 .and. rgain.ne.0.) design_freq=rgain   ! fix isotrope gain
-         write(fileant,'(4hGAIN,i2.2,4h.DAT)') idx
+         write(fileant,'(4hgain,i2.2,4h.dat)') idx
          open(22,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileant,
      +        form='formatted')
          rewind(22)
