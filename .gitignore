@@ -56,4 +56,5 @@ voacapl/itshfbc/coeffs/coefbinw
 voacapl/itshfbc/coeffs/coeffbin
 voacapl/itshfbc/coeffs/fof2bin
 voacapl/itshfbc/coeffs/fof2binw
-
+voacapl/itshfbc/bin/dst/dst2ascii
+voacapl/itshfbc/bin/dst/dst2csv
