@@ -1,0 +1,18 @@
+This application requires the gfortran compiler which is present in the repositories most, if not all, modern Linux distributions.
+
+On Fedora, the compiler may be installed with the following command;
+
+    $ sudo dnf install gcc-gfortran
+
+On Ubuntu, the following command may be used
+
+$ sudo apt-get install gfortran
+Initialise the build with the following commands;
+
+    $ automake --add-missing
+    $ autoreconf
+    $ ./configure
+    $ make
+    $ sudo make install
+
+Run the makeitshfbc script to set up a itshfbc directory structure in your home folder.
