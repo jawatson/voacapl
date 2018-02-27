@@ -46,6 +46,10 @@ by modifying the contents of the file itshfbc/database/version.w32
 *  Version 14.0905A = use Alex's changes with normal absorption
 *  Version 14.0905a = use Alex's changes with IONCAP absorption
 
+###Additional Software
+VOACAP is capable of exporting a significant amount of distance information, triggered when using an input file named 'voacapd.dat'.  The information is exported in the form of a Fortran records and is not readily accessible to other applications.  A couple of small utilities have been added in version 0.7, dst2csv and dst2ascii, to read this file and produce a text based report, either as a CSV for importing into external applictaions for further analysis, or as a (large) ASCII table.
+
+The two application will be compiled and installed as part of a normal installation.
 
 73's
 
