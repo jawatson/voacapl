@@ -7,6 +7,7 @@ AC_PROG_FC([gfortran])
 AC_PROG_RANLIB
 AC_CONFIG_FILES([
  	Makefile
+ 	src/modules/Makefile
  	src/hfmufesw/Makefile
  	src/voa_lib/Makefile
  	src/wp10dwin/Makefile
