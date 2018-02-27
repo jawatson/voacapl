@@ -1,14 +1,11 @@
       subroutine set_run       !  set current directory to ..\RUN
+      use voacapl_defs
       common /crun_directory/ run_directory
          character run_directory*50
 
 c jw      integer*2 error_code
       integer error_code
       character tmp*50,subs(12)*10
-
-c****************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-c****************************************************************
 
 c jw TODO reinsert the path sep parameter below
 c      data subs/'\antennas\','\areadata\','\BIN_WIN\' ,'\coeffs\'  ,
@@ -39,12 +36,10 @@ c 900   call attach@(run_directory,error_code)    !  reset to the RUN directory
       end
 c--------------------------------------------------------------------
       subroutine get_run       !  get current directory
+      use voacapl_defs
       common /crun_directory/ run_directory
       character run_directory*50
       character tmp*50
-c****************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-c****************************************************************
 
 c      run_directory=curdir@()      !  get the current directory
       call getcwd(run_directory)      !  get the current directory

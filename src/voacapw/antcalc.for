@@ -10,6 +10,7 @@ c                method   = a = area coverage method
 c                         = i = inverse area
 c                         =   = point-to-point method
 c****************************************************************
+      use voacapl_defs
       common /cQUIET/ iquiet
       common /crun_directory/ run_directory
          character run_directory*50
@@ -32,8 +33,6 @@ ccc      data antgains/2730*0./
 ccc      data efficiency/30*0./
       data xmtrecv/'TRANSMIT','RECEIVE'/
       data tlat,tlon,rlat,rlon/0.,0.,0.,0./
-
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
 c****************************************************************
       iexecute=0         !  make sure antennas are not changed after an EXECUTE card
 c                        !  as this WILL NOT work.

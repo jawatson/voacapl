@@ -12,6 +12,7 @@ c     to record the error for posterity.  The change was corrected in the
 c     ASCII data file and then it was converted to binary.
 c*****************************************************************
 C
+      use voacapl_defs
       common /crun_directory/ run_directory
          character run_directory*50
       common /ccoeff/ coeff
@@ -46,7 +47,6 @@ ccc   EQUIVALENCE(XERCOF(1,1,1), END(1))
 ccc   EQUIVALENCE(XF2COF(1,1,1), END(1))
 C--------------------------------
       CHARACTER foF2_name*12,coeff_name*12
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
 c*****************************************************************
       nch_run=lcount(run_directory,50)
       if(coeff.ne.'URSI') coeff='CCIR'    !  default is CCIR

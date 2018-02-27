@@ -1,5 +1,6 @@
 c###hfmufs.for
       SUBROUTINE HFMUFS(fileout,*)
+      use voacapl_defs
       character fileout*64,file_si*64
 c jw      logical doesit*1
       logical*1 doesit
@@ -56,10 +57,6 @@ C125PC     +itlos(45,2,11,24,4,2),ihpfx(45,2,11,24,4,2),lNANG(2,11,24,4,2)
 C125PC      integer*2 imddl,igdfx,itlos,ihpfx,lNANG
 CPC      COMMON/MAPS/VMAP(12,6,50,90),PNT(2,3),ILT,ILG,NLAT,NLON,IMAP
 c------------------------------------------------------------------------
-
-C******************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-C******************************************************************
 
 C.....START OF PROGRAM
 C.....SET THE LOGICAL UNITS FOR SYSTEM INPUT AND OUTPUT FILES.

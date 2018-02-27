@@ -1,5 +1,5 @@
 lib_LIBRARIES = libwp10dwin.a
-AM_FFLAGS = -w -fno-backslash -ffixed-line-length-none -fno-sign-zero
+AM_FFLAGS = -w -fno-backslash -ffixed-line-length-none -fno-sign-zero -I ../voacapw/
 libwp10dwin_a_SOURCES =  antcal.for\
 	azmax.for\
 	bessel.for\

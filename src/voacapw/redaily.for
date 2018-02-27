@@ -7,6 +7,7 @@ c*******************************************************************
 C     This routine reads and calculates the daily F2 array (F2COF)
 C     FOR MONTH,day AND SUNSPOT NUMBER
 C
+      use voacapl_defs
       common /crun_directory/ run_directory
          character run_directory*50
       COMMON /ONE/ IA(6),IB(6),IKIM(10,6),ESLCOF(5,55),ESMCOF(7,61),
@@ -15,9 +16,6 @@ C.....VARIABLES FROM THE DATA BASE FILE BEFORE SUNSPOT INTERPOLATION
       DIMENSION XF2COF(13,76,2)
       DIMENSION C(9),MONN(13)
       DATA MONN /1,32,60,91,121,152,182,213,244,274,305,335,366/
-C******************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-C******************************************************************
 
       nch_run=lcount(run_directory,50)
 c******************************************************************

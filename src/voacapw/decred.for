@@ -5,6 +5,7 @@ C
 C     THIS ROUTINE CALLS FUNCTION MONITR TO READ THE CONTROL CARDS.
 C     THE CARD IMAGES ARE THEN DECODED , PROCESSED AND THE DATA STORED
 C
+      use voacapl_defs
       character cirafz*30,zones(100)*4
       common /cCIRAF_TP/ nTP,idx_TP(911)
       common /crun_directory/ run_directory
@@ -95,7 +96,7 @@ C     IS SET TO LU5.  CONTROL THEN PASSES TO STATEMENT LABEL 105 TO
 C     BRANCH AND PROCESS THE CONTROL CARD.
 C
 C***********************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
+
       nch_run=lcount(run_directory,50)
 C.....EXECUTE PROGRAM IF TWO CONSECUTIVE CARDS WITH SAME NAME
       IF(IRED.le.0) go to 105

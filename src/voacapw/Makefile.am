@@ -1,7 +1,8 @@
 bin_PROGRAMS = voacapl
 AM_FFLAGS = -cpp -w -fno-backslash -ffixed-line-length-none -fno-sign-zero 
 voacapl_LDADD = ../hfmufesw/libhfmufesw.a ../voa_lib/libvoa.a  ../wp10dwin/libwp10dwin.a
-voacapl_SOURCES = ficepac.hdr \
+voacapl_SOURCES = voacapl_defs.for \
+    ficepac.hdr \
  	fice_ssn.hdr \
  	ficearea.hdr \
  	voacapw.for\

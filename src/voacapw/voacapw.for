@@ -3,18 +3,10 @@ c      winapp 80000,260000
 ccc      winapp 240000,500000
       PROGRAM VOACAPW
 *    +                (filein,fileout,areach)
+C***********************************************************************
+      use voacapl_defs
+C***********************************************************************
       character(len=3), parameter :: COMPILER='w32'       !  32-bit compiler
-
-C***********************************************************************
-#ifdef _WIN32
-      character(len=1), parameter :: PATH_SEPARATOR ='\'
-      integer, parameter :: MAX_AREA_MONTHS = 9
-#else
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-      integer, parameter :: MAX_AREA_MONTHS = 25
-#endif
-      character(len=*), parameter :: VOACAPL_VERSION = '0.7'
-C***********************************************************************
 
 c jw     include <windows.ins>
 C***********************************************************************
@@ -712,12 +704,11 @@ c###set_magnetic_pole.for
       SUBROUTINE set_magnetic_pole
 c         This sets the location of the geomagnetic north pole
 c         The default is (78.5N, 69.0W) = (78.5, -69.0)
+      use voacapl_defs
       common /Cnorth_pole/ g_magnetic_lat,g_magnetic_lon  !  magnetic north pole
       common /crun_directory/ run_directory
          character run_directory*50
       data lu/21/
-
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
 
       nch_run=lcount(run_directory,50)
 c***********************************************************

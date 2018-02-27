@@ -1,4 +1,5 @@
       subroutine readant(lu,filename,description)
+      use voacapl_defs
       common /crun_directory/ run_directory
          character run_directory*50
       common /designfreq/ freqdesign
@@ -7,7 +8,7 @@
       common /ccirparm/ parm(20),z6,umax,vmax,giso,
      +                  modegain,gainmax(3,2),gainmaxb(30)
       character filename*(*),description*70,alf*80
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
+
       dimension gains(91)
       equivalence (gains,gain_type11)
       nc1=len_trim(filename)

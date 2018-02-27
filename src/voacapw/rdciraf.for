@@ -1,5 +1,7 @@
 c------------------------------------------------------------
       subroutine rdCIRAF    !  read the ..\database\cirafp.911 file
+
+      use voacapl_defs
       common /Cciraf/ nciraf_tp,ciraf(911),ciraf_lat(911),ciraf_lon(911)
          character ciraf*4
 c          this contains rectangle containing CIRAF zones
@@ -7,10 +9,6 @@ c          this contains rectangle containing CIRAF zones
       common /crun_directory/ run_directory
          character run_directory*50
       character ns*1,ew*1
-
-C******************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-C******************************************************************
 
       nch_run=lenchar(run_directory)
 

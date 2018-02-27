@@ -11,15 +11,13 @@ c              rundirectory = C:\ITSHFBC\RUN (default installation)
 c              mode = (blank) = point-to-point
 c                   = a = area coverage
 c*******************************************************************
+      use voacapl_defs
       CHARACTER fileant*10,antfile*21,mode*1
       common /crun_directory/ run_directory
          character run_directory*50
       dimension areagain(91)
       character program*300,alf*1,exe*12,dat*12
       logical*1 iexe_exist
-C******************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-C******************************************************************
       nch_run=lcount(run_directory,50)
 
 #ifdef _WIN

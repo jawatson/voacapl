@@ -9,6 +9,7 @@ c          filein = file to create the input data on
 c          icircuit = circuit number to be processed
 c          * = alternate return when done or if error occurs
 c**************************************************************************
+      use voacapl_defs
       character model*6,filein*(*)
       common /crun_directory/ run_directory
          character run_directory*50
@@ -17,9 +18,7 @@ c**************************************************************************
       common /Cantenna_deck/ nantennas,antennas(22)
          character antennas*80
       character alf*80
-c**********************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-c**********************************************************************
+
       new=0
       icircuit=icircuit+1
       if(icircuit.ne.1) go to 100  !  process up to the next execute card

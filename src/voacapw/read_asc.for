@@ -1,4 +1,5 @@
       subroutine read_asc(model,*)       !  read common from modelW.ASC
+      use voacapl_defs
       character model*6
 
       INCLUDE 'ficepac.hdr'
@@ -11,9 +12,6 @@
          character run_directory*50
 c**********************************************************************
 
-C******************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-C******************************************************************
       nch_run=lcount(run_directory,50)
       open(29,file=run_directory(1:nch_run)//PATH_SEPARATOR//model//'w.asc',
      +      status='old',err=999)

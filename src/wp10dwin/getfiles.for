@@ -3,8 +3,8 @@ c*******************************************************************
 c         get list of antenna file names
 c         from the directory ..\ANTENNAS\directory
 c*******************************************************************
+      use voacapl_defs
       character directory*8,filename*12,description*63,list(*)*77
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
       nchdir=lcount(directory,8)
 c jw TODO Look at the folloing to see if it's required...
       ier=isystem('dir ..\antennas\'//directory(1:nchdir)//

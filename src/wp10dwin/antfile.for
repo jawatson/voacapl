@@ -1,8 +1,9 @@
 c# antfile.f
       subroutine antfile(dir,file,antname)
 c          concatenate dir\file into antname
+      use voacapl_defs
       character dir*8,file*12,antname*21
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
+
       antname='                     '
       n=0
       do 10 i=1,8

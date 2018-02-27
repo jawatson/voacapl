@@ -3,6 +3,7 @@ c# ioncap.f
 c******************************************************************
 c            this routine executes VOACAP 
 c******************************************************************
+      use voacapl_defs
       INCLUDE 'ficepac.hdr'
       common /cbotlines/ nbotlines,linesbot(14)
       common /ctoplines/ ntoplines,linestop( 7)
@@ -13,9 +14,7 @@ c******************************************************************
       character path(2)*1,coefflist(2)*4
       data path/'S','L'/
       data coefflist/'CCIR','URSI'/
-C******************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-C******************************************************************
+
       nch_run=lcount(run_directory,50)
       if(igraph.eq.0) then
          open(31,file=run_directory(1:nch_run)//PATH_SEPARATOR//'voacapx.dat')

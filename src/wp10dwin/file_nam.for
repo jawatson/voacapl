@@ -1,7 +1,7 @@
       subroutine file_nam(subdir,filenam,filesufx,filename)
 c          concatenate to create the antenna type filename
+      use voacapl_defs
       character filename*(*),subdir*(*),filenam*8,filesufx*3,t_subdir*12
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
 c**********************************************************************
       t_subdir=subdir
       nch1=lcount(t_subdir ,12)

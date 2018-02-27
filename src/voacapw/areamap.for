@@ -12,6 +12,7 @@ c                meth     = 'm' = map only
 c                         = 'c' = map with contours
 c                         = 'p' = calculations & plots
 c**********************************************************
+      use voacapl_defs
       common /crun_directory/ run_directory
          character run_directory*50
       INCLUDE 'ficearea.hdr'
@@ -27,9 +28,6 @@ c jw      integer*2 error_code
 c jw      data system_type/'DOS '/
       data system_type/'UNIX'/
       data iyear/1993/
-c*********************************************************************
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
-c*********************************************************************
 c jw      call DOScolr                      !  read color table
 c jw      call WINcolr                      !  read Windows color table
 
@@ -301,9 +299,9 @@ c***************************************************
       END
 * -------------------------------------------------------------------- *
       subroutine getfreqs(Freq,areafreqs,nfreqs)
+      use voacapl_defs
       dimension areafreqs(11)
       character filename*24
-      character(len=1), parameter :: PATH_SEPARATOR ='/'
       common /crun_directory/ run_directory
          character run_directory*50
       areafreqs(1)=Freq
