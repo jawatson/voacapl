@@ -250,6 +250,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_FFLAGS = -cpp -w -c
 modules_SOURCES = voacapl_defs.for
+modules_LINK = true
+CLEANFILES = voacapl_defs.mod
 all: all-am
 
 .SUFFIXES:
@@ -328,7 +330,7 @@ clean-binPROGRAMS:
 
 modules$(EXEEXT): $(modules_OBJECTS) $(modules_DEPENDENCIES) $(EXTRA_modules_DEPENDENCIES) 
 	@rm -f modules$(EXEEXT)
-	$(AM_V_F77LD)$(F77LINK) $(modules_OBJECTS) $(modules_LDADD) $(LIBS)
+	$(AM_V_GEN)$(modules_LINK) $(modules_OBJECTS) $(modules_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -453,6 +455,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
