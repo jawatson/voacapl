@@ -6,5 +6,10 @@
         character(len=1), parameter :: PATH_SEPARATOR ='/'
         integer, parameter :: MAX_AREA_MONTHS = 25
 #endif
-        character(len=*), parameter :: VOACAPL_VERSION = '0.7.2b'
+
+#if defined(VERSION)
+        character(len=*), parameter :: VOACAPL_VERSION = VERSION
+#else
+        character(len=*), parameter :: VOACAPL_VERSION = "Test"
+#endif
       end module voacapl_defs
