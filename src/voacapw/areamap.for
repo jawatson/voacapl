@@ -28,7 +28,7 @@ c jw      character tns*1,tew*1,pns*1,pew*1,alf*80,sufix*4,path*5,coeffs*4
       character recfile*21,xmtrfile*21,cirafz*30
 c      character system_type*4,beam_alf*5,card*90,data_dir*9
       character system_type*4,beam_alf*5,data_dir*9
-      character(len=(12+(MAX_AREA_MONTHS*7))) :: card
+      character(len=max(12+MAX_AREA_MONTHS*7, 90)) :: card
       character(len=20) :: fmt_str
 
 c jw      data system_type/'DOS '/
@@ -151,8 +151,7 @@ c********************************************
          model='      '                  !  map only, no calculation model
       end if
       nch=lcount(filename,30)
-      grid_file=run_directory(1:nch_run-3)//data_dir//
-     +          filename(1:nch-2)//'g?'
+      grid_file=run_directory(1:nch_run-3)//data_dir//filename(1:nch-2)//'g?'
       nchg=lcount(grid_file,70)
       do 500 ii=1,MAX_AREA_MONTHS        !  create a file for each plot
 c jw      call yieldit                   !  yield for windows control
