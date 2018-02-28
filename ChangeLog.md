@@ -1,10 +1,14 @@
 ## Changelog
 
 ### v0.7.2 (In Progress)
-Fixed a bug that was preventing antenna type 90 file from working correctly.
-Fixed a bug in the dst2xxx applications caused by using a variable in the 
+
+* Fixed a bug that was preventing antenna type 90 file from working correctly.
+* Fixed a bug in the dst2xxx applications caused by using a variable in the 
 stop message.  This has been replaced with a write string followed by a stop
 with no parameters.
+* Added support for up to 25 area files to be processed in a single run. The
+limit is defined by the variable MAX\_AREA\_MONTHS in the definitions module.
+* Removed a warning when compiling the modules by suppressing the linking.
 
 ### v0.7.1 26Feb18
 Moved the definitions module to a separate dorectory to make sure it gets compiled before everything else.  This was breaking first time compiles on a new install.
