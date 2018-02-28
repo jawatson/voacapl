@@ -3,6 +3,8 @@ C Header file of ficepac.hdr
 C to declare fields for data entry for area coverage Windows version
 C
 
+      use voacapl_defs
+
       character*6 color(6)
       character*12 cityname
       CHARACTER*6 parms(5)                        !  parameters to contour
@@ -12,10 +14,12 @@ C
       CHARACTER*20 tname,pname
       REAL*4 xmin,xmax,ymin,ymax
       INTEGER*4 ngrid,gridtype,method,ipath,icoeffs
-      REAL*4 montha(9)
-      INTEGER*4 ssna(9),ihour(9)
-      real*4 qindexa(9)
-      REAL*4 Freq(9)
+      ! The followin arrays are dimensioned according to the max
+      ! number of area calcs we're performing.
+      REAL*4 montha(MAX_AREA_MONTHS)
+      INTEGER*4 ssna(MAX_AREA_MONTHS),ihour(MAX_AREA_MONTHS)
+      real*4 qindexa(MAX_AREA_MONTHS)
+      REAL*4 Freq(MAX_AREA_MONTHS)
       INTEGER*4 noise
       REAL*4 amind
       INTEGER*4 xlufp,rsn

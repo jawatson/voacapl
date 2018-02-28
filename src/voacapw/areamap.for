@@ -13,18 +13,24 @@ c                         = 'c' = map with contours
 c                         = 'p' = calculations & plots
 c**********************************************************
       use voacapl_defs
+      INCLUDE 'ficearea.hdr'
       common /crun_directory/ run_directory
          character run_directory*50
-      INCLUDE 'ficearea.hdr'
       character fileout*64,filename*64,ich,meth*1,model*6
       character grid_file*70,area*1
       dimension layers(6),areafreqs(11)
       integer bandw
 c jw      integer*2 error_code
       integer error_code
-      character tns*1,tew*1,pns*1,pew*1,alf*80,sufix*4,path*5,coeffs*4
+c jw      character tns*1,tew*1,pns*1,pew*1,alf*80,sufix*4,path*5,coeffs*4
+      character tns*1,tew*1,pns*1,pew*1,alf*80,path*5,coeffs*4
+      character(len=5) :: sufix
       character recfile*21,xmtrfile*21,cirafz*30
-      character system_type*4,beam_alf*5,card*90,data_dir*9
+c      character system_type*4,beam_alf*5,card*90,data_dir*9
+      character system_type*4,beam_alf*5,data_dir*9
+      character(len=(12+(MAX_AREA_MONTHS*7))) :: card
+      character(len=20) :: fmt_str
+
 c jw      data system_type/'DOS '/
       data system_type/'UNIX'/
       data iyear/1993/
@@ -85,20 +91,26 @@ c          read COLOR & CITYNAME whether OLD or NEW format
          read(card(11:15),'(i5)') method
       else if(card(1:10).eq.'Coeffs   :') then
          coeffs=card(11:14)
+      ! The following inputs have been modified to work with a larger
+      ! number of area plots
       else if(card(1:10).eq.'Months   :') then
-         read(card,'(10x,9f7.2)') montha
-         do 305 i=1,9     !  fix old integer months (before MONTH.DAY)
-         if(montha(i).gt.0. .and. montha(i).lt.1.)
-     +                             montha(i)=montha(i)*100.
+         write (fmt_str, "(AI0A)") "(10x,", MAX_AREA_MONTHS,"f7.2)"
+         read(card, fmt_str) montha
+         do 305 i=1,MAX_AREA_MONTHS     !  fix old integer months (before MONTH.DAY)
+           if(montha(i).gt.0. .and. montha(i).lt.1.) montha(i)=montha(i)*100.
 305      continue
       else if(card(1:10).eq.'Ssns     :') then
-         read(card,'(10x,9i7)') ssna
+         write (fmt_str, "(AI0A)") "(10x,", MAX_AREA_MONTHS,"I7)"
+         read(card, fmt_str) ssna
       else if(card(1:10).eq.'Qindexs  :') then
-         read(card,'(10x,9f7.1)') qindexa
+         write (fmt_str, "(AI0A)") "(10x,", MAX_AREA_MONTHS,"I7)"
+         read(card,fmt_str) qindexa
       else if(card(1:10).eq.'Hours    :') then
-         read(card,'(10x,9i7)') ihour
+         write (fmt_str, "(AI0A)") "(10x,", MAX_AREA_MONTHS,"I7)"
+         read(card, fmt_str) ihour
       else if(card(1:10).eq.'Freqs    :') then
-         read(card,'(10x,9f7.3)') Freq
+         write (fmt_str, "(AI0A)") "(10x,", MAX_AREA_MONTHS,"f7.3)"
+         read(card, fmt_str) Freq
       else if(card(1:10).eq.'System   :') then
          if(model.eq.'ICEPAC' .or. model.eq.'VOACAP') then
             read (card,810) noise,amind,xlufp,rsn,pmp,dmpx
@@ -130,7 +142,7 @@ c********************************************
       if(ich.ge.'0' .and. ich.le.'9') layers(i)=ichar(ich)-ichar('0')
 10    continue
       call gettra(tlat,tlon,plat,plon)   !  convert to decimal degrees
-      do 20 nmonths=1,9                  !  find out how many months
+      do 20 nmonths=1,MAX_AREA_MONTHS    !  find out how many months
       if(montha(nmonths).eq.0) go to 25
 20    continue
 25    nmonths=nmonths-1
@@ -142,14 +154,14 @@ c********************************************
       grid_file=run_directory(1:nch_run-3)//data_dir//
      +          filename(1:nch-2)//'g?'
       nchg=lcount(grid_file,70)
-      do 500 ii=1,9                      !  create a file for each plot
-c jw      call yieldit                       !  yield for windows control
+      do 500 ii=1,MAX_AREA_MONTHS        !  create a file for each plot
+c jw      call yieldit                   !  yield for windows control
       write(sufix,'(3h.da,i1)') ii
       call suffix(fileout,12,sufix,4)    !  append suffix
-c jw      call erase@(fileout,error_code)    !  delete file first
+c jw      call erase@(fileout,error_code)!  delete file first
       call unlink(fileout,error_code)    !  delete file first
       grid_file(nchg:nchg)=sufix(4:4)
-c jw      call erase@(grid_file,error_code)    !  delete *.vg? files
+c jw      call erase@(grid_file,error_code)!  delete *.vg? files
       call unlink(grid_file,error_code)    !  delete *.vg? files
       if(ii.gt.nmonths) go to 500
       open(29,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout)
