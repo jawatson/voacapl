@@ -33,12 +33,14 @@ program dst2ascii
     
     inquire(file=idx_path, exist=file_exists)
     if (.not.file_exists) then
-        stop 'Unable to open IDX file '//idx_path
+        write(*,'(''Unable to open IDX file : '',a)') idx_path
+        stop
     end if
 
     inquire(file=dst_path, exist=file_exists)
     if (.not.file_exists) then
-        stop 'Unable to open DST file '//idx_path
+        write(*,'(''Unable to open DST file : '',a)') dst_path
+        stop
     end if
 
     open(IDX_FILE, file=idx_path, status='old')
