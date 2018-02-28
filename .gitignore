@@ -36,13 +36,9 @@
 # voacapl specific files
 Makefile
 aclocal.m4
-ar-lib
 autom4te.cache/
-compile
 config.log
 config.status
-configure
-missing
 src/hfmufesw/Makefile
 src/modules/Makefile
 src/voa_lib/Makefile
