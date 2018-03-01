@@ -192,7 +192,6 @@ c*******************************************
          write(*,'(''voacapl - release '',a)') VOACAPL_VERSION
          call exit(0)
       else if (run(1:2).eq.'-h') then
-c TODO reinstate the help menu
          call print_help()
          call exit(0)
       end if
@@ -206,6 +205,14 @@ c jw      if(run(1:6).eq.'SILENT') then
          if(nch.le.3) go to 940
       end if
 c jw      run_directory=run(1:nch)//'\RUN'
+
+c******************************************************
+c     check that the itshfbc directory exists, quit with 
+c     a message about creating one if not.
+c******************************************************
+      inquire(file=run(1:len(trim(run)))//'/.', exist=doesit)
+      if (.not. doesit) goto 941
+
       run_directory=run(1:nch)//PATH_SEPARATOR//'run'
 ccc      call get_run
       call set_run            !  make sure we are in ..\RUN directory
@@ -560,7 +567,7 @@ c*****voaarea.cir batch area coverage file not found
 
 c*****This error is no longer called
 940   write(*,'('' Error: voacapl not executed properly.'')')
-      write(*,'('' Refer to the man page ("man voacapl") for help.'')')
+      write(*,'('' Refer to the man page ("man voacapl") for help.'')')941
       call exit(1)
 
 c*****itshfbc directory not found
