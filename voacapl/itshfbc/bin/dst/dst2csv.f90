@@ -1,7 +1,21 @@
-! A small application to convert a .DST binary record file into a text based csv.
+! dst2cvs. Convert a .DST binary record file into a text based CSV.
 !
-! J.Watson, February 2018
+! Copyright (C) 2018 J.Watson
 !
+! This program is free software: you can redistribute it and/or modify
+! it under the terms of the GNU General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version.
+!
+! This program is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+! GNU General Public License for more details.
+
+! You should have received a copy of the GNU General Public License
+! along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
 program dst2csv
     logical*1 file_exists
     real :: gcdkm, xlat, xlon, MUF, FOT, ANGLE, DELAY, VHITE, MUFday, LOSS

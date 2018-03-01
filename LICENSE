@@ -1,3 +1,8 @@
+dst2csv.f90 and dst2ascii.f90 are released under the GNU GENERAL PUBLIC 
+LICENSE, Version 3. 
+
+Licensing for all other software in the package is as follows;
+
 The following notice is included within the VOACAP distribution, 
 (obtainable from http://www.greg-hand.com/hf.html);
 
@@ -15,7 +20,7 @@ of the program and related material, nor shall the fact of
 distribution constitute any endorsement by the U.S. Government.
 ******************************************************************
 
-All modifiactions made by J.A.Watson to the original VOACAP source 
+All modifications made by J.A.Watson to the original VOACAP source 
 are made available under the Creative Commons CC0 licence, reproduced 
 below;
 
