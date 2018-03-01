@@ -1,0 +1,7 @@
+06 May  2015    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+06 May  2015   1. The existing Tarma Installer I was using is not supported
+                  on recent versions of Windows. So I just got an update to it
+                  called InstallMate 9. This version has been generated with
+                  this new installer. Let me know of any problems.
+                  No changes to the software have been made.

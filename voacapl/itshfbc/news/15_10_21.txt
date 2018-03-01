@@ -1,0 +1,4 @@
+21 Oct  2015    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+21 Oct  2015   1. The installer has been fixed for Windows 10.
+                  No other changes were made.

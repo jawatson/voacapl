@@ -371,6 +371,12 @@ nobase_dist_doc_DATA = \
 	voacapl/itshfbc/news/12_07_08.txt\
 	voacapl/itshfbc/news/12_07_09.txt\
 	voacapl/itshfbc/news/12_07_22.txt\
+	voacapl/itshfbc/news/14_09_05.txt\
+	voacapl/itshfbc/news/14_11_14.txt\
+	voacapl/itshfbc/news/14_12_31.txt\
+	voacapl/itshfbc/news/15_05_06.txt\
+	voacapl/itshfbc/news/15_10_21.txt\
+	voacapl/itshfbc/news/16_12_07.txt\
 	voacapl/itshfbc/news/1993_all.txt\
 	voacapl/itshfbc/news/1994_all.txt\
 	voacapl/itshfbc/news/1995_all.txt\

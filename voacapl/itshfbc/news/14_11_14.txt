@@ -1,0 +1,23 @@
+14 Nov  2014    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+14 Nov  2014   Let's try this again. There were problems in the last release,
+               so I removed it.
+
+               VOACAP had several problems.
+
+               1. Method 30 (Short/Long path smoothing between 7000-10000km) was not working.
+                  This was the most disturbing problem and has been fixed.
+
+               2. There were some fatal errors during area coverage calculation.
+                  Seemed to be happening with HamCap with full world calculations.
+                  This has been fixed.
+
+               3. The value of LOSS was perhaps a little wrong.
+                  For each possible mode, a tranmission LOSS is calculated, and then
+                  Signal Power (and Field Strength) are calculated from that.
+                  Then the Most Reliable Mode (MRM) is found. The final Signal Power
+                  (and Field Strength) is then calculated as the power sum of all the modes.
+                  But the LOSS is given the LOSS of the MRM. Now the LOSS is back calculated
+                  from the new Signal Power. Thus, it should be consistent.
+                  This can be observed in Point-to-Point with Method=25.
+                  The difference is small (~1dB or less).

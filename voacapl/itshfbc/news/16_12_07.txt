@@ -1,0 +1,15 @@
+07 Dec  2016    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+07 Dec  2016   1. ICEAREA & VOAAREA had a problem if a calculated grid point was
+                  exactly 10,000km from the transmitter if the smoothing method
+                  was used. The "short path" model is used for distances < 7,000km.
+                  The "long path" model is used for distances > 10,000km. Thus a
+                  smoothing algorthim was used to cover the distances in between.
+                  But there was an "IF" statement that if the distance was exactly
+                  10,000km, smoothing was done, but a previous "IF" statement did not
+                  calculate the "short path" results. Therefore, a value (that was
+                  never calculated) was used, and that caused a floating point stack error.
+                  It would be very unusual for a calculated grid point to be exactly
+                  10,000km from the transmitter, so this is a very rare occurance.
+                  RECAREA did not seem to have this problem because it has a different
+                  smoothing algorithm.

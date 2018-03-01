@@ -1,0 +1,8 @@
+31 Dec  2014    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+31 Dec  2014   Happy New Year!
+
+               1. A geometry problem with REC533 was discovered when a control
+                  point is exactly at the north or south pole. This was 
+                  discovered with Tx=(60N,135E) - Rx=(60N,45W).
+                  This has been fixed.

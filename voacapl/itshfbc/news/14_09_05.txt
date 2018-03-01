@@ -1,0 +1,12 @@
+05 Sep  2014    News for NTIA/ITS HF Propagation Models (WINDOWS version)
+
+05 Sep  2014   1. There was an error in the area coverage calculation for the Type 48
+                  antenna (NOSC Inverted Cone). This only affects this antenna.
+                  But the error was in all 3 propagation models (VOACAP, ICEPAC, REC533).
+                  It was caused by a misspelled variable name.
+
+               2. It has been so long since I put out a new version, I hope other problems
+                  do not occur. :)
+
+                  This version had some problems and was removed from the download.
+                 
