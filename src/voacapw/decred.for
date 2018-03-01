@@ -180,7 +180,7 @@ ccc      READ(INPUT,1502) NYEAR, (MONTHS(I),I=1,12)
              coeff='URSI'                !  daily MUST use URSI
              write(*,'('' *******************************************************'')')
              write(*,'('' * Warning: Daily predictions specified in input file. *'')')
-             write(*,'('' * forcing use of URSI coefficients.                     *'')')
+             write(*,'('' * forcing use of URSI coefficients.                   *'')')
              write(*,'('' *******************************************************'')')
          end if
       end if
