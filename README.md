@@ -36,15 +36,7 @@ The following command will run voacapl from the command line using the contents 
 
     $ voacapl ~/itshfbc 
 
-###Absorption Model
-Most users will be happy with the dafault absorption model.  Some user's may 
-however wish to experiment with alternative models which may be selected
-by modifying the contents of the file itshfbc/database/version.w32
-
-*  Version 14.0905W = normal code
-*  Version 14.0905I = use old IONCAP absorption model
-*  Version 14.0905A = use Alex's changes with normal absorption
-*  Version 14.0905a = use Alex's changes with IONCAP absorption
+Please refer to the [wiki](https://github.com/jawatson/voacapl/wiki) for further guidance on running voacapl.
 
 ###Additional Software
 VOACAP is capable of exporting a significant amount of distance information, triggered when using an input file named 'voacapd.dat'.  The information is exported in the form of a Fortran records and is not readily accessible to other applications.  A couple of small utilities have been added in version 0.7, dst2csv and dst2ascii, to read this file and produce a text based report, either as a CSV for importing into external applictaions for further analysis, or as a (large) ASCII table.
