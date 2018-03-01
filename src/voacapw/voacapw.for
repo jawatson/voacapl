@@ -571,7 +571,7 @@ c*****This error is no longer called
       call exit(1)
 
 c*****itshfbc directory not found
-941   write(*,'('' Error: itshfbc directory not at specified path: '',a)') trim(run)
+941   write(*,'('' Error: Unable to open itshfbc directory at: '',a)') trim(run)
       write(*,'('' Run the command "makeitshbc" to create a copy of the'')')
       write(*,'('' itshfbc directory in your home directory.'')')
       write(*, '('' VOACAPW:941'')')
