@@ -10,10 +10,11 @@ limit is defined by the variable MAX\_AREA\_MONTHS in the definitions module.
 * Removed a warning when compiling the modules by suppressing the linking.
 * The version number is now read into the voacapls\_def module from a pre-processor macro, VERSION which is the version number saved in the configure/ac file.
 * Adds a check that the specified path to the itshfbc directory exists.
+* Modified a couple of the Makefile.ac to remove wildcard characters which were causing problems with make distcheck.  Added a check to remove the compiled coeff files.  Running 'make distcheck' now passes. 
 
 
 ### v0.7.1 26Feb18
-* Moved the definitions module to a separate dorectory to make sure it gets compiled before everything else.  This was breaking first time compiles on a new install.
+* Moved the definitions module to a separate directory to make sure it gets compiled before everything else.  This was breaking first time compiles on a new install.
 ### v0.7.0 26Feb18
 * A number of bugs have been found in the recent releases that were easier to fix by simply returning to the latest available code released by Greg and making the smallest amount of changes possible to get the code running on Linux. This release should be regarded as a fresh start and it's recommended that all users update to this version.
 
