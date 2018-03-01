@@ -8,6 +8,9 @@ with no parameters.
 * Added support for up to 25 area files to be processed in a single run. The
 limit is defined by the variable MAX\_AREA\_MONTHS in the definitions module.
 * Removed a warning when compiling the modules by suppressing the linking.
+* The version number is now read into the voacapls\_def module from a pre-processor macro, VERSION which is the version number saved in the configure/ac file.
+* Adds a check that the specified path to the itshfbc directory exists.
+
 
 ### v0.7.1 26Feb18
 * Moved the definitions module to a separate dorectory to make sure it gets compiled before everything else.  This was breaking first time compiles on a new install.
@@ -152,16 +155,16 @@ No major changes just revised a few lines;
 - voacapw.f:Revised file numbering scheme to use an integer variable (fileNumCtr) and 'write' to create the file names (around line 536)
 
 ### v0.2.1 Aug07
-Made a few changes in the hfarea.f:113 file to tidy up the progress display.  The advance='no' option (available in F90) has been used instead of the sou@ function which is not supported in GFortran.
+* Made a few changes in the hfarea.f:113 file to tidy up the progress display.  The advance='no' option (available in F90) has been used instead of the sou@ function which is not supported in GFortran.
 
 ### v0.2 Aug07
-Changed case of the 'Version.w32' file-name to 'version.w32' (lowercase 'V'). Changed case of the gain01/02 files created in the itshfbc/run directory. Changed the case of all source code file names.
+* Changed case of the 'Version.w32' file-name to 'version.w32' (lowercase 'V'). Changed case of the gain01/02 files created in the itshfbc/run directory. Changed the case of all source code file names.
 
 ### v0.1.3 July07
-Fixed a number of bugs in the voa area routines. Added the 'make install' option to the Makefile.
+* Fixed a number of bugs in the voa area routines. Added the 'make install' option to the Makefile.
 
 ### v0.1.2a Jul07
-Corrected an error in VOACAPW.f:428 that prevented the application compiling with GFortran >4.2. Added compilation option '-ffixed-line-length-none' to make the code a little easier to read.
+* Corrected an error in VOACAPW.f:428 that prevented the application compiling with GFortran >4.2. Added compilation option '-ffixed-line-length-none' to make the code a little easier to read.
 
 ### v0.1.1a Jun07
 Refactored code in the following files to remove obsolete arithmetic if statements;
@@ -172,4 +175,4 @@ Refactored code in the following files to remove obsolete arithmetic if statemen
 - Corrected a file separator error in ANTCALC.f:111 & DECRED.f:287 that was causing the GAINxx.DAT files to be written to the itshfbc directory. These files are now being (correctly) written to the itshfbc/run directory.
 
 ### v0.1a Jun07
-Initial public release. Tested on Fedora 7. 
+* Initial public release. Tested on Fedora 7. 
