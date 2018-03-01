@@ -120,7 +120,7 @@ C            31  32  33  34  35  36  37  38  39  40  41  42  43  44  45
 C
 C           MET MON MON SUN CIR SYS TIM CCI FRE LAB INT EXE SAM EFV ESV
 C           EDP AUX AUX ANT OUT COM FRE PRO END NEX QUI FPR TOP BOT INF
-C           ARE LIN COE ZON    
+C           ARE LIN COE ZON
 C
 ccc      write(*,'('' before GO TO (..) icard='',i5)') icard
       GO TO(110,145,165,205,230,270,285,330,340,380,390,410,425,465,480,
@@ -176,10 +176,16 @@ ccc      READ(INPUT,1502) NYEAR, (MONTHS(I),I=1,12)
          ida=nint((xmonth(i)-float(monthx))*100.)
          idaily(i)=ida                    !  if <>0, use daily foF2 coeff
          months(i)=monthx
-         if(ida.gt.0) coeff='URSI'                !  daily MUST use URSI
+         if(ida.gt.0) then
+             coeff='URSI'                !  daily MUST use URSI
+             write(*,'('' *******************************************************'')')
+             write(*,'('' * Warning: Daily predictions specified in input file. *'')')
+             write(*,'('' * forcing use of URSI coefficients.                     *'')')
+             write(*,'('' *******************************************************'')')
+         end if
       end if
 146   continue
-         
+
       IWCRD(2) = -1
       GO TO 90
 C***********************************************************************
@@ -484,7 +490,7 @@ C***********************************************************************
 C.....THE "COMMENT" CARD ALLOWS THE USER TO PUT COMMENTS IN THE INPUT
 C.....FILE. IT HAS NO EFFECT ON PROGRAM EXECUTION
   545 CONTINUE
-      if(input(11:14).eq.'GROU') write(LUO,'(11h COMMENT   ,a)') 
+      if(input(11:14).eq.'GROU') write(LUO,'(11h COMMENT   ,a)')
      +        input(11:)
       GO TO 90
 C***********************************************************************
