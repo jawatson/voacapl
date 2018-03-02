@@ -177,11 +177,13 @@ ccc      READ(INPUT,1502) NYEAR, (MONTHS(I),I=1,12)
          idaily(i)=ida                    !  if <>0, use daily foF2 coeff
          months(i)=monthx
          if(ida.gt.0) then
-             coeff='URSI'                !  daily MUST use URSI
-             write(*,'('' *******************************************************'')')
-             write(*,'('' * Warning: Daily predictions specified in input file. *'')')
-             write(*,'('' * forcing use of URSI coefficients.                   *'')')
-             write(*,'('' *******************************************************'')')
+            if (coeff.eq.'CCIR') then
+              write(*,'('' *******************************************************'')')
+              write(*,'('' * Warning: Daily predictions specified in input file. *'')')
+              write(*,'('' * forcing use of URSI coefficients.                   *'')')
+              write(*,'('' *******************************************************'')')
+            end if
+            coeff='URSI'                  !  daily MUST use URSI            
          end if
       end if
 146   continue
