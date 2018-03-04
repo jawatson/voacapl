@@ -1,6 +1,7 @@
 ## Changelog
+### v0.7.3 (In Progress)
 
-### v0.7.2 (In Progress)
+### v0.7.2 04Mar18
 * Fixed a bug that was preventing antenna type 90 file from working correctly.
 * Fixed a bug in the dst2xxx applications caused by using a variable in the 
 stop message.  This has been replaced with a write string followed by a stop
