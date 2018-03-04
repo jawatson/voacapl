@@ -59,6 +59,7 @@ voacapl_SOURCES = ficepac.hdr \
  	hfmufs.for\
  	hfmufs2.for\
  	inmuf.for\
+    invcon.for\
  	ionplt.for\
  	ionset.for\
  	lecden.for\

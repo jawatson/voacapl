@@ -116,26 +116,26 @@ am_voacapl_OBJECTS = voacapw.$(OBJEXT) blkdat.$(OBJEXT) \
 	gettop.$(OBJEXT) gmloss.$(OBJEXT) gphbod.$(OBJEXT) \
 	gridxy.$(OBJEXT) harris.$(OBJEXT) hfarea.$(OBJEXT) \
 	hfciraf.$(OBJEXT) outciraf.$(OBJEXT) hfmufs.$(OBJEXT) \
-	hfmufs2.$(OBJEXT) inmuf.$(OBJEXT) ionplt.$(OBJEXT) \
-	ionset.$(OBJEXT) lecden.$(OBJEXT) listin.$(OBJEXT) \
-	lngpat.$(OBJEXT) luffy.$(OBJEXT) magfin.$(OBJEXT) \
-	magvar.$(OBJEXT) monitr.$(OBJEXT) mpath.$(OBJEXT) \
-	noisy.$(OBJEXT) nommuf.$(OBJEXT) outall.$(OBJEXT) \
-	outant.$(OBJEXT) outarea.$(OBJEXT) outbod.$(OBJEXT) \
-	outgph.$(OBJEXT) oution.$(OBJEXT) outlay.$(OBJEXT) \
-	outlin.$(OBJEXT) outmuf.$(OBJEXT) outpar.$(OBJEXT) \
-	out_si.$(OBJEXT) outtab.$(OBJEXT) outtop.$(OBJEXT) \
-	pen.$(OBJEXT) penang.$(OBJEXT) prbmuf.$(OBJEXT) \
-	pwrdb.$(OBJEXT) rdciraf.$(OBJEXT) redmap.$(OBJEXT) \
-	redaily.$(OBJEXT) regmod.$(OBJEXT) relbil.$(OBJEXT) \
-	runfreqs.$(OBJEXT) sang.$(OBJEXT) selmod.$(OBJEXT) \
-	seltxr.$(OBJEXT) serprb.$(OBJEXT) setgph.$(OBJEXT) \
-	setlng.$(OBJEXT) setluf.$(OBJEXT) setout.$(OBJEXT) \
-	settxr.$(OBJEXT) sigdis.$(OBJEXT) squeez.$(OBJEXT) \
-	syssy.$(OBJEXT) tabbod.$(OBJEXT) tabs.$(OBJEXT) \
-	timvar.$(OBJEXT) txpwr.$(OBJEXT) versy.$(OBJEXT) \
-	virtim.$(OBJEXT) xlimit6.$(OBJEXT) xlin.$(OBJEXT) \
-	zones.$(OBJEXT)
+	hfmufs2.$(OBJEXT) inmuf.$(OBJEXT) invcon.$(OBJEXT) \
+	ionplt.$(OBJEXT) ionset.$(OBJEXT) lecden.$(OBJEXT) \
+	listin.$(OBJEXT) lngpat.$(OBJEXT) luffy.$(OBJEXT) \
+	magfin.$(OBJEXT) magvar.$(OBJEXT) monitr.$(OBJEXT) \
+	mpath.$(OBJEXT) noisy.$(OBJEXT) nommuf.$(OBJEXT) \
+	outall.$(OBJEXT) outant.$(OBJEXT) outarea.$(OBJEXT) \
+	outbod.$(OBJEXT) outgph.$(OBJEXT) oution.$(OBJEXT) \
+	outlay.$(OBJEXT) outlin.$(OBJEXT) outmuf.$(OBJEXT) \
+	outpar.$(OBJEXT) out_si.$(OBJEXT) outtab.$(OBJEXT) \
+	outtop.$(OBJEXT) pen.$(OBJEXT) penang.$(OBJEXT) \
+	prbmuf.$(OBJEXT) pwrdb.$(OBJEXT) rdciraf.$(OBJEXT) \
+	redmap.$(OBJEXT) redaily.$(OBJEXT) regmod.$(OBJEXT) \
+	relbil.$(OBJEXT) runfreqs.$(OBJEXT) sang.$(OBJEXT) \
+	selmod.$(OBJEXT) seltxr.$(OBJEXT) serprb.$(OBJEXT) \
+	setgph.$(OBJEXT) setlng.$(OBJEXT) setluf.$(OBJEXT) \
+	setout.$(OBJEXT) settxr.$(OBJEXT) sigdis.$(OBJEXT) \
+	squeez.$(OBJEXT) syssy.$(OBJEXT) tabbod.$(OBJEXT) \
+	tabs.$(OBJEXT) timvar.$(OBJEXT) txpwr.$(OBJEXT) \
+	versy.$(OBJEXT) virtim.$(OBJEXT) xlimit6.$(OBJEXT) \
+	xlin.$(OBJEXT) zones.$(OBJEXT)
 voacapl_OBJECTS = $(am_voacapl_OBJECTS)
 voacapl_DEPENDENCIES = ../hfmufesw/libhfmufesw.a ../voa_lib/libvoa.a \
 	../wp10dwin/libwp10dwin.a
@@ -346,6 +346,7 @@ voacapl_SOURCES = ficepac.hdr \
  	hfmufs.for\
  	hfmufs2.for\
  	inmuf.for\
+    invcon.for\
  	ionplt.for\
  	ionset.for\
  	lecden.for\
