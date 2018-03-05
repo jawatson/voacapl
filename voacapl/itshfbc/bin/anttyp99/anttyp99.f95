@@ -34,7 +34,7 @@ PROGRAM anttyp99
     integer, parameter :: gain_file_un = 22
     integer, parameter :: lua = 42
       
-!.....START OF PROGRAM
+!...START OF PROGRAM
     call GET_COMMAND_ARGUMENT(1, run_directory)
     nch_run=len(trim(run_directory))
     if(nch_run.lt.3) go to 930
