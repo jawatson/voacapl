@@ -3,10 +3,7 @@ c------------------------------------------------------
 c          external antenna calculations:
 c          If outside frequency range, gain=-99.9 returned.
 c          If ELEVATION angle or AZIMUTH angle in error, return 1
-      common /Cant99/ luaa,filenam,title,itype,parms(20),
-     +                 nfreq,frequency(100),dbi(100),eff(100),
-     +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
-         character filenam*80,title*80
+      use Cant99 
 
       gain=-99.9
       efficiency=0.
@@ -122,10 +119,8 @@ c          interpolation
       end
 c-------------------------------------------------------
       subroutine ant99_read(filename,lu,lua,*)
-      common /Cant99/ luaa,filenam,title,itype,parms(20),
-     +                 nfreq,frequency(100),dbi(100),eff(100),
-     +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
-         character filenam*80,title*80
+      use Cant99
+
       character filename*(*)
       character alf*80
       dimension iazimuth(360)
@@ -223,11 +218,7 @@ c*************************************************************************
       end
 c------------------------------------------------------
       subroutine ant99_close       !  close the scratch unit
-      common /Cant99/ luaa,filenam,title,itype,parms(20),
-     +                 nfreq,frequency(100),dbi(100),eff(100),
-     +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
-         character filenam*80,title*80
-
+      use Cant99
       close(luaa)
       return
       end

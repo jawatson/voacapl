@@ -14,18 +14,10 @@ c    directory = full pathname to the RUN directory (e.g. c:\ITSHFBC\RUN)
 c    mode      = (blank) = Point-to-Point
 c              = a = Area Coverage
 C***********************************************************************
-      common /Cant99/ luaa,filenam,title,itype,parms(20),
-     +                 nfreq,frequency(100),dbi(100),eff(100),
-     +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
-      character filenam*80,title*80
-      common /cantenna/ anttype,antname,
-     +                  xfqs,xfqe,designfreq,antfile,
-     +                  beammain,offazim,cond,diel,
-     +                  gain(91)
-      character anttype*10,antname*70,antfile*24
+      use cantenna
+      use Cant99
 
       character (len=80) :: filename, gainfile
-
       character (len=120) :: run_directory
       character (len=1) :: mode
       
@@ -35,7 +27,6 @@ C.....START OF PROGRAM
       if(nch_run.lt.3) go to 930
       
       call GET_COMMAND_ARGUMENT(2, mode)
-
 
       open(21,file=run_directory(1:nch_run)//'/anttyp99.dat', status='old',err=900)
       rewind(21)
