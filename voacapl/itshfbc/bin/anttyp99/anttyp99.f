@@ -20,6 +20,8 @@ C***********************************************************************
       character (len=80) :: filename, gainfile
       character (len=120) :: run_directory
       character (len=1) :: mode
+      integer, parameter :: dat_file_un = 21
+      integer, parameter :: gain_file_un = 22
       
 C.....START OF PROGRAM
       call GET_COMMAND_ARGUMENT(1, run_directory)
@@ -28,15 +30,16 @@ C.....START OF PROGRAM
       
       call GET_COMMAND_ARGUMENT(2, mode)
 
-      open(21,file=run_directory(1:nch_run)//'/anttyp99.dat', status='old',err=900)
-      rewind(21)
-      read(21,*,err=920) idx          !  antenna index #, GAINxx.dat
-      read(21,'(a)',err=920) antfile  !  antenna file name
-      read(21,*,err=920) xfqs         !  starting frequency
-      read(21,*,err=920) xfqe         !  ending frequency
-      read(21,*,err=920) beammain     !  main beam (deg from North)
-      read(21,*,err=920) offazim      !  off azimuth (deg from North)
-      close(21)
+      open(dat_file_un,file=run_directory(1:nch_run)//'/anttyp99.dat', status='old',err=900)
+      rewind(dat_file_un)
+      read(dat_file_un,*,err=920) idx          !  antenna index #, GAINxx.dat
+      read(dat_file_un,'(a)',err=920) antfile  !  antenna file name
+      read(dat_file_un,*,err=920) xfqs         !  starting frequency
+      read(dat_file_un,*,err=920) xfqe         !  ending frequency
+      read(dat_file_un,*,err=920) beammain     !  main beam (deg from North)
+      read(dat_file_un,*,err=920) offazim      !  off azimuth (deg from North)
+      close(dat_file_un)
+
       nch=len(trim(antfile))
       filename=run_directory(1:nch_run-3)//'antennas/'//antfile(1:nch)
 
@@ -46,16 +49,16 @@ C.....START OF PROGRAM
       cond=parms(4)         !  conductivity
       write(gainfile,1) run_directory(1:nch_run),idx
 1     format(a,5h/gain,i2.2,4h.dat)
-      open(22,file=gainfile)
-      rewind(22)
-      write(22,'(a)') 'HARRIS99  '//title
+      open(gain_file_un,file=gainfile)
+      rewind(gain_file_un)
+      write(gain_file_un,'(a)') 'HARRIS99  '//title
 
       if(mode.ne.' ') go to 200     !  area coverage
 
 c****************************************************************
 c                  Point-to-Point mode
 c****************************************************************
-      write(22,2) xfqs,xfqe,beammain,offazim,cond,diel
+      write(gain_file_un,2) xfqs,xfqe,beammain,offazim,cond,diel
 2     format(2f5.0,2f7.2,2f10.5)
       azimuth=offazim
       do ifreq=1,30
@@ -71,7 +74,7 @@ c****************************************************************
                 gain(iel+1)=0.
             end do
         end if
-        write(22,3) ifreq,aeff,gain
+        write(gain_file_un,3) ifreq,aeff,gain
 3       format(i2,f6.2,(T10,10F7.3))
       end do
       go to 500
@@ -79,10 +82,10 @@ c****************************************************************
 c****************************************************************
 c                    Area Coverage mode
 c****************************************************************
-200   write(22,2) 2.0,xfqe,beammain,-999.,cond,diel
+200   write(gain_file_un,2) 2.0,xfqe,beammain,-999.,cond,diel
       freq=xfqs
       call ant99_calc(freq,0.,8.,g,aeff,*940)
-      write(22,201) freq,aeff
+      write(gain_file_un,201) freq,aeff
 201   format(10x,f7.3,'MHz eff=',f10.3)
       do iazim=0,359
         azimuth=iazim
@@ -90,12 +93,12 @@ c****************************************************************
             elev=iel
             call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
         end do
-        write(22,251) iazim,gain
+        write(gain_file_un,251) iazim,gain
 251     format(i5,(T10,10F7.3))
       end do
 c****************************************************************
 500   call ant99_close
-      close(22)
+      close(gain_file_un)
 c****************************************************************
       go to 999
 c****************************************************************
