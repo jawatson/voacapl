@@ -1,9 +1,9 @@
 c------------------------------------------------------
-      subroutine ant90_calc(freq,azimuth,elev,gain,efficiency,*)
+      subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
 c          external antenna calculations:
 c          If outside frequency range, gain=-99.9 returned.
 c          If ELEVATION angle or AZIMUTH angle in error, return 1
-      common /Cant90/ luaa,filenam,title,itype,parms(20),
+      common /Cant99/ luaa,filenam,title,itype,parms(20),
      +                 nfreq,frequency(100),dbi(100),eff(100),
      +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
          character filenam*80,title*80
@@ -18,7 +18,7 @@ c          If ELEVATION angle or AZIMUTH angle in error, return 1
       if(azim.lt.0. .or. azim.ge.360.) go to 920   !  out of azimuth angle range
       do 10 i=1,nfreq
       if(abs(freq-frequency(i)).lt..001) then   !  frequency match
-	 gain=ant90_gain(i,azim,elev,luaa,ifreq1,gain1)
+	 gain=ant99_gain(i,azim,elev,luaa,ifreq1,gain1)
 	 efficiency=eff(i)
          return
       end if
@@ -26,9 +26,9 @@ c          If ELEVATION angle or AZIMUTH angle in error, return 1
 c          interpolate on frequency
       do 20 i=2,nfreq
       if(freq.le.frequency(i)) then       !  interpolate between (i-1) and (i)
-	 g1=ant90_gain(i-1,azim,elev,luaa,ifreq1,gain1)
+	 g1=ant99_gain(i-1,azim,elev,luaa,ifreq1,gain1)
 	 eff1=eff(i-1)
-	 g2=ant90_gain(i  ,azim,elev,luaa,ifreq2,gain2)
+	 g2=ant99_gain(i  ,azim,elev,luaa,ifreq2,gain2)
 	 eff2=eff(i)
 	 xf=(freq-frequency(i-1))/(frequency(i)-frequency(i-1))
 	 efficiency=eff1 + (eff2-eff1)*xf
@@ -58,10 +58,10 @@ ccc      go to 999
 999   return 1
       end
 c------------------------------------------------------
-      function ant90_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
+      function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
       dimension gain1(91,360)
       data bad/-99998./
-      ant90_gain=-99.9
+      ant99_gain=-99.9
       if(ifreq.ne.ifreq1) read(luaa,rec=ifreq) gain1
       ifreq1=ifreq
       iaz=azimuth
@@ -70,7 +70,7 @@ c------------------------------------------------------
       low_az=ia
       go to 20
 10    continue
-      write(*,'('' Cannot get here in ant90_gain.'')')
+      write(*,'('' Cannot get here in ant99_gain.'')')
 20    do 30 ia=iaz+1,359       !  find upper azimuth
       if(gain1(1,ia+1).lt.bad) go to 30
       iup_az=ia
@@ -84,7 +84,7 @@ c------------------------------------------------------
       low_el=ie
       go to 60
 50    continue
-      write(*,'('' Cannot get here in ant90_gain.'')')
+      write(*,'('' Cannot get here in ant99_gain.'')')
 60    do 70 ie=iel+1,90        !  find upper elevation
       if(gain1(ie+1,1).lt.bad) go to 70
       iup_el=ie
@@ -94,12 +94,12 @@ c------------------------------------------------------
 80    continue
 
 c      if(low_el.eq.iup_el) low_el=low_el-1
-      g=ant90_interp(gain1,low_az,azimuth,iup_az,low_el,elev,iup_el)
-      ant90_gain=g
+      g=ant99_interp(gain1,low_az,azimuth,iup_az,low_el,elev,iup_el)
+      ant99_gain=g
       return
       end
 c------------------------------------------------------
-      function ant90_interp(z,iy1,y,iy2,ix1,x,ix2)
+      function ant99_interp(z,iy1,y,iy2,ix1,x,ix2)
 c          interpolation
       dimension z(91,*)
       jy2=iy2
@@ -117,12 +117,12 @@ c          interpolation
             z34 = z3 + (z4-z3)*xf
       end if
       zz=z12 + (z34-z12)*(y-float(iy1))/float(iy2-iy1)
-      ant90_interp=zz
+      ant99_interp=zz
       return
       end
 c-------------------------------------------------------
-      subroutine ant90_read(filename,lu,lua,*)
-      common /Cant90/ luaa,filenam,title,itype,parms(20),
+      subroutine ant99_read(filename,lu,lua,*)
+      common /Cant99/ luaa,filenam,title,itype,parms(20),
      +                 nfreq,frequency(100),dbi(100),eff(100),
      +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
          character filenam*80,title*80
@@ -222,8 +222,8 @@ c*************************************************************************
       stop
       end
 c------------------------------------------------------
-      subroutine ant90_close       !  close the scratch unit
-      common /Cant90/ luaa,filenam,title,itype,parms(20),
+      subroutine ant99_close       !  close the scratch unit
+      common /Cant99/ luaa,filenam,title,itype,parms(20),
      +                 nfreq,frequency(100),dbi(100),eff(100),
      +                 ifreq1,gain1(91,360),ifreq2,gain2(91,360)
          character filenam*80,title*80
