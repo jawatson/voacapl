@@ -54,49 +54,51 @@ C.....START OF PROGRAM
       rewind(gain_file_un)
       write(gain_file_un,'(a)') 'HARRIS99  '//title
 
-      if(mode.ne.' ') go to 200     !  area coverage
+      if(mode.ne.' ') then
 
 c****************************************************************
 c                  Point-to-Point mode
 c****************************************************************
-      write(gain_file_un,2) xfqs,xfqe,beammain,offazim,cond,diel
-2     format(2f5.0,2f7.2,2f10.5)
-      azimuth=offazim
-      do ifreq=1,30
-        freq=ifreq
-        if(freq.ge.xfqs .and. freq.le.xfqe) then    !  in frequency range
-            do iel=0,90
-                elev=iel
-                call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
-            end do
-        else                                        !  outside freq range
-            aeff=0.
-            do iel=0,90
-                gain(iel+1)=0.
-            end do
-        end if
-        write(gain_file_un,3) ifreq,aeff,gain
-3       format(i2,f6.2,(T10,10F7.3))
-      end do
-      go to 500
+        write(gain_file_un,2) xfqs,xfqe,beammain,offazim,cond,diel
+2       format(2f5.0,2f7.2,2f10.5)
+        azimuth=offazim
+        do ifreq=1,30
+            freq=ifreq
+            if(freq.ge.xfqs .and. freq.le.xfqe) then    !  in frequency range
+                do iel=0,90
+                    elev=iel
+                    call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
+                end do
+            else                                        !  outside freq range
+                aeff=0.
+                do iel=0,90
+                    gain(iel+1)=0.
+                end do
+            end if
+            write(gain_file_un,3) ifreq,aeff,gain
+3           format(i2,f6.2,(T10,10F7.3))
+        end do
+      else
+c      go to 500
 
 c****************************************************************
 c                    Area Coverage mode
 c****************************************************************
-200   write(gain_file_un,2) 2.0,xfqe,beammain,-999.,cond,diel
-      freq=xfqs
-      call ant99_calc(freq,0.,8.,g,aeff,*940)
-      write(gain_file_un,201) freq,aeff
-201   format(10x,f7.3,'MHz eff=',f10.3)
-      do iazim=0,359
-        azimuth=iazim
-        do iel=0,90
-            elev=iel
-            call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
+200     write(gain_file_un,2) 2.0,xfqe,beammain,-999.,cond,diel
+        freq=xfqs
+        call ant99_calc(freq,0.,8.,g,aeff,*940)
+        write(gain_file_un,201) freq,aeff
+201     format(10x,f7.3,'MHz eff=',f10.3)
+        do iazim=0,359
+            azimuth=iazim
+            do iel=0,90
+                elev=iel
+                call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
+            end do
+            write(gain_file_un,251) iazim,gain
+251         format(i5,(T10,10F7.3))
         end do
-        write(gain_file_un,251) iazim,gain
-251     format(i5,(T10,10F7.3))
-      end do
+      end if 
 c****************************************************************
 500   call ant99_close
       close(gain_file_un)
