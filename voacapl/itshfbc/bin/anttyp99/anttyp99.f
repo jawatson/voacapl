@@ -54,7 +54,7 @@ C.....START OF PROGRAM
       rewind(gain_file_un)
       write(gain_file_un,'(a)') 'HARRIS99  '//title
 
-      if(mode.ne.' ') then
+      if(mode.eq.' ') then
 
 c****************************************************************
 c                  Point-to-Point mode
