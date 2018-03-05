@@ -49,9 +49,12 @@ C.....START OF PROGRAM
       open(22,file=gainfile)
       rewind(22)
       write(22,'(a)') 'HARRIS99  '//title
-c****************************************************************
+
       if(mode.ne.' ') go to 200     !  area coverage
-c*****Point-to-Point mode
+
+c****************************************************************
+c                  Point-to-Point mode
+c****************************************************************
       write(22,2) xfqs,xfqe,beammain,offazim,cond,diel
 2     format(2f5.0,2f7.2,2f10.5)
       azimuth=offazim
@@ -72,8 +75,10 @@ c*****Point-to-Point mode
 3       format(i2,f6.2,(T10,10F7.3))
       end do
       go to 500
+
 c****************************************************************
-c*****Area Coverage mode
+c                    Area Coverage mode
+c****************************************************************
 200   write(22,2) 2.0,xfqe,beammain,-999.,cond,diel
       freq=xfqs
       call ant99_calc(freq,0.,8.,g,aeff,*940)
@@ -83,9 +88,9 @@ c*****Area Coverage mode
         azimuth=iazim
         do iel=0,90
             elev=iel
-220         call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
+            call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
         end do
-250     write(22,251) iazim,gain
+        write(22,251) iazim,gain
 251     format(i5,(T10,10F7.3))
       end do
 c****************************************************************
