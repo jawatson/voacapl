@@ -48,6 +48,9 @@ C.....START OF PROGRAM
       read(dat_file_un,*,err=920) offazim      !  off azimuth (deg from North)
       close(dat_file_un)
 
+      write (*,'(f8.3)') beammain
+      write (*,'(f8.3)') offazim
+
       nch=len(trim(antfile))
       filename=run_directory(1:nch_run-3)//'antennas/'//antfile(1:nch)
 
