@@ -115,18 +115,6 @@ am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
 am__v_at_1 = 
 DEFAULT_INCLUDES = -I.@am__isrc@
-F77COMPILE = $(F77) $(AM_FFLAGS) $(FFLAGS)
-AM_V_F77 = $(am__v_F77_@AM_V@)
-am__v_F77_ = $(am__v_F77_@AM_DEFAULT_V@)
-am__v_F77_0 = @echo "  F77     " $@;
-am__v_F77_1 = 
-F77LD = $(F77)
-F77LINK = $(F77LD) $(AM_FFLAGS) $(FFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
-	$@
-AM_V_F77LD = $(am__v_F77LD_@AM_V@)
-am__v_F77LD_ = $(am__v_F77LD_@AM_DEFAULT_V@)
-am__v_F77LD_0 = @echo "  F77LD   " $@;
-am__v_F77LD_1 = 
 FCCOMPILE = $(FC) $(AM_FCFLAGS) $(FCFLAGS)
 AM_V_FC = $(am__v_FC_@AM_V@)
 am__v_FC_ = $(am__v_FC_@AM_DEFAULT_V@)
@@ -139,18 +127,6 @@ AM_V_FCLD = $(am__v_FCLD_@AM_V@)
 am__v_FCLD_ = $(am__v_FCLD_@AM_DEFAULT_V@)
 am__v_FCLD_0 = @echo "  FCLD    " $@;
 am__v_FCLD_1 = 
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
 SOURCES = $(anttyp99_SOURCES)
 DIST_SOURCES = $(anttyp99_SOURCES)
 am__can_run_installinfo = \
@@ -275,13 +251,13 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_FFLAGS = -w -ffixed-line-length-none
 anttyp99_SOURCES = cant99.f95\
-	anttyp99.f\
-	ant99.f
+	anttyp99.f95\
+	ant99.f95
 
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .f .f95 .o .obj
+.SUFFIXES: .f95 .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -356,19 +332,13 @@ clean-binPROGRAMS:
 
 anttyp99$(EXEEXT): $(anttyp99_OBJECTS) $(anttyp99_DEPENDENCIES) $(EXTRA_anttyp99_DEPENDENCIES) 
 	@rm -f anttyp99$(EXEEXT)
-	$(AM_V_F77LD)$(F77LINK) $(anttyp99_OBJECTS) $(anttyp99_LDADD) $(LIBS)
+	$(AM_V_FCLD)$(FCLINK) $(anttyp99_OBJECTS) $(anttyp99_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
-
-.f.o:
-	$(AM_V_F77)$(F77COMPILE) -c -o $@ $<
-
-.f.obj:
-	$(AM_V_F77)$(F77COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .f95.o:
 	$(AM_V_FC)$(FCCOMPILE) -c -o $@ $<
