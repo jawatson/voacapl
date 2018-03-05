@@ -14,9 +14,17 @@ c    directory = full pathname to the RUN directory (e.g. c:\ITSHFBC\RUN)
 c    mode      = (blank) = Point-to-Point
 c              = a = Area Coverage
 C***********************************************************************
-      use cantenna
+c      use cantenna
       use Cant99
+    
+c      implicit none
 
+      real :: xfqs,xfqe,designfreq
+      real ::beammain,offazim,cond,diel
+      real, dimension(91) :: gain
+      character(len=10) :: anttype
+      character(len=70) :: antname
+      character(len=24) :: antfile
       character (len=80) :: filename, gainfilename
       character (len=120) :: run_directory
       character (len=1) :: mode
