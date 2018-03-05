@@ -26,7 +26,7 @@ C***********************************************************************
 
       character (len=80) :: filename, gainfile
 
-      character (len=50) :: run_directory
+      character (len=120) :: run_directory
       character (len=1) :: mode
       
 C.....START OF PROGRAM
@@ -89,13 +89,15 @@ c*****Area Coverage mode
       call ant99_calc(freq,0.,8.,g,aeff,*940)
       write(22,201) freq,aeff
 201   format(10x,f7.3,'MHz eff=',f10.3)
-      do 250 iazim=0,359
-      azimuth=iazim
-      do 220 iel=0,90
-      elev=iel
-220   call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
-250   write(22,251) iazim,gain
-251   format(i5,(T10,10F7.3))
+      do iazim=0,359
+        azimuth=iazim
+        do iel=0,90
+            elev=iel
+220         call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
+        end do
+250     write(22,251) iazim,gain
+251     format(i5,(T10,10F7.3))
+      end do
 c****************************************************************
 500   call ant99_close
       close(22)
