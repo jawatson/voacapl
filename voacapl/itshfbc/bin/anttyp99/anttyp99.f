@@ -79,12 +79,11 @@ c****************************************************************
 3           format(i2,f6.2,(T10,10F7.3))
         end do
       else
-c      go to 500
 
 c****************************************************************
 c                    Area Coverage mode
 c****************************************************************
-200     write(gain_file_un,2) 2.0,xfqe,beammain,-999.,cond,diel
+        write(gain_file_un,2) 2.0,xfqe,beammain,-999.,cond,diel
         freq=xfqs
         call ant99_calc(freq,0.,8.,g,aeff,*940)
         write(gain_file_un,201) freq,aeff
@@ -100,7 +99,7 @@ c****************************************************************
         end do
       end if 
 c****************************************************************
-500   call ant99_close
+      call ant99_close      !Close the scratch file
       close(gain_file_un)
 c****************************************************************
       go to 999
