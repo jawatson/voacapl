@@ -17,7 +17,7 @@ C***********************************************************************
       use cantenna
       use Cant99
 
-      character (len=80) :: filename, gainfile
+      character (len=80) :: filename, gainfilename
       character (len=120) :: run_directory
       character (len=1) :: mode
       integer, parameter :: dat_file_un = 21
@@ -47,9 +47,10 @@ C.....START OF PROGRAM
       call ant99_read(filename,21,lua,*910)
       diel=parms(3)         !  dielectric constant
       cond=parms(4)         !  conductivity
-      write(gainfile,1) run_directory(1:nch_run),idx
+      write(gainfilename,1) run_directory(1:nch_run),idx
 1     format(a,5h/gain,i2.2,4h.dat)
-      open(gain_file_un,file=gainfile)
+
+      open(gain_file_un,file=gainfilename)
       rewind(gain_file_un)
       write(gain_file_un,'(a)') 'HARRIS99  '//title
 
