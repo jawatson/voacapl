@@ -4221,7 +4221,7 @@ else
   RANLIB="$ac_cv_prog_RANLIB"
 fi
 
-ac_config_files="$ac_config_files Makefile src/modules/Makefile src/hfmufesw/Makefile src/voa_lib/Makefile src/wp10dwin/Makefile src/voacapw/Makefile voacapl/itshfbc/coeffs/Makefile voacapl/itshfbc/bin/anttyp90/Makefile voacapl/itshfbc/bin/dst/Makefile"
+ac_config_files="$ac_config_files Makefile src/modules/Makefile src/hfmufesw/Makefile src/voa_lib/Makefile src/wp10dwin/Makefile src/voacapw/Makefile voacapl/itshfbc/coeffs/Makefile voacapl/itshfbc/bin/anttyp90/Makefile voacapl/itshfbc/bin/anttyp99/Makefile voacapl/itshfbc/bin/dst/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4973,6 +4973,7 @@ do
     "src/voacapw/Makefile") CONFIG_FILES="$CONFIG_FILES src/voacapw/Makefile" ;;
     "voacapl/itshfbc/coeffs/Makefile") CONFIG_FILES="$CONFIG_FILES voacapl/itshfbc/coeffs/Makefile" ;;
     "voacapl/itshfbc/bin/anttyp90/Makefile") CONFIG_FILES="$CONFIG_FILES voacapl/itshfbc/bin/anttyp90/Makefile" ;;
+    "voacapl/itshfbc/bin/anttyp99/Makefile") CONFIG_FILES="$CONFIG_FILES voacapl/itshfbc/bin/anttyp99/Makefile" ;;
     "voacapl/itshfbc/bin/dst/Makefile") CONFIG_FILES="$CONFIG_FILES voacapl/itshfbc/bin/dst/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

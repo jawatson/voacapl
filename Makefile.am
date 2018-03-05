@@ -9,6 +9,7 @@ SUBDIRS = src/modules\
 	src/voacapw\
 	voacapl/itshfbc/coeffs\
 	voacapl/itshfbc/bin/anttyp90 \
+	voacapl/itshfbc/bin/anttyp99 \
 	voacapl/itshfbc/bin/dst
 	
 dist_doc_DATA = README.md\

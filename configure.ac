@@ -14,6 +14,7 @@ AC_CONFIG_FILES([
  	src/voacapw/Makefile
 	voacapl/itshfbc/coeffs/Makefile
 	voacapl/itshfbc/bin/anttyp90/Makefile
+	voacapl/itshfbc/bin/anttyp99/Makefile
 	voacapl/itshfbc/bin/dst/Makefile
 ])
 AC_OUTPUT
