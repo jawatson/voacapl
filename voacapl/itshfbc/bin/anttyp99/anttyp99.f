@@ -60,17 +60,16 @@ c*****Point-to-Point mode
         if(freq.ge.xfqs .and. freq.le.xfqe) then    !  in frequency range
             do iel=0,90
                 elev=iel
-20              call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
+                call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
             end do
         else                                        !  outside freq range
             aeff=0.
             do iel=0,90
-30              gain(iel+1)=0.
+                gain(iel+1)=0.
             end do
         end if
         write(22,3) ifreq,aeff,gain
 3       format(i2,f6.2,(T10,10F7.3))
-50      continue
       end do
       go to 500
 c****************************************************************
@@ -97,13 +96,13 @@ c****************************************************************
 c****************************************************************
 900   write(*,901) run_directory(1:nch_run)//'/anttyp99.dat' !jw
 901   format(' In anttyp99, could not OPEN file=',a)
-      stop 'OPEN error in anttyp90 at 900'
+      stop 'OPEN error in anttyp99 at 900'
 910   write(*,911) filename
 911   format(' In anttyp99, error READing file=',a)
-      stop 'READ error in anttyp90 at 910'
+      stop 'READ error in anttyp99 at 910'
 920   write(*,921) run_directory(1:nch_run)//'/anttyp99.dat' !jw
 921   format(' In anttyp99, error READing file=',a)
-      stop 'READ error in anttyp90 at 920'
+      stop 'READ error in anttyp99 at 920'
 c***********************************************************************
 930   write(*,931)
 931   format('anttyp99 must be executed:',/
