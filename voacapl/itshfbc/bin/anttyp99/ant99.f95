@@ -56,8 +56,9 @@ end
       
 function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
     real, intent(in) :: azimuth
-    integer :: iaz    
+    integer :: iaz  
     dimension gain1(91,360)
+    !write(*, '(A F12.6)') '1. Azimuth = ', azimuth  
     data bad/-99998./
     ant99_gain=-99.9
     if(ifreq.ne.ifreq1) read(luaa,rec=ifreq) gain1
@@ -107,27 +108,29 @@ function ant99_interp(z,iy1,y,iy2,ix1,x,ix2)
 !...interpolation
 !    implicit none
     real, intent(in) :: y
+    integer, intent(in) :: iy1,iy2,ix1,ix2
     dimension z(91,*)
-    write(*, '(A, I3, F10.3, I3, I3, F10.3, I3)') "Coords:", iy1,y,iy2,ix1,x,ix2
+    !write(*, '(A, I5, F10.3, I5, I5, F10.3, I5)') "Coords:", iy1,y,iy2,ix1,x,ix2
     jy2=iy2
     if(jy2.eq.360) jy2=0
     z1=z(ix1+1,iy1+1)
     z2=z(ix2+1,iy1+1)
     z3=z(ix1+1,jy2+1)
     z4=z(ix2+1,jy2+1)
-    write(*, '(A F10.3, F10.3, F10.3, F10.3)') "Gains:", z1, z2, z3, z4
+    !write(*, '(A F10.5, F10.5, F10.5, F10.5)') "Gains:", z1, z2, z3, z4
 
     if (ix1.eq.ix2) then ! 90deg elevation
         z12 = z2
         z34 = z4
     else
-        xf = (x-float(ix1))/float(ix2-ix1)
+        xf = (x-real(ix1))/real(ix2-ix1)
         z12 = z1 + (z2-z1)*xf
         z34 = z3 + (z4-z3)*xf
     end if
-    zz=z12 + (z34-z12)*(y-float(iy1))/float(iy2-iy1)
+    zz=z12 + (z34-z12)*(y-real(iy1))/real(iy2-iy1)
+    if (zz.lt.-99.9) zz=-99.999 ! to make the fields match the Harris version
     ant99_interp=zz
-    write(*, '(A F10.3)') "Interpolated Gain:", zz
+    !write(*, '(A F10.3)') "Interpolated Gain:", zz
     return
 end
 !-------------------------------------------------------
