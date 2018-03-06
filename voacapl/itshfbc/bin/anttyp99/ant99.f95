@@ -12,11 +12,11 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
     if(freq.lt.frequency(1) .or. freq.gt.frequency(nfreq)) go to 900 ! out of freq range
     if(elev.lt.0. .or. elev.gt.90.) go to 910 ! out of elevation angle range
     azim=azimuth
-    write(*, '(AF10.3)') '3. Off az = ', azimuth
+    !write(*, '(AF10.3)') '3. Off az = ', azimuth
     if(azim.lt.0.) azim=azim+360.
     if(azim.ge.360.) azim=azim-360.
     if(azim.lt.0. .or. azim.ge.360.) go to 920   !  out of azimuth angle range
-    write(*, '(AF10.3)') '4. Off az = ', azim
+    !write(*, '(AF10.3)') '4. Off az = ', azim
     do i=1,nfreq
         if(abs(freq-frequency(i)).lt..001) then  !  frequency match
 	        gain=ant99_gain(i,azim,elev,luaa,ifreq1,gain1)
@@ -94,9 +94,9 @@ function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
     end do
     iup_el=90
 80  continue
-    write(*, '(AI3)') 'Low az = ', low_az
-    write(*, '(AI3)') 'High az = ', iup_az
-    write(*, '(AF10.3)') 'required = ', azimuth
+    !write(*, '(AI3)') 'Low az = ', low_az
+    !write(*, '(AI3)') 'High az = ', iup_az
+    !write(*, '(AF10.3)') 'required = ', azimuth
     g=ant99_interp(gain1,low_az,azimuth,iup_az,low_el,elev,iup_el)
     ant99_gain=g
     return
@@ -115,8 +115,8 @@ function ant99_interp(z,iy1,y,iy2,ix1,x,ix2)
     z2=z(ix2+1,iy1+1)
     z3=z(ix1+1,jy2+1)
     z4=z(ix2+1,jy2+1)
-    !write(*, '(F10.3, F10.3, F10.3, F10.3)') z1, z2, z3, z4
-    write(*, '(F10.3, F10.3, F10.3, F10.3)') z1, z2, z3, z4
+    write(*, '(A F10.3, F10.3, F10.3, F10.3)') "Gains:", z1, z2, z3, z4
+
     if (ix1.eq.ix2) then ! 90deg elevation
         z12 = z2
         z34 = z4
@@ -127,6 +127,7 @@ function ant99_interp(z,iy1,y,iy2,ix1,x,ix2)
     end if
     zz=z12 + (z34-z12)*(y-float(iy1))/float(iy2-iy1)
     ant99_interp=zz
+    write(*, '(A F10.3)') "Interpolated Gain:", zz
     return
 end
 !-------------------------------------------------------
