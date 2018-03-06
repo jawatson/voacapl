@@ -5,14 +5,18 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
 !   If ELEVATION angle or AZIMUTH angle in error, return 1
     use Cant99 
 !    implicit none
+    integer, intent(in) :: azimuth
+    integer :: azim
     gain=-99.9
     efficiency=0.0
     if(freq.lt.frequency(1) .or. freq.gt.frequency(nfreq)) go to 900 ! out of freq range
     if(elev.lt.0. .or. elev.gt.90.) go to 910 ! out of elevation angle range
     azim=azimuth
+    write(*, '(AI3)') '3. Off az = ', azimuth
     if(azim.lt.0.) azim=azim+360.
     if(azim.ge.360.) azim=azim-360.
     if(azim.lt.0. .or. azim.ge.360.) go to 920   !  out of azimuth angle range
+    write(*, '(AI3)') '4. Off az = ', azim
     do i=1,nfreq
         if(abs(freq-frequency(i)).lt..001) then  !  frequency match
 	        gain=ant99_gain(i,azim,elev,luaa,ifreq1,gain1)
@@ -51,6 +55,8 @@ end
 !------------------------------------------------------
       
 function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
+    integer, intent(in) :: azimuth
+    integer :: iaz    
     dimension gain1(91,360)
     data bad/-99998./
     ant99_gain=-99.9
@@ -88,7 +94,9 @@ function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
     end do
     iup_el=90
 80  continue
-
+    write(*, '(AI3)') 'Low az = ', low_az
+    write(*, '(AI3)') 'High az = ', iup_az
+    write(*, '(AI3)') 'required = ', azimuth
     g=ant99_interp(gain1,low_az,azimuth,iup_az,low_el,elev,iup_el)
     ant99_gain=g
     return
