@@ -28,7 +28,7 @@ PROGRAM anttyp99
     character (len=80) :: filename, gainfilename
     character (len=120) :: run_directory
     character (len=1) :: mode
-    integer :: azimuth
+    real :: azimuth
     integer :: nch, nch_run, idx, iel, iazim, ifreq
     integer, parameter :: dat_file_un = 21
     integer, parameter :: gain_file_un = 22
@@ -74,13 +74,13 @@ PROGRAM anttyp99
         write(gain_file_un,2) xfqs,xfqe,beammain,offazim,cond,diel
 2       format(2f5.0,2f7.2,2f10.5)
         azimuth=offazim
-        write(*, '(AI3)') '1. Off az = ', azimuth
+        write(*, '(AF10.3)') '1. Off az = ', azimuth
         do ifreq=1,30
             freq=ifreq
             if(freq.ge.xfqs .and. freq.le.xfqe) then    !  in frequency range
                 do iel=0,90
                     elev=iel
-                    write(*, '(AI3)') '2. Off az = ', azimuth
+                    write(*, '(AF10.3)') '2. Off az = ', azimuth
                     call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
                 end do
             else                                        !  outside freq range
