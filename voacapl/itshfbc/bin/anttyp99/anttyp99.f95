@@ -51,6 +51,14 @@ PROGRAM anttyp99
     read(dat_file_un,*,err=920) offazim      !  off azimuth (deg from North)
     close(dat_file_un)
 
+    !Uncomment the following line to get full compatibility with the 
+    !Harris version with produces gain tables with the azimuth rounded
+    !to the nearest degree.
+    !Leaving the follwing line as a comment should produce more accurate
+    !gain tables, interpolated to the exact azimuth.
+    !
+    offazim = real(nint(offazim))
+
     nch=len(trim(antfile))
     filename=run_directory(1:nch_run-3)//'antennas/'//antfile(1:nch)
 
