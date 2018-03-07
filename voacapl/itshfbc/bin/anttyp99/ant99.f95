@@ -4,9 +4,12 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
 !   If outside frequency range, gain=-99.9 returned.
 !   If ELEVATION angle or AZIMUTH angle in error, return 1
     use Cant99 
-!    implicit none
-    real, intent(in) :: azimuth
-    real :: azim
+    implicit none
+    real, intent(in)    :: freq, azimuth, elev
+    real                :: gain, efficiency
+    real                :: azim, g1, g2, eff1, eff2, xf
+    real                :: ant99_gain
+    integer             :: i
     gain=-99.9
     efficiency=0.0
     if(freq.lt.frequency(1) .or. freq.gt.frequency(nfreq)) go to 900 ! out of freq range

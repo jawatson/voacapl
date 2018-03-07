@@ -18,21 +18,32 @@ PROGRAM anttyp99
     
     implicit none
 
-    real :: elev, freq, g ! <- Gain looks strange... what's it used for?
-    real :: xfqs,xfqe,designfreq, aeff
-    real ::beammain,offazim,cond,diel
+    real                :: elev, azimuth, freq, g 
+    real                :: xfqs,xfqe,designfreq, aeff
+    real                :: beammain,offazim,cond,diel
     real, dimension(91) :: gain
-    character(len=10) :: anttype
-    character(len=70) :: antname
-    character(len=24) :: antfile
-    character (len=80) :: filename, gainfilename
-    character (len=120) :: run_directory
-    character (len=1) :: mode
-    real :: azimuth
-    integer :: nch, nch_run, idx, iel, iazim, ifreq
-    integer, parameter :: dat_file_un = 21
-    integer, parameter :: gain_file_un = 22
-    integer, parameter :: lua = 42
+    character(len=24)   :: antfile
+    character(len=80)   :: filename, gainfilename
+    character(len=120)  :: run_directory
+    character(len=1)    :: mode
+    integer             :: nch, nch_run, idx, iel, iazim, ifreq
+    integer, parameter  :: dat_file_un = 21
+    integer, parameter  :: gain_file_un = 22
+    integer, parameter  :: lua = 42
+
+    !HARRIS_INTERP controls compatibility compatibility with the 
+    !Harris version with produces gain tables with the azimuth 
+    !rounded to the nearest degree.
+    !HARRIS_INTERP = .false. should produce more accurate
+    !gain tables, interpolated to the exact azimuth.
+    !
+    logical, parameter  :: HARRIS_INTERP = .true.
+
+    !HARRIS_LOWER_LIMIT Controls the format of the lower limit.  The
+    !Harris version prints the value -99.990 as -99.999 (although the 
+    !value -99.990 appears to be used in the interpolation.
+
+    logical, parameter  :: HARRIS_LOWER_LIMIT = .true.
       
 !...START OF PROGRAM
     call GET_COMMAND_ARGUMENT(1, run_directory)
@@ -41,8 +52,7 @@ PROGRAM anttyp99
       
     call GET_COMMAND_ARGUMENT(2, mode)
 
-    open(dat_file_un,file=run_directory(1:nch_run)//'/anttyp99.dat', status='old',err=900)
-    rewind(dat_file_un)
+    open(dat_file_un,file=run_directory(1:nch_run)//'/anttyp99.dat', position='rewind', status='old',err=900)
     read(dat_file_un,*,err=920) idx          !  antenna index #, GAINxx.dat
     read(dat_file_un,'(a)',err=920) antfile  !  antenna file name
     read(dat_file_un,*,err=920) xfqs         !  starting frequency
@@ -50,14 +60,6 @@ PROGRAM anttyp99
     read(dat_file_un,*,err=920) beammain     !  main beam (deg from North)
     read(dat_file_un,*,err=920) offazim      !  off azimuth (deg from North)
     close(dat_file_un)
-
-    !Uncomment the following line to get full compatibility with the 
-    !Harris version with produces gain tables with the azimuth rounded
-    !to the nearest degree.
-    !Leaving the follwing line as a comment should produce more accurate
-    !gain tables, interpolated to the exact azimuth.
-    !
-    offazim = real(nint(offazim))
 
     nch=len(trim(antfile))
     filename=run_directory(1:nch_run-3)//'antennas/'//antfile(1:nch)
@@ -68,8 +70,7 @@ PROGRAM anttyp99
     write(gainfilename,1) run_directory(1:nch_run),idx
 1   format(a,5h/gain,i2.2,4h.dat)
 
-    open(gain_file_un,file=gainfilename)
-    rewind(gain_file_un)
+    open(gain_file_un,file=gainfilename, position='rewind')
     write(gain_file_un,'(a)') 'HARRIS99  '//title
 
     if(mode.eq.' ') then
@@ -79,22 +80,23 @@ PROGRAM anttyp99
         write(gain_file_un,2) xfqs,xfqe,beammain,offazim,cond,diel
 2       format(2f5.0,2f7.2,2f10.5)
         azimuth=offazim
+        if (HARRIS_INTERP) azimuth = real(nint(azimuth))
         do ifreq=1,30
             freq=ifreq
-            if(freq.ge.xfqs .and. freq.le.xfqe) then    !  in frequency range
+            if(freq.ge.xfqs .and. freq.le.xfqe) then !  in frequency range
                 do iel=0,90
                     elev=iel
-                    !write(*, '(AF10.3)') '2. Off az = ', azimuth
                     call ant99_calc(freq,azimuth,elev,gain(iel+1),aeff,*940)
                 end do
-            else                                        !  outside freq range
+            else                                     !  outside freq range
                 aeff=0.
                 do iel=0,90
                     gain(iel+1)=0.
                 end do
             end if
-            !to make the fields match the Harris version
-            where (gain.lt.-99.9) gain=-99.999
+            if (HARRIS_LOWER_LIMIT) then
+                where (gain.lt.-99.9) gain=-99.999
+            end if
             write(gain_file_un,3) ifreq,aeff,gain
 3           format(i2,f6.2,(T10,10F7.3))
         end do
