@@ -1,6 +1,8 @@
 ## Changelog
 ### v0.7.3 (In Progress)
 * Added invcon.for to the build.  This file was accidentally omitted from previous builds.
+* Adds anttype99 to the build.  This is derived from the anttype90 code published with voacap and supports Harris type 99 antenna files.  No type 99 files are provided with this distribution.
+
 ### v0.7.2 04Mar18
 * Fixed a bug that was preventing antenna type 90 file from working correctly.
 * Fixed a bug in the dst2xxx applications caused by using a variable in the 
