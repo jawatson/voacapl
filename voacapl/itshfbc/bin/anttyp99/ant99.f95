@@ -56,11 +56,16 @@ end
 !------------------------------------------------------
       
 function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1) result(g)
+    implicit none
     real, intent(in)    :: azimuth
-    integer             :: iaz  
-    real                :: g
+    real, intent(in)    :: elev
+    integer             :: ifreq1, ifreq, luaa
+    integer             :: iaz, iel, iup_az, iup_el, ia, ie
+    integer             :: low_az, low_el
+    real                :: g, gain1
+    real                :: ant99_interp
     dimension gain1(91,360)
-    !write(*, '(A F12.6)') '1. Azimuth = ', azimuth  
+    real bad    
     data bad/-99998./
     g=-99.9
     if(ifreq.ne.ifreq1) read(luaa,rec=ifreq) gain1
