@@ -12,11 +12,9 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
     if(freq.lt.frequency(1) .or. freq.gt.frequency(nfreq)) go to 900 ! out of freq range
     if(elev.lt.0. .or. elev.gt.90.) go to 910 ! out of elevation angle range
     azim=azimuth
-    !write(*, '(AF10.3)') '3. Off az = ', azimuth
     if(azim.lt.0.) azim=azim+360.
     if(azim.ge.360.) azim=azim-360.
     if(azim.lt.0. .or. azim.ge.360.) go to 920   !  out of azimuth angle range
-    !write(*, '(AF10.3)') '4. Off az = ', azim
     do i=1,nfreq
         if(abs(freq-frequency(i)).lt..001) then  !  frequency match
 	        gain=ant99_gain(i,azim,elev,luaa,ifreq1,gain1)
@@ -54,13 +52,14 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
 end
 !------------------------------------------------------
       
-function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
-    real, intent(in) :: azimuth
-    integer :: iaz  
+function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1) result(g)
+    real, intent(in)    :: azimuth
+    integer             :: iaz  
+    real                :: g
     dimension gain1(91,360)
     !write(*, '(A F12.6)') '1. Azimuth = ', azimuth  
     data bad/-99998./
-    ant99_gain=-99.9
+    g=-99.9
     if(ifreq.ne.ifreq1) read(luaa,rec=ifreq) gain1
     ifreq1=ifreq
     iaz=azimuth
@@ -95,29 +94,26 @@ function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1)
     end do
     iup_el=90
 80  continue
-    !write(*, '(AI3)') 'Low az = ', low_az
-    !write(*, '(AI3)') 'High az = ', iup_az
-    !write(*, '(AF10.3)') 'required = ', azimuth
     g=ant99_interp(gain1,low_az,azimuth,iup_az,low_el,elev,iup_el)
-    ant99_gain=g
+    !ant99_gain=g
     return
 end
 
 !------------------------------------------------------
-function ant99_interp(z,iy1,y,iy2,ix1,x,ix2)
+function ant99_interp(z,iy1,y,iy2,ix1,x,ix2) result(zz)
 !...interpolation
-!    implicit none
-    real, intent(in) :: y
+    implicit none
+    real, intent(in)    :: x, y, z
     integer, intent(in) :: iy1,iy2,ix1,ix2
+    integer             :: jy2
+    real                :: z1, z2, z3, z4, z12, z34, xf, zz
     dimension z(91,*)
-    !write(*, '(A, I5, F10.3, I5, I5, F10.3, I5)') "Coords:", iy1,y,iy2,ix1,x,ix2
     jy2=iy2
     if(jy2.eq.360) jy2=0
     z1=z(ix1+1,iy1+1)
     z2=z(ix2+1,iy1+1)
     z3=z(ix1+1,jy2+1)
     z4=z(ix2+1,jy2+1)
-    !write(*, '(A F10.5, F10.5, F10.5, F10.5)') "Gains:", z1, z2, z3, z4
 
     if (ix1.eq.ix2) then ! 90deg elevation
         z12 = z2
@@ -128,9 +124,6 @@ function ant99_interp(z,iy1,y,iy2,ix1,x,ix2)
         z34 = z3 + (z4-z3)*xf
     end if
     zz=z12 + (z34-z12)*(y-real(iy1))/real(iy2-iy1)
-    if (zz.lt.-99.9) zz=-99.999 ! to make the fields match the Harris version
-    ant99_interp=zz
-    !write(*, '(A F10.3)') "Interpolated Gain:", zz
     return
 end
 !-------------------------------------------------------

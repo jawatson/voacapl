@@ -79,7 +79,6 @@ PROGRAM anttyp99
         write(gain_file_un,2) xfqs,xfqe,beammain,offazim,cond,diel
 2       format(2f5.0,2f7.2,2f10.5)
         azimuth=offazim
-        !write(*, '(AF10.3)') '1. Off az = ', azimuth
         do ifreq=1,30
             freq=ifreq
             if(freq.ge.xfqs .and. freq.le.xfqe) then    !  in frequency range
@@ -94,6 +93,8 @@ PROGRAM anttyp99
                     gain(iel+1)=0.
                 end do
             end if
+            !to make the fields match the Harris version
+            where (gain.lt.-99.9) gain=-99.999
             write(gain_file_un,3) ifreq,aeff,gain
 3           format(i2,f6.2,(T10,10F7.3))
         end do
