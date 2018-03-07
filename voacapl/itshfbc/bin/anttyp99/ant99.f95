@@ -137,18 +137,24 @@ end
 !-------------------------------------------------------
 subroutine ant99_read(filename, lu, lua,*)
     use Cant99
+    implicit none
+    integer :: lu, lua
+    integer :: i, iaz, iel, ios, nch, nparms 
+    integer, dimension(360) :: iazimuth
+    real :: g, bad
     character filename*(*)
-    character alf*80
-    dimension iazimuth(360)
+    character(len=80) :: alf
+
+    
     data bad/-99999./
     filenam=filename
     nch=len(trim(filename))
-    open(lu,file=filename(1:nch),status='old',err=910)
-    rewind(lu)
+    open(lu,file=filename(1:nch),position='rewind', status='old',err=910)
     read(lu,'(a)',end=100) title
     read(lu,*) nparms
-    do 10 i=1,nparms
-10      read(lu,*) parms(i)
+    do i=1,nparms
+        read(lu,*) parms(i)
+    end do
     itype=nint(parms(2))
 
     ifreq1=0
@@ -223,10 +229,10 @@ subroutine ant99_read(filename, lu, lua,*)
 900 close(lu)
     return 1
 910 write(*,911) filename(1:nch)
-911 format('Could not OPEN antenna file=',a)
+911 format('Could not OPEN antenna file: ',a)
     return 1
 920 write(*,921) ios
-921 format('Error READing antenna file=',i5)
+921 format('Error READing antenna file: ',i5)
     stop
 end
 
