@@ -108,7 +108,7 @@ c jw      integer*2 istat
       common /ctime/ ntime                          !  plot vs time
       common /cCIRAF_TP/ nTP,idx_TP(911)
       character cmnam*64,title*80,ich*1,area_meth*1,dum*1
-      character message*80,run*50,PROGRAM*300
+      character message*80,c_arg*50,PROGRAM*300
       logical*1 doesit
 c jw      logical*4 fexists@
       logical*1 fexists
@@ -181,36 +181,36 @@ ccc      permission=.false.
 c jw      call permit_underflow@(permission)
 c******************************************************
 c jw      run=cmnam()
-      call get_command_argument(argCtr, run) !jw
+      call get_command_argument(argCtr, c_arg) !jw
       argCtr = argCtr + 1
-      nch=lenchar(run)
+      nch=lenchar(c_arg)
 c jw      if(nch.le.3) go to 930
 c jw      call ucase(run,nch)
 C******************************************************************
 C Process posix type commands that appear before then run directory
 C******************************************************************
       do command=1, COMMAND_ARGUMENT_COUNT()
-        if (run(1:1).ne.'-') exit
+        if (c_arg(1:1).ne.'-') exit
 
-        if((run(1:9).eq.'--version').or.(run(1:2).eq.'-v')) then
+        if((c_arg(1:9).eq.'--version').or.(c_arg(1:2).eq.'-v')) then
            write(*,'(''voacapl - release '',a)') VOACAPL_VERSION
            call exit(0)
-        else if (run(1:2).eq.'-h') then
+        else if (c_arg(1:2).eq.'-h') then
            call print_help()
            call exit(0)
-        else if((run(1:2).eq.'--silent').or.(run(1:2).eq.'-s')) then
+        else if((c_arg(1:2).eq.'--silent').or.(c_arg(1:2).eq.'-s')) then
            iquiet=1
-        else if(run(1:18).eq.'--absorption-mode=') then
-           if (scan("WwAa", run(19:19))>0) then
-               ABSORPTION_MODE=run(19:19)
+        else if(c_arg(1:18).eq.'--absorption-mode=') then
+           if (scan("WwAa", c_arg(19:19))>0) then
+               ABSORPTION_MODE=c_arg(19:19)
            else
-               write(*, '(AA)') "Invalid absorption mode: ", run(19:19)
+               write(*, '(AA)') "Invalid absorption mode: ", c_arg(19:19)
            end if
         else
-           write(*, '(AA)') "Option not recognised: ", run
+           write(*, '(AA)') "Option not recognised: ", c_arg
         end if
 
-        call get_command_argument(argCtr, run)
+        call get_command_argument(argCtr, c_arg)
         argCtr = argCtr + 1
 
       end do
@@ -219,11 +219,11 @@ c******************************************************
 c     check that the itshfbc directory exists, quit with
 c     a message about creating one if not.
 c******************************************************
-      nch=len(trim(run))
-      inquire(file=run(1:nch)//'/.', exist=doesit)
+      nch=len(trim(c_arg))
+      inquire(file=c_arg(1:nch)//'/.', exist=doesit)
       if (.not. doesit) goto 941
 
-      run_directory=run(1:nch)//PATH_SEPARATOR//'run'
+      run_directory=c_arg(1:nch)//PATH_SEPARATOR//'run'
 ccc      call get_run
       call set_run            !  make sure we are in ..\RUN directory
       nch_run=lcount(run_directory,50)
@@ -586,7 +586,7 @@ c*****This error is no longer called
       call exit(1)
 
 c*****itshfbc directory not found
-941   write(*,'('' Error: Unable to open itshfbc directory at: '',a)') trim(run)
+941   write(*,'('' Error: Unable to open itshfbc directory at: '',a)') trim(c_arg)
       write(*,'('' Run the command "makeitshbc" to create a copy of the'')')
       write(*,'('' itshfbc directory in your home directory.'')')
       write(*, '('' VOACAPW:941'')')
