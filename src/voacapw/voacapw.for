@@ -118,7 +118,7 @@ C  PROGRAM VERSION NUMBER, PROGRAM CONTROL VARIABLES
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
       common /CVERSN/ VERSN
       character VERSN*8
-      real*8 start_time,end_time
+c jw      real*8 start_time,end_time
 
       common /crun_directory/ run_directory
          character run_directory*50
@@ -207,7 +207,7 @@ c jw      if(run(1:6).eq.'SILENT') then
 c jw      run_directory=run(1:nch)//'\RUN'
 
 c******************************************************
-c     check that the itshfbc directory exists, quit with 
+c     check that the itshfbc directory exists, quit with
 c     a message about creating one if not.
 c******************************************************
       inquire(file=run(1:len(trim(run)))//'/.', exist=doesit)
