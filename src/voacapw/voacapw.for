@@ -201,7 +201,7 @@ C******************************************************************
         else if((c_arg(1:2).eq.'--silent').or.(c_arg(1:2).eq.'-s')) then
            iquiet=1
         else if(c_arg(1:18).eq.'--absorption-mode=') then
-           if (scan("WwAa", c_arg(19:19))>0) then
+           if (scan("WIAa", c_arg(19:19))>0) then
                ABSORPTION_MODE=c_arg(19:19)
            else
                write(*, '(AA)') "Invalid absorption mode: ", c_arg(19:19)
