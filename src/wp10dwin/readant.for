@@ -1,7 +1,8 @@
       subroutine readant(lu,filename,description)
       use voacapl_defs
-      common /crun_directory/ run_directory
-         character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /designfreq/ freqdesign
       common /ctype11g/ gain_type11(91)
       common /gain_10/ gain10(90,29)

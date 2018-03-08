@@ -10,9 +10,10 @@ c          icircuit = circuit number to be processed
 c          * = alternate return when done or if error occurs
 c**************************************************************************
       use voacapl_defs
+      use crun_directory
       character model*6,filein*(*)
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /card_deck/ ncards,cards(50)
          character cards*80
       common /Cantenna_deck/ nantennas,antennas(22)

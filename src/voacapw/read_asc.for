@@ -1,5 +1,6 @@
       subroutine read_asc(model,*)       !  read common from modelW.ASC
       use voacapl_defs
+      use crun_directory
       character model*6
 
       INCLUDE 'ficepac.hdr'
@@ -8,8 +9,8 @@
       common /ctoplines/ ntoplines,linestop( 7)
       common /zMETHOD/ kmeth     !  propagation method used for method=23
          integer*4 kmeth
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
 c**********************************************************************
 
       nch_run=lcount(run_directory,50)

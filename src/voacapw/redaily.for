@@ -8,8 +8,9 @@ C     This routine reads and calculates the daily F2 array (F2COF)
 C     FOR MONTH,day AND SUNSPOT NUMBER
 C
       use voacapl_defs
-      common /crun_directory/ run_directory
-         character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       COMMON /ONE/ IA(6),IB(6),IKIM(10,6),ESLCOF(5,55),ESMCOF(7,61),
      +             ESUCOF(5,55),F2COF(13,76),FM3COF(9,49),ERCOF(9,22)
 C.....VARIABLES FROM THE DATA BASE FILE BEFORE SUNSPOT INTERPOLATION

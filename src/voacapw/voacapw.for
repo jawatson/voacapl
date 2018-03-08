@@ -5,7 +5,8 @@ ccc      winapp 240000,500000
 *    +                (filein,fileout,areach)
 C***********************************************************************
       use voacapl_defs
-C***********************************************************************
+      use crun_directory
+C******************************************************
       character(len=3), parameter :: COMPILER='w32'       !  32-bit compiler
 
 c jw     include <windows.ins>
@@ -121,8 +122,8 @@ C  PROGRAM VERSION NUMBER, PROGRAM CONTROL VARIABLES
       character(len=1) :: ABSORPTION_MODE=" "
 c jw      real*8 start_time,end_time
 
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /cQUIET/ iquiet
       character alf_narea_batch*4,alf_iarea_batch*4
       character alf_elapsed_time*8,alf_fileout*50
@@ -174,7 +175,6 @@ c set the argument and file number counters to 1
 c******************************************************
       argCtr = 1
       fileNumCtr = 1
-
 c******************************************************
 c jw      permission=.true.        !  ignore underflows
 ccc      permission=.false.
@@ -724,12 +724,13 @@ c
 c--------------------------------------------------------------
 c###set_magnetic_pole.for
       SUBROUTINE set_magnetic_pole
+      use crun_directory
 c         This sets the location of the geomagnetic north pole
 c         The default is (78.5N, 69.0W) = (78.5, -69.0)
       use voacapl_defs
       common /Cnorth_pole/ g_magnetic_lat,g_magnetic_lon  !  magnetic north pole
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       data lu/21/
 
       nch_run=lcount(run_directory,50)

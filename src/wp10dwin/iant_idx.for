@@ -2,8 +2,9 @@
       FUNCTION iant_idx(dir,file)     !  open file and get antenna index
 * --------------------------------------------------------------------- *
       use voacapl_defs
-      common /crun_directory/ run_directory
-         character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       CHARACTER tempstring*1,dir*8,file*12,antfil*21
       iant_idx=-1
       call antfile(dir,file,antfil)

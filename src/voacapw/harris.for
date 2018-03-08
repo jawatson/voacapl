@@ -12,9 +12,10 @@ c              mode = (blank) = point-to-point
 c                   = a = area coverage
 c*******************************************************************
       use voacapl_defs
+      use crun_directory
       CHARACTER fileant*10,antfile*21,mode*1
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       dimension areagain(91)
       character program*300,alf*1,exe*12,dat*12
       logical*1 iexe_exist

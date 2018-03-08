@@ -1,11 +1,12 @@
 c###hfmufs2.for
       SUBROUTINE HFMUFS2(fileout,*)   !  for vs DISTANCE & vs TIME plots
+      use crun_directory
       character fileout*64,alf*4
       common /cdistance/ idistance,ndistance,ihr    !  plot vs distance
       common /ctime/ ntime                          !  plot vs time
       common /cnfreqs/ nfreqs
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /cdaily/ idaily(12)
       common /Cday/ iday
 C--------------------------------

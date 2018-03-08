@@ -1,7 +1,8 @@
       subroutine set_run       !  set current directory to ..\RUN
       use voacapl_defs
-      common /crun_directory/ run_directory
-         character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
 
 c jw      integer*2 error_code
       integer error_code
@@ -37,8 +38,9 @@ c 900   call attach@(run_directory,error_code)    !  reset to the RUN directory
 c--------------------------------------------------------------------
       subroutine get_run       !  get current directory
       use voacapl_defs
-      common /crun_directory/ run_directory
-      character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw      character run_directory*50
       character tmp*50
 
 c      run_directory=curdir@()      !  get the current directory

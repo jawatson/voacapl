@@ -13,8 +13,9 @@ c     ASCII data file and then it was converted to binary.
 c*****************************************************************
 C
       use voacapl_defs
-      common /crun_directory/ run_directory
-         character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /ccoeff/ coeff
       character coeff*4
 C.....F1 LAYER MONTHLY COEFFICIENTS

@@ -13,9 +13,10 @@ c                         = 'c' = map with contours
 c                         = 'p' = calculations & plots
 c**********************************************************
       use voacapl_defs
+      use crun_directory
       INCLUDE 'ficearea.hdr'
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       character fileout*64,filename*64,ich,meth*1,model*6
       character grid_file*70,area*1
       dimension layers(6),areafreqs(11)
@@ -311,10 +312,11 @@ c***************************************************
 * -------------------------------------------------------------------- *
       subroutine getfreqs(Freq,areafreqs,nfreqs)
       use voacapl_defs
+      use crun_directory
       dimension areafreqs(11)
       character filename*24
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw        character run_directory*50
       areafreqs(1)=Freq
       nfreqs=1
       if(Freq.gt..5) return

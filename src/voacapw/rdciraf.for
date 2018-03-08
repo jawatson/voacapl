@@ -2,12 +2,13 @@ c------------------------------------------------------------
       subroutine rdCIRAF    !  read the ..\database\cirafp.911 file
 
       use voacapl_defs
+      use crun_directory
       common /Cciraf/ nciraf_tp,ciraf(911),ciraf_lat(911),ciraf_lon(911)
          character ciraf*4
 c          this contains rectangle containing CIRAF zones
       common /Cciraf_max/ ciraf_lat_max(4,85),ciraf_lon_max(4,85)
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       character ns*1,ew*1
 
       nch_run=lenchar(run_directory)

@@ -4,11 +4,12 @@ c******************************************************************
 c            this routine executes VOACAP 
 c******************************************************************
       use voacapl_defs
+      use crun_directory
       INCLUDE 'ficepac.hdr'
       common /cbotlines/ nbotlines,linesbot(14)
       common /ctoplines/ ntoplines,linestop( 7)
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
 c******************************************************************
       character tns*1,tew*1,rns*1,rew*1,alf*80,antfile_name*21
       character path(2)*1,coefflist(2)*4

@@ -1,6 +1,6 @@
-bin_PROGRAMS = modules
-AM_FFLAGS =  -cpp -w -c -DVERSION=\"$(VERSION)\"
-modules_SOURCES =  voacapl_defs.for
-modules_LINK = true
-CLEANFILES = voacapl_defs.mod
+lib_LIBRARIES = libmodules.a
+AM_FFLAGS =  -cpp -w -c -DVERSION=\"$(VERSION)\" 
+libmodules_a_SOURCES =  voacapl_defs.for\
+	crun_directory.f95
+
 

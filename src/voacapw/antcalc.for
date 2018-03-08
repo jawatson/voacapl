@@ -11,9 +11,10 @@ c                         = i = inverse area
 c                         =   = point-to-point method
 c****************************************************************
       use voacapl_defs
+      use crun_directory
       common /cQUIET/ iquiet
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /designfreq/ freqdesign
       common /ccirparm/ parm(20),z6,umax,vmax,giso,
      +                  modegain,gainmax(3,2),gainmaxb(30),antnam

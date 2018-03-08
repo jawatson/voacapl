@@ -1,5 +1,6 @@
 c# hfarea.f
       SUBROUTINE hfarea(*)
+      use crun_directory
 c jw      include <windows.ins>
       common /Ccancel_batch/ icancel_batch
       common /cQUIET/ iquiet
@@ -50,8 +51,8 @@ C
 *D    +itlos(45,2,11,24,4,2),ihpfx(45,2,11,24,4,2),lNANG(2,11,24,4,2)
 *D     integer*2 imddl,igdfx,itlos,ihpfx,lNANG
       COMMON /RGRID/ IPROJ,PLAT,PLON,XMIN,XMAX,YYMIN,YMAX,NX,NY
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /cdaily/ idaily(12)
       common /Cday/ iday
       character alf*20

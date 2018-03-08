@@ -1,6 +1,7 @@
 c###hfmufs.for
       SUBROUTINE HFMUFS(fileout,*)
       use voacapl_defs
+      use crun_directory
       character fileout*64,file_si*64
 c jw      logical doesit*1
       logical*1 doesit
@@ -8,8 +9,8 @@ c jw      logical*4 fexists@
       integer*4 error_code4
       integer*2 error_code
       common /cQUIET/ iquiet
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /cdaily/ idaily(12)
       common /Cday/ iday
       common /ccoeff/ coeff

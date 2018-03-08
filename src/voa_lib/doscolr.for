@@ -1,7 +1,8 @@
 c# DOScolr.for
       subroutine DOScolr    !  read DOS color table
-      common /crun_directory/ run_directory
-         character run_directory*50
+      use crun_directory
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /DOS_col/ ncolors,colors(20),index_DOS(20),DOScol(20)
       character colors*6,DOScol*6
       character skip*1

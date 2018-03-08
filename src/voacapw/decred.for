@@ -6,10 +6,11 @@ C     THIS ROUTINE CALLS FUNCTION MONITR TO READ THE CONTROL CARDS.
 C     THE CARD IMAGES ARE THEN DECODED , PROCESSED AND THE DATA STORED
 C
       use voacapl_defs
+      use crun_directory
       character cirafz*30,zones(100)*4
       common /cCIRAF_TP/ nTP,idx_TP(911)
-      common /crun_directory/ run_directory
-         character run_directory*50
+c jw      common /crun_directory/ run_directory
+c jw         character run_directory*50
       common /ccoeff/ coeff
       character coeff*4
       common /cdaily/ idaily(12)       !  day of the month modification
