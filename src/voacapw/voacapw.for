@@ -118,6 +118,7 @@ C  PROGRAM VERSION NUMBER, PROGRAM CONTROL VARIABLES
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
       common /CVERSN/ VERSN
       character VERSN*8
+      character(len=1) :: ABSORPTION_MODE=" "
 c jw      real*8 start_time,end_time
 
       common /crun_directory/ run_directory
@@ -185,32 +186,41 @@ c jw      run=cmnam()
       nch=lenchar(run)
 c jw      if(nch.le.3) go to 930
 c jw      call ucase(run,nch)
-c*******************************************
-C New version and help commands
-c*******************************************
-      if(run(1:2).eq.'-v') then
-         write(*,'(''voacapl - release '',a)') VOACAPL_VERSION
-         call exit(0)
-      else if (run(1:2).eq.'-h') then
-         call print_help()
-         call exit(0)
-      end if
-      iquiet=0
-c jw      if(run(1:6).eq.'SILENT') then
-      if(run(1:2).eq.'-s') then
-         iquiet=1
-         call get_command_argument(argCtr, run)
-         argCtr = argCtr + 1
-         nch=lenchar(run)
-         if(nch.le.3) go to 940
-      end if
-c jw      run_directory=run(1:nch)//'\RUN'
+C******************************************************************
+C Process posix type commands that appear before then run directory
+C******************************************************************
+      do command=1, COMMAND_ARGUMENT_COUNT()
+        if (run(1:1).ne.'-') exit
+
+        if((run(1:9).eq.'--version').or.(run(1:2).eq.'-v')) then
+           write(*,'(''voacapl - release '',a)') VOACAPL_VERSION
+           call exit(0)
+        else if (run(1:2).eq.'-h') then
+           call print_help()
+           call exit(0)
+        else if((run(1:2).eq.'--silent').or.(run(1:2).eq.'-s')) then
+           iquiet=1
+        else if(run(1:18).eq.'--absorption-mode=') then
+           if (scan("WwAa", run(19:19))>0) then
+               ABSORPTION_MODE=run(19:19)
+           else
+               write(*, '(AA)') "Invalid absorption mode: ", run(19:19)
+           end if
+        else
+           write(*, '(AA)') "Option not recognised: ", run
+        end if
+
+        call get_command_argument(argCtr, run)
+        argCtr = argCtr + 1
+
+      end do
 
 c******************************************************
 c     check that the itshfbc directory exists, quit with
 c     a message about creating one if not.
 c******************************************************
-      inquire(file=run(1:len(trim(run)))//'/.', exist=doesit)
+      nch=len(trim(run))
+      inquire(file=run(1:nch)//'/.', exist=doesit)
       if (.not. doesit) goto 941
 
       run_directory=run(1:nch)//PATH_SEPARATOR//'run'
@@ -487,6 +497,11 @@ c***********************************************************
      +     COMPILER,status='old',iostat=ios,err=964)
       rewind(21)
       read(21,'(8x,a)') VERSN
+c.....Modify the VERSN string if we have a user defined mode.
+      if (ABSORPTION_MODE.ne." ") then
+          VERSN = VERSN(1:7)//ABSORPTION_MODE
+      end if
+
       close(21)
 ccc      write(*,'('' version='',a)') VERSN
 c****************************************************************
