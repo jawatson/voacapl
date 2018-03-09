@@ -322,21 +322,6 @@ c jw            open(61,file=run_directory(1:nch_run)//'\'//filein, status='old'
 39          format(' BATCH area file(',i4,' of ',i4,'):',a)
             write(alf_narea_batch,'(i4)') narea_batch
             write(alf_iarea_batch,'(i4)') iarea_batch
-c jw            call seconds_since_1980@(end_time)    !  use to calc time
-c jw            elapsed=end_time-start_time
-c jw            write(alf_elapsed_time,'(f8.1)') elapsed/60.
-c jw            k=winio@('%ca[Batch VOACAP Area calculations progress]&')
-c jw            alf_fileout=' '
-c jw            k=winio@('fileout= %50st&',alf_fileout)
-c jw            alf_label=' '
-c jw            k=winio@('%nl%80st&',alf_label)
-c jw            k=winio@('%nl%nl%cnCalculating file %tc[red]%4st %tc[black]'
-c jw     +               //' of '//alf_narea_batch//'&',alf_iarea_batch)
-c jw            k=winio@('%nl%cnElapsed time: %tc[red]%8st %tc[black]'//
-c jw     +               'minutes&',alf_elapsed_time)
-c jw            icancel_batch=0
-c jw            k=winio@('%nl%nl%cn%^bt[&Cancel]&',cancel_batch)
-c jw            k=winio@('%lw',iprocess_ctrl)      !  leave window open
          end if
          fileout='voaareax'
 ccc         write(*,'(''before areamap, filein='',a)') filein
@@ -346,6 +331,7 @@ c jw         fileout='..\AREADATA\'
          fileout=trim(area_directory)//PATH_SEPARATOR
 c jw         if(areach.eq.'I') fileout='..\AREA_INV\'
          if(areach.eq.'I') fileout=trim(area_inv_directory)
+c.....End of area processing
       else if(filein(1:6).eq.'batch ') then     !  Batch point-to-point
          areach='B'
 c jw         file_batch=cmnam()       !  is this "new" Special batch?
@@ -359,7 +345,7 @@ c jw         fileout=cmnam()
          if(fileout(1:1).eq.' ') fileout='voacapb.out'
          nch_out=lcount(fileout,64)
 c jw         call erase@(run_directory(1:nch_run)//'\'//fileout(1:nch_out),istat)   !  delete any previous file
-         call unlink(trim(run_directory)//PATH_SEPARATOR//fileout(1:nch_out), istat)
+         call unlink(trim(run_directory)//PATH_SEPARATOR//trim(fileout), istat)
 ccc         write(*,'('' after erase, istat='',i5)') istat
 c jw         if(istat.ne.0 .and. iquiet.eq.0) then
 c jw            call dos_error_message@(istat,message)
@@ -368,6 +354,7 @@ ccc            write(*,'('' istat='',i5,1h=,a)') istat,message
 ccc            write(*,'('' file='',a)') run_directory(1:nch_run)//
 ccc     +                                '\'//fileout(1:nch_out)
 c jw         end if
+c.....end of batch processing
       else
 c jw         fileout=cmnam()
          call get_command_argument(argCtr, fileout) !jw
@@ -398,9 +385,6 @@ ccc      write(*,'(''after 40, area='',a)') areach
          rewind(lu5)
          read(lu5,'(20x,a)') areafile
          close(lu5)
-         write(*,'(''fileout='',a)') fileout
-         write(*,'(''areafile='',a)') areafile
-         write(*,'(''filein='',a)') filein
          nch=len(trim(fileout))
          nch2=len(trim(areafile))
          nch3=len(trim(filein))
@@ -419,8 +403,8 @@ ccc      write(*,'(''after 40, area='',a)') areach
          icircuit=0
          call batch(38,'VOACAP',filein,icircuit,*999)
       else if(listing.eq.'S') then           !  New SPECIAL batch
-         nch_batch=lcount(file_batch,64)
-         open(38,file=trim(run_directory)//PATH_SEPARATOR//file_batch(1:nch_batch),status='old',err=999)
+c         nch_batch=lcount(file_batch,64)
+         open(38,file=trim(run_directory)//PATH_SEPARATOR//trim(file_batch),status='old',err=999)
          if(iquiet.eq.0)
      +   write(*,'('' Output is being written to: '',a,/)')
      +                 fileout(1:nch_out)
@@ -434,7 +418,7 @@ c jw      doesit=fexists@(
 c jw     +     run_directory(1:nch_run)//'\'//filein(1:nch_in),
 c jw     +     error_code)   !  if file does not exist, quit
 ccc      write(*,'(''opening file='',a)') filein
-      inquire(file=trim(run_directory)//PATH_SEPARATOR//filein,exist=doesit)
+      inquire(file=trim(run_directory)//PATH_SEPARATOR//trim(filein),exist=doesit)
       if(.NOT.doesit) go to 950
       if(iquiet.eq.0) then
          if(filein(1:7).eq.'voacapw') write(*,51) 'WANTED  '
@@ -491,7 +475,7 @@ cccc      open(LU35,status='scratch')
       REWIND LU15
       REWIND LU35
 c***********************************************************
-      if(ndistance.gt.1) then
+      if(ndistance.gt.1) then ! Do the distance calcs.
          OPEN(48,file=trim(run_directory)//PATH_SEPARATOR//'voacapd.idx')
          rewind(48)
 c jw         call erase@(run_directory(1:nch_run)//'\VOACAPD.DST',istat)
@@ -508,12 +492,14 @@ c jw         call erase@(run_directory(1:nch_run)//'\VOACAPT.DST',istat)
      +        access='direct',form='unformatted',recl=96)
       end if
 c***********************************************************
+c VERSN
+c***********************************************************
       open(21,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'version.'//COMPILER,status='old',iostat=ios,err=964)
       rewind(21)
       read(21,'(8x,a)') VERSN
 c.....Modify the VERSN string if we have a user defined mode.
       if (len(trim(ABSORPTION_MODE))>0) then
-          VERSN = VERSN(1:7)//ABSORPTION_MODE
+          VERSN(8:8) = ABSORPTION_MODE
       end if
 
       close(21)
@@ -614,7 +600,7 @@ c      call exit(1) ! Exit if we can't find the right file.
       goto 950
 
 c*****Area prediction input file not found
-943   write(*,'('' Error: The specified input file was not found: '',a)') run_directory(1:nch_run)//PATH_SEPARATOR//filein
+943   write(*,'('' Error: The specified input file was not found: '',a)') trim(run_directory)//PATH_SEPARATOR//filein
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:943'')')
       call exit(1) ! Exit if we can't find the right file.
@@ -626,7 +612,7 @@ c*****Missing or unreadable area data input file
       call exit(1) ! Exit if we can't find the right file.
 
 c*****Missing or unreadable area data input file
-945   write(*,'('' Error: The specified input file was not found: '',a)') run_directory(1:nch_run)//PATH_SEPARATOR//filein
+945   write(*,'('' Error: The specified input file was not found: '',a)') trim(run_directory)//PATH_SEPARATOR//filein
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:945'')')
       call exit(1) ! Exit if we can't find the right file.
@@ -735,9 +721,9 @@ c         close and delete temporary files
       close(LU15)
       close(LU35)
 c jw      call erase@(run_directory(1:nch_run)//'\'//'LU15_VOA.TMP',istat)
-      call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//'lu15_voa.tmp', istat) ! jw
+      call unlink(trim(run_directory)//PATH_SEPARATOR//'lu15_voa.tmp', istat) ! jw
 c jw      call erase@(run_directory(1:nch_run)//'\'//'LU35_VOA.TMP',istat)
-      call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//'lu35_voa.tmp', istat) ! jw
+      call unlink(trim(run_directory)//PATH_SEPARATOR//'lu35_voa.tmp', istat) ! jw
 c jw      call underflow_count@(count_underflow)  !  see if any underflows occured
 ccc      write(*,'(''underflow='',i8)') count_underflow
       END
