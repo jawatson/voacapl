@@ -41,22 +41,17 @@ PROGRAM anttyp99
 
     !HARRIS_LOWER_LIMIT Controls the format of the lower limit.  The
     !Harris version prints the value -99.990 as -99.999 (although the 
-    !value -99.990 appears to be used in the interpolation.
+    !value -99.990 appears to be used in the interpolation).
 
     logical, parameter  :: HARRIS_LOWER_LIMIT = .true.
       
 !...START OF PROGRAM
 
+! TODO handle the input args a little more flexibly to 
+! accomodat eeither 2 or 3 args.
     call GET_COMMAND_ARGUMENT(1, run_directory)
-    if(len(trim(run_directory)).lt.3) go to 930
-    
-    if (COMMAND_ARGUMENT_COUNT().eq.2) then
-        call GET_COMMAND_ARGUMENT(2, mode)
-        root_directory=run_directory
-    else if (COMMAND_ARGUMENT_COUNT().eq.3) then
-        call GET_COMMAND_ARGUMENT(2, root_directory)
-        call GET_COMMAND_ARGUMENT(3, mode)
-    end if
+    call GET_COMMAND_ARGUMENT(2, root_directory)
+    call GET_COMMAND_ARGUMENT(3, mode)
 
     open(dat_file_un,file=trim(run_directory)//'/anttyp99.dat', position='rewind', status='old',err=900)
     read(dat_file_un,*,err=920) idx          !  antenna index #, GAINxx.dat
@@ -68,7 +63,6 @@ PROGRAM anttyp99
     close(dat_file_un)
 
     filename=trim(root_directory)//'/antennas/'//trim(antfile)
-
     call ant99_read(filename,21,lua,*910)
     diel=parms(3)         !  dielectric constant
     cond=parms(4)         !  conductivity
@@ -78,7 +72,7 @@ PROGRAM anttyp99
     open(gain_file_un,file=gainfilename, position='rewind')
     write(gain_file_un,'(a)') 'HARRIS99  '//title
 
-    if(mode.eq.' ') then
+    if(len(trim(mode)).eq.0) then
 !****************************************************************
 !                  Point-to-Point mode
 !****************************************************************
