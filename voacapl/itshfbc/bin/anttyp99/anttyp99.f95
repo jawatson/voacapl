@@ -24,9 +24,9 @@ PROGRAM anttyp99
     real, dimension(91) :: gain
     character(len=24)   :: antfile
     character(len=80)   :: filename, gainfilename
-    character(len=120)  :: run_directory
+    character(len=120)  :: run_directory, root_directory
     character(len=1)    :: mode
-    integer             :: nch, nch_run, idx, iel, iazim, ifreq
+    integer             :: idx, iel, iazim, ifreq
     integer, parameter  :: dat_file_un = 21
     integer, parameter  :: gain_file_un = 22
     integer, parameter  :: lua = 42
@@ -46,13 +46,20 @@ PROGRAM anttyp99
     logical, parameter  :: HARRIS_LOWER_LIMIT = .true.
       
 !...START OF PROGRAM
-    call GET_COMMAND_ARGUMENT(1, run_directory)
-    nch_run=len(trim(run_directory))
-    if(nch_run.lt.3) go to 930
-      
-    call GET_COMMAND_ARGUMENT(2, mode)
 
-    open(dat_file_un,file=run_directory(1:nch_run)//'/anttyp99.dat', position='rewind', status='old',err=900)
+    call GET_COMMAND_ARGUMENT(1, run_directory)
+    if(len(trim(run_directory)).lt.3) go to 930
+    
+    if (COMMAND_ARGUMENT_COUNT().eq.2) then
+        call GET_COMMAND_ARGUMENT(2, mode)
+        root_directory=run_directory
+    else if (COMMAND_ARGUMENT_COUNT().eq.3) then
+        write(*, '(a)') 'got 3 args'
+        call GET_COMMAND_ARGUMENT(2, root_directory)
+        call GET_COMMAND_ARGUMENT(3, mode)
+    end if
+
+    open(dat_file_un,file=trim(run_directory)//'/anttyp99.dat', position='rewind', status='old',err=900)
     read(dat_file_un,*,err=920) idx          !  antenna index #, GAINxx.dat
     read(dat_file_un,'(a)',err=920) antfile  !  antenna file name
     read(dat_file_un,*,err=920) xfqs         !  starting frequency
@@ -61,13 +68,12 @@ PROGRAM anttyp99
     read(dat_file_un,*,err=920) offazim      !  off azimuth (deg from North)
     close(dat_file_un)
 
-    nch=len(trim(antfile))
-    filename=run_directory(1:nch_run-3)//'antennas/'//antfile(1:nch)
+    filename=trim(root_directory)//'/antennas/'//trim(antfile)
 
     call ant99_read(filename,21,lua,*910)
     diel=parms(3)         !  dielectric constant
     cond=parms(4)         !  conductivity
-    write(gainfilename,1) run_directory(1:nch_run),idx
+    write(gainfilename,1) trim(run_directory),idx
 1   format(a,5h/gain,i2.2,4h.dat)
 
     open(gain_file_un,file=gainfilename, position='rewind')
@@ -127,13 +133,13 @@ PROGRAM anttyp99
 !****************************************************************
     go to 999
 !****************************************************************
-900 write(*,901) run_directory(1:nch_run)//'/anttyp99.dat'
+900 write(*,901) trim(run_directory)//'/anttyp99.dat'
 901 format(' In anttyp99, could not OPEN file=',a)
     stop 'OPEN error in anttyp99 at 900'
 910 write(*,911) filename
 911 format(' In anttyp99, error READing file=',a)
     stop 'READ error in anttyp99 at 910'
-920 write(*,921) run_directory(1:nch_run)//'/anttyp99.dat'
+920 write(*,921) trim(run_directory)//'/anttyp99.dat'
 921 format(' In anttyp99, error READing file=',a)
     stop 'READ error in anttyp99 at 920'
 !***********************************************************************
