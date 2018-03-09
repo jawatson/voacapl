@@ -112,10 +112,7 @@ c jw      integer*2 istat
       character cmnam*64,title*80,ich*1,area_meth*1,dum*1
       character message*80,c_arg*50,PROGRAM*300
       logical*1 doesit
-c jw      logical*4 fexists@
       logical*1 fexists
-c jw      integer*4 window_handle,error_code
-c jw      integer*2 x_pos,y_pos,xsize,ysize
 C  PROGRAM VERSION NUMBER, PROGRAM CONTROL VARIABLES
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
 c      common /CVERSN/ VERSN
