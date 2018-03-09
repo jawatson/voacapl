@@ -7,6 +7,7 @@ C     THIS ROUTINE OUTPUTS THE ANTENNA PATTERNS GENERATED IN GETANT
 C     IF METHOD IS 13,14 OR 15 AND CREATES AN ANTENNA FILE IF USER
 C     REQUEST WAS MADE VIA AN "ANTOUT" CONTROL CARD.
 C
+      use cversn
       common /cmodel/model
       character model*8
       common /cantenna/ numants,iats(20),anttype(20),antname(20),
@@ -22,8 +23,8 @@ C
      C NUMNAM, NUPROC, MAXMET, MSPEC, M100
       COMMON / ION / IHRE, IHRO, IHRS, LUFP, METHOD, NOISE, NPSL
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
-      common /CVERSN/ VERSN
-         character VERSN*8
+c jw      common /CVERSN/ VERSN
+c jw         character VERSN*8
       COMMON / OUTPRT / LINBOT(26), LINBD(14), LINTOP(15), LINTP(14),
      A GRPTYP, JOUT, LINBYP, LINES, LINMAX, LINTYP, LPAGES, NLINE
       dimension iff(21)

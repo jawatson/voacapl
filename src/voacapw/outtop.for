@@ -16,6 +16,7 @@ C     =5 OUTPUT RECEIVER ANTENNA INFORMATION
 C     =6 3 MHZ MAN-MADE NOISE, REQUIRED RELIABILITY AND REQUIRED SNR
 C     =7 OUTPUT THE MULTIPATH POWER TOLERANCE AND DELAY TIME TOLERANCE
 C
+      use cversn
       common /cdistance/ idistance,ndistance,ihr       !  plot vs distance
       common /ctime/ ntime                             !  plot vs time
       common /cmodel/ model
@@ -46,8 +47,8 @@ C
      C NUMNAM, NUPROC, MAXMET, MSPEC, M100
       COMMON / ION / IHRE, IHRO, IHRS, LUFP, METHOD, NOISE, NPSL
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
-      common /CVERSN/ VERSN
-         character VERSN*8
+c jw      common /CVERSN/ VERSN
+c jw         character VERSN*8
       COMMON / OUTPRT / LINBOT(26), LINBD(14), LINTOP(15), LINTP(14),
      A GRPTYP, JOUT, LINBYP, LINES, LINMAX, LINTYP, LPAGES, NLINE
       COMMON / SSP / SUN(2,12), MONTH

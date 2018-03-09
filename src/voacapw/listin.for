@@ -1,5 +1,6 @@
 c# listin.f
       SUBROUTINE LISTIN
+      use cversn
       common /clisting/ listing,formfeed
       character listing*1,formfeed*1
 C--------------------------------
@@ -10,10 +11,9 @@ C.....CHECKS THE NAME IDENTIFIERS ON THE INPUT FILE
      B JFREQ, JLONG, KCARD, KRUN, MAPIN, MAXNAM, MONOLD, MOREM, MORES,
      C NUMNAM, NUPROC, MAXMET, MSPEC, M100
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
-      common /CVERSN/ VERSN
-         character VERSN*8
-      COMMON / FILES / LUI, LUO, LU2, LU5, LU6, LU15, LU16, LU20, LU25,
-     A LU26, LU35
+c jw      common /CVERSN/ VERSN
+c jw         character VERSN*8
+      COMMON / FILES / LUI,LUO,LU2,LU5,LU6,LU15,LU16,LU20,LU25,LU26, LU35
       COMMON / NAMEX / NAMES(100), INPUTX
       CHARACTER NAMES*10, INPUT*85, INPUTX*85,list*1
       EQUIVALENCE(INPUTX,INPUT)

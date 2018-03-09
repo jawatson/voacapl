@@ -11,8 +11,9 @@ c             is yy.mmddW then the original version is used.
 c                yy.mmddA then Alex's version is used.
 c                yy.mmdda then Alex's version is used with IONCAP absorption.
 c***********************************************
-      common /CVERSN/ VERSN
-      character VERSN*8
+      use cversn
+c jw      common /CVERSN/ VERSN
+c jw      character VERSN*8
       if(versn(8:8).eq.'A' .or. versn(8:8).eq.'a') then
          call curmuf_alex       !  use Alex's modified version
       else

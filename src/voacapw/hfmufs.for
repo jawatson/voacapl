@@ -2,6 +2,7 @@ c###hfmufs.for
       SUBROUTINE HFMUFS(fileout,*)
       use voacapl_defs
       use crun_directory
+      use cversn
       character fileout*64,file_si*64
 c jw      logical doesit*1
       logical*1 doesit
@@ -43,8 +44,8 @@ C
       COMMON/FRQ/FREA(13),FREL(29),FREQ,JMODE,ITXRCP(2)
       COMMON / ION / IHRE, IHRO, IHRS, LUFP, METHOD, NOISE, NPSL
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
-      common /CVERSN/ VERSN
-         character VERSN*8
+c jw      common /CVERSN/ VERSN
+c jw         character VERSN*8
       COMMON/MUFS/EMUF(24),F1MUF(24),F2MUF(24),ESMUF(24),ALLMUF(24)
      1,FOT(24),XLUF(24),HPF(24),ANGMUF(24),MODMUF,SIGL(4),SIGU(4),DELMU
      2F(4),HPMUF(4),HTMUF(4),FVMUF(4),AFMUF(4),NHOPMF(4),YFOT(4),YHPF(4)

@@ -10,8 +10,9 @@ c          Normally if the version (..\database\version.w32)
 c             is yy.mmddW then the original version is used.
 c                yy.mmddA then Alex's version is used.
 c***********************************************
-      common /CVERSN/ VERSN
-      character VERSN*8
+      use cversn
+c jw      common /CVERSN/ VERSN
+c jw      character VERSN*8
       if(versn(8:8).eq.'A' .or. versn(8:8).eq.'a') then
          call sigdis_alex       !  use Alex's modified version
       else
@@ -26,8 +27,9 @@ C
 C  ADJUST SIGNAL DISTRIBUTION TABLES FOR THIS PATH AND SET ABSORPTION
 C  LOSS PARAMETERS
 C
-      common /cversn/ versn
-         character versn*8      !  look for "H" to ignore absorption fix
+      use cversn
+c jw      common /cversn/ versn
+c jw         character versn*8      !  look for "H" to ignore absorption fix
       COMMON / FILES / LUI, LUO, LU2, LU5, LU6, LU15, LU16, LU20, LU25,
      A LU26, LU35
       COMMON/CON/D2R,DCL,GAMA,PI,PI2,PIO2,R2D,RZ,VOFL
@@ -238,8 +240,9 @@ C
 C  ADJUST SIGNAL DISTRIBUTION TABLES FOR THIS PATH AND SET ABSORPTION
 C  LOSS PARAMETERS
 C
-      common /cversn/ versn
-         character versn*8      !  look for "H" to ignore absorption fix
+      use cversn
+c jw      common /cversn/ versn
+c jw         character versn*8      !  look for "H" to ignore absorption fix
       COMMON / FILES / LUI, LUO, LU2, LU5, LU6, LU15, LU16, LU20, LU25,
      A LU26, LU35
       COMMON/CON/D2R,DCL,GAMA,PI,PI2,PIO2,R2D,RZ,VOFL

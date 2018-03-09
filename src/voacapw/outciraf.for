@@ -4,6 +4,7 @@ C--------------------------------
 C
 C     THIS ROUTINE OUTPUTS all variables for area coverage contour plotting
 C
+      use cversn
       common /chours/ nhours,ihours(24)       !  which hours are active
       common /cdaily/ idaily(12)       !  day of the month modification
       common /cantenna/ numants,iats(20),anttype(20),antname(20),
@@ -49,8 +50,8 @@ C
       COMMON / TIME / IT, GMT, UTIME(24), GMTR, XLMT(24), ITIM, JTX
       CHARACTER KLINE*6
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
-      common /CVERSN/ VERSN
-         character VERSN*8
+c jw      common /CVERSN/ VERSN
+c jw         character VERSN*8
 
       character antbear*12,slew*4
       character alfs(23)*6,alfPwr*10,label*90,path*5,daily*3

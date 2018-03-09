@@ -10,8 +10,9 @@ c          Normally if the version (..\database\version.w32)
 c             is yy.mmddW then the original version is used.
 c                yy.mmddA then Alex's version is used.
 c***********************************************
-      common /CVERSN/ VERSN
-      character VERSN*8
+      use cversn
+c      common /CVERSN/ VERSN
+c      character VERSN*8
       if(versn(8:8).eq.'A' .or. versn(8:8).eq.'a') then
          call settxr_alex       !  use Alex's modified version
       else

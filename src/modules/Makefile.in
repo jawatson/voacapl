@@ -132,7 +132,7 @@ am__v_AR_1 =
 libmodules_a_AR = $(AR) $(ARFLAGS)
 libmodules_a_LIBADD =
 am_libmodules_a_OBJECTS = voacapl_defs.$(OBJEXT) \
-	crun_directory.$(OBJEXT)
+	crun_directory.$(OBJEXT) cversn.$(OBJEXT)
 libmodules_a_OBJECTS = $(am_libmodules_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -308,7 +308,8 @@ top_srcdir = @top_srcdir@
 lib_LIBRARIES = libmodules.a
 AM_FFLAGS = -cpp -w -c -DVERSION=\"$(VERSION)\" 
 libmodules_a_SOURCES = voacapl_defs.for\
-	crun_directory.f95
+	crun_directory.f95\
+    cversn.f95
 
 all: all-am
 
