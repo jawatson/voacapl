@@ -98,7 +98,7 @@ C     BRANCH AND PROCESS THE CONTROL CARD.
 C
 C***********************************************************************
 
-      nch_run=lcount(run_directory,50)
+c jw      nch_run=lcount(run_directory,50)
 C.....EXECUTE PROGRAM IF TWO CONSECUTIVE CARDS WITH SAME NAME
       IF(IRED.le.0) go to 105
    90 CONTINUE
@@ -295,7 +295,7 @@ C***********************************************************************
       write(gainfile,'(4hgain,i2.2,4h.dat)') iantr
 ccc      write(*,'('' opening file='',a)') run_directory(1:nch_run)//
 ccc     +                                         '\'//gainfile
-      open(lu26,file=run_directory(1:nch_run)//PATH_SEPARATOR//gainfile,status='old',form='formatted')
+      open(lu26,file=trim(run_directory)//PATH_SEPARATOR//gainfile,status='old',form='formatted')
       rewind(lu26)
       read(lu26,331) anttype(iantr),antname(iantr)
 331   format(a10,a70)

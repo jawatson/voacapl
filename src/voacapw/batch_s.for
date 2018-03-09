@@ -60,8 +60,9 @@ c          read new cards and replace
       go to 100
 c**************************************************************
 c          save deck and process
-200   nch_run=lenchar(run_directory)
-      open(31,file=run_directory(1:nch_run)//PATH_SEPARATOR//model//'x.dat')
+c200   nch_run=lenchar(run_directory)
+200   continue    
+      open(31,file=trim(run_directory)//PATH_SEPARATOR//model//'x.dat')
       rewind(31)
       do 210 i=1,ncards
       nch=lenchar(cards(i))

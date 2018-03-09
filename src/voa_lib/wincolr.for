@@ -1,5 +1,6 @@
 c# WINcolr.for
       subroutine WINcolr    !  read DOS color table
+      use voacapl_defs
       use crun_directory
       common /WIN_col/ ncolors,DOS_colors(20),colors(20),
      +            ncities_colors,DOS_cities(7),cities_colors(7),
@@ -10,9 +11,9 @@ c# WINcolr.for
       character skip*1
 c jw      common /crun_directory/ run_directory
 c jw         character run_directory*50
-      nch_run=lcount(run_directory,50)
+c jw      nch_run=lcount(run_directory,50)
 
-      open(17,file=run_directory(1:nch_run-3)//'database/colors.win',
+      open(17,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'colors.win',
      +      status='old',err=900)
       rewind(17)
       read(17,'(a)') skip    !  skip header card
@@ -27,6 +28,6 @@ c jw         character run_directory*50
       close(17)
       return
 900   write(*,'('' Could not OPEN file='',a,1h;)') 
-     +     run_directory(1:nch_run-3)//'database\colors.win'
-      stop 'Missing file ..\database\colors.win in WINcolr'
+     +     trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'colors.win'
+      stop 'Missing file: colors.win'
       end

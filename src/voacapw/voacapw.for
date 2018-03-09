@@ -232,6 +232,10 @@ c      nch=len(trim(c_arg))
       if (len(trim(run_directory)).eq.0) then
         run_directory=trim(root_directory)//PATH_SEPARATOR//'run'
       end if
+      
+      inquire(file=trim(run_directory)//'/.', exist=doesit)
+      if (.not. doesit) goto 947
+        
       call set_run            !  make sure we are in ..\RUN directory
       nch_run=lcount(run_directory,50)
 ccc      open(72,file='voacap_dmp.txt')
@@ -264,8 +268,8 @@ c jw         window_handle=create_window(title,x_pos,y_pos,xsize,ysize)
 c jw         ier=set_default_window@(window_handle)
 c jw      end if
 c****************************************************************
-      if(iquiet.eq.0) write(*,'('' Root Directory: '',a)') root_directory
-      if(iquiet.eq.0) write(*,'('' Run Directory: '',a)') run_directory
+      if(iquiet.eq.0) write(*,'('' Root Directory: '',a)') trim(root_directory)
+      if(iquiet.eq.0) write(*,'('' Run Directory: '',a)') trim(run_directory)
 c****************************************************************
 c jw      iharris=it_exist(run_directory(1:nch_run-3)//bin_win\anttyp99.exe')
       inquire(file=trim(root_directory)//PATH_SEPARATOR//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
@@ -276,7 +280,7 @@ c jw      call del_abt     !  delete the voaarea.abt & voacap.abt files
 c jw      filein=cmnam()
       call get_command_argument(argCtr, filein)
       argCtr = argCtr + 1 !jw
-      write(*,'('' filein='',a)') filein
+ccc      write(*,'('' filein='',a)') filein
       if(filein(1:1).eq.' ') filein='voacapx.dat'
 c jw      call lcase(filein,20)
       if(filein(1:5).eq.'area ' .or. filein(1:4).eq.'inv ') then ! area coverage
@@ -415,7 +419,7 @@ ccc50    inquire(file=filein,exist=doesit)   !  if file does not exist, quit
 c jw      doesit=fexists@(
 c jw     +     run_directory(1:nch_run)//'\'//filein(1:nch_in),
 c jw     +     error_code)   !  if file does not exist, quit
-      write(*,'(''opening file='',a)') filein
+ccc      write(*,'(''opening file='',a)') filein
       inquire(file=trim(run_directory)//PATH_SEPARATOR//filein,exist=doesit)
       if(.NOT.doesit) go to 950
       if(iquiet.eq.0) then
@@ -441,7 +445,6 @@ c***********************************************************
 ccc      write(*,'(''listing, areach='',a,1h:,a)') listing,areach
 ccc      write(*,'(''opening file='',a)') filein
       open(LU5,file=trim(run_directory)//PATH_SEPARATOR//filein,STATUS='OLD', iostat=ios,err=944)
-      write(*,'(''file opened'')')
       rewind(lu5)
       ndistance=1
       if(fileout(1:11).eq.'VOACAPD.OUT' .or.
@@ -593,7 +596,7 @@ c*****This error is no longer called
       call exit(1)
 
 c*****itshfbc directory not found
-941   write(*,'('' Error: Unable to open itshfbc directory at: '',a)') trim(c_arg)
+941   write(*,'('' Error: Unable to open itshfbc directory at: '',a)') trim(root_directory)
       write(*,'('' Run the command "makeitshbc" to create a copy of the'')')
       write(*,'('' itshfbc directory in your home directory.'')')
       write(*, '('' VOACAPW:941'')')
@@ -632,6 +635,12 @@ c*****Error opening output file
       ci = adjustl(ci)
       write(*,'('' Error code ('',a,'')'')') trim(ci)
       call exit(1) ! Exit if we can't find the right file.
+
+c*****itshfbc directory not found
+947   write(*,'('' Error: Unable to open run directory at: '',a)') trim(run_directory)
+      write(*, '('' VOACAPW:947'')')
+      call exit(1) ! Exit if we can't find the run directory.
+
 
 c*****Error opening output file
 948   write(*,'('' Error opening output file : '',a)') trim(run_directory)//PATH_SEPARATOR//fileout

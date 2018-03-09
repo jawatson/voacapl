@@ -71,7 +71,7 @@ C.....AUXILIARY INPUT AND/OR OUTPUT FILES ARE TO BE USED.
       LUI = LU5
       LUO = LU6
 c***********************************************************************
-      nch_run=lcount(run_directory,50)
+c jw      nch_run=lcount(run_directory,50)
       MONTH=MONTHS(1)
       SSN=SUNSP(1)
       call REDMAP(SSN,MONTH)

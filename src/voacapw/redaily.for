@@ -18,7 +18,7 @@ C.....VARIABLES FROM THE DATA BASE FILE BEFORE SUNSPOT INTERPOLATION
       DIMENSION C(9),MONN(13)
       DATA MONN /1,32,60,91,121,152,182,213,244,274,305,335,366/
 
-      nch_run=lcount(run_directory,50)
+c jw      nch_run=lcount(run_directory,50)
 c******************************************************************
 
 
@@ -41,7 +41,7 @@ c******************************************************************
       C(8)=1.0+8.0*C2*(C2-1.)
       C(9)=C(5)*(4.0*C2-2.0)
       TFLUX=63.7493+0.7274*SSN+0.000895*SSN*SSN
-      OPEN(27,FILE=run_directory(1:nch_run-3)//'coeffs'//PATH_SEPARATOR//'fof2dalw.bin',
+      OPEN(27,FILE=trim(root_directory)//PATH_SEPARATOR//'coeffs'//PATH_SEPARATOR//'fof2dalw.bin',
      +                    status='old',form='unformatted')
       rewind(27)
       DO 20 KFOF2R=1,9

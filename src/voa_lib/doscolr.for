@@ -1,5 +1,6 @@
 c# DOScolr.for
       subroutine DOScolr    !  read DOS color table
+      use voacapl_defs
       use crun_directory
 c jw      common /crun_directory/ run_directory
 c jw         character run_directory*50
@@ -8,8 +9,8 @@ c jw         character run_directory*50
       character skip*1
 C------------------------------------------------------------------
       nc=0
-      nch_run=lcount(run_directory,50)
-      open(17,file=run_directory(1:nch_run-3)//'database/colors.dat',
+c jw      nch_run=lcount(run_directory,50)
+      open(17,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'colors.dat',
      +     status='old',err=900)
       rewind(17)
       read(17,'(a)') skip    !  skip header card
