@@ -467,28 +467,17 @@ ccc      write(*,'(''opening file='',a)') filein
       if(fileout(1:11).eq.'VOACAPT.OUT' .or.
      +   fileout(1:11).eq.'voacapt.out') ntime=1       !  plot vs time
       if(areach.eq.'B' .or. areach.eq.'S') then        !  batch, use APPEND
-c jw         open(LU6,file=run_directory(1:nch_run)//'\'//fileout, status='APPEND')
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
-c jw         formfeed=''
          formfeed='\n\f'
-      else if(fileout(1:2).eq.'..') then
-         nchf=lcount(fileout,64)
-ccc         write(*,'('' opening area file='',a)')
-ccc     +                 run_directory(1:nch_run-3)//fileout(4:nchf)
-ccc         write(*,'(''areafile='',a)') areafile
-         open(LU6,file=trim(root_directory)//fileout(4:nchf), iostat=ios,err=946)
+      else if((fileout(1:2).eq.'..').or.(listing.eq.'A'))then !area files
+         open(LU6,file=fileout, iostat=ios,err=946)
          rewind(lu6)
          formfeed=' '
       else if(append.eq.'a') then
-c jw         open(LU6,file=run_directory(1:nch_run)//'\'//fileout,status='APPEND')
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
-c jw         formfeed=''
          formfeed='\n\f'
-ccc         write(*,'('' file opened OK'')')
       else
-ccc         write(*,'('' opening file='',a)')
-ccc     +                 run_directory(1:nch_run)//'\'//fileout
-         write(*, '(''opeing file'',a)') trim(run_directory)//PATH_SEPARATOR//fileout
+         write(*, '(''opening file'',a)') trim(run_directory)//PATH_SEPARATOR//fileout
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
          rewind(lu6)
          formfeed=' '
@@ -643,7 +632,7 @@ c*****Missing or unreadable area data input file
       call exit(1) ! Exit if we can't find the right file.
 
 c*****Error opening output file
-946   write(*,'('' Error opening output file : '',a)') trim(root_directory)//fileout(4:nchf)
+946   write(*,'('' Error opening output file : '',a)') fileout
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:946'')')
       write(ci,'(I3)') ios

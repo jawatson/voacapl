@@ -44,8 +44,8 @@ c jw      call WINcolr                      !  read Windows color table
       nch_run=lcount(run_directory,50)
 ccc      write(*,'(''OPENing:'',a)') 
 ccc     +     run_directory(1:nch_run-3)//data_dir//filename
-      open(29,file=run_directory(1:nch_run-3)//data_dir//filename,
-     +     status='old',iostat=ios,err=900)
+c jw      open(29,file=run_directory(1:nch_run-3)//data_dir//filename,status='old',iostat=ios,err=900)
+      open(29,file=trim(area_directory)//PATH_SEPARATOR//filename,status='old',iostat=ios,err=900)
       rewind(29)
       cirafz='      '
 800   read(29,'(a)',end=890) card

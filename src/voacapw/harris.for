@@ -75,7 +75,7 @@ C
       PROGRAM=run_directory(1:nch_run-3)//'bin_win'//PATH_SEPARATOR//exe//' '//
      +             run_directory(1:nch_run)//' '//mode
 #else
-      PROGRAM=exe//' '//run_directory(1:nch_run)//' '//mode
+      PROGRAM=exe//' '//trim(run_directory)//' '//trim(root_directory)//' '//mode
 #endif
       nch=lcount(PROGRAM,300)
 c jw      call gh_exec(PROGRAM,nch,1)   !  execute and wait for ANTTYPxx.EXE
