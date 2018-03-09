@@ -54,7 +54,6 @@ PROGRAM anttyp99
         call GET_COMMAND_ARGUMENT(2, mode)
         root_directory=run_directory
     else if (COMMAND_ARGUMENT_COUNT().eq.3) then
-        write(*, '(a)') 'got 3 args'
         call GET_COMMAND_ARGUMENT(2, root_directory)
         call GET_COMMAND_ARGUMENT(3, mode)
     end if
