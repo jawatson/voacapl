@@ -7,7 +7,7 @@ c jw         character run_directory*50
 c jw      integer*2 error_code
       integer error_code
       character tmp*50,subs(12)*10
-
+      write(*, '(AA)') 'here1', trim(run_directory)
 c jw TODO reinsert the path sep parameter below
 c      data subs/'\antennas\','\areadata\','\BIN_WIN\' ,'\coeffs\'  ,
 c     +          '\database\','\geocity\' ,'\geonatio\','\geostate\',
@@ -18,7 +18,7 @@ c jw TODO reinsert the path sep parameter below
      +          '/database/','/geocity/' ,'/geonatio/','/geostate/',
      +          '/HELP_WIN/','/news_win/','/SAVED/'   ,'/userdb/'  /
 
-      nch=lcount(run_directory,50)
+      nch=len(trim(run_directory))
       if(run_directory(nch-3:nch).eq.PATH_SEPARATOR//'RUN') go to 900    !  ok
       if(run_directory(nch-3:nch).eq.PATH_SEPARATOR//'run') go to 900    !  ok
 c          force this to be the RUN sub-directory
@@ -32,7 +32,8 @@ c jw      call ucase(tmp,nch)                       !  convert to UPPER case
          go to 900
 10    continue
 c 900   call attach@(run_directory,error_code)    !  reset to the RUN directory
-900   call chdir(run_directory,error_code)    !  reset to the RUN directory
+      write(*, "(AA)") 'hello', trim(run_directory)
+900   call chdir(trim(run_directory),error_code)    !  reset to the RUN directory
       return
       end
 c--------------------------------------------------------------------

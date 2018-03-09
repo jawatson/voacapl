@@ -5,9 +5,9 @@ ccc      winapp 240000,500000
 *    +                (filein,fileout,areach)
 C***********************************************************************
       use voacapl_defs
-      use crun_directory
       use cversn
-C******************************************************
+      use crun_directory
+C***********************************************************************
       character(len=3), parameter :: COMPILER='w32'       !  32-bit compiler
 
 c jw     include <windows.ins>
@@ -118,13 +118,13 @@ c jw      integer*4 window_handle,error_code
 c jw      integer*2 x_pos,y_pos,xsize,ysize
 C  PROGRAM VERSION NUMBER, PROGRAM CONTROL VARIABLES
       COMMON / METSET / ITRUN, ITOUT, JTRUN(40), JTOUT(40)
-c jw      common /CVERSN/ VERSN
-c jw      character VERSN*8
+c      common /CVERSN/ VERSN
+c      character VERSN*8
       character(len=1) :: ABSORPTION_MODE=" "
 c jw      real*8 start_time,end_time
 
-c jw      common /crun_directory/ run_directory
-c jw         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       common /cQUIET/ iquiet
       character alf_narea_batch*4,alf_iarea_batch*4
       character alf_elapsed_time*8,alf_fileout*50
@@ -176,6 +176,7 @@ c set the argument and file number counters to 1
 c******************************************************
       argCtr = 1
       fileNumCtr = 1
+
 c******************************************************
 c jw      permission=.true.        !  ignore underflows
 ccc      permission=.false.
@@ -190,7 +191,6 @@ c jw      call ucase(run,nch)
 C******************************************************************
 C Process posix type commands that appear before then run directory
 C******************************************************************
-      run_directory = ""
       do command=1, COMMAND_ARGUMENT_COUNT()
         if (c_arg(1:1).ne.'-') exit
 
@@ -202,15 +202,12 @@ C******************************************************************
            call exit(0)
         else if((c_arg(1:2).eq.'--silent').or.(c_arg(1:2).eq.'-s')) then
            iquiet=1
-        else if (c_arg(1:18).eq.'--absorption-mode=') then
+        else if(c_arg(1:18).eq.'--absorption-mode=') then
            if (scan("WIAa", c_arg(19:19))>0) then
                ABSORPTION_MODE=c_arg(19:19)
            else
                write(*, '(AA)') "Invalid absorption mode: ", c_arg(19:19)
            end if
-        else if (c_arg(1:10).eq.'--run-dir=') then
-            run_directory = c_arg(11:len(trim(c_arg)))
-            write(*, '(AA)') "Set run_directory to ", run_directory
         else
            write(*, '(AA)') "Option not recognised: ", c_arg
         end if
@@ -224,14 +221,12 @@ c******************************************************
 c     check that the itshfbc directory exists, quit with
 c     a message about creating one if not.
 c******************************************************
-      nch=len(trim(c_arg))
-      inquire(file=c_arg(1:nch)//'/.', exist=doesit)
+c      nch=len(trim(c_arg))
+      inquire(file=trim(c_arg)//'/.', exist=doesit)
       if (.not. doesit) goto 941
-      root_directory = c_arg(1:nch)
-      if (run_directory.eq."") then
-          run_directory=root_directory//PATH_SEPARATOR//'run'
-      end if
-ccc      call get_run
+
+      run_directory=trim(c_arg)//PATH_SEPARATOR//'run'
+      write(*, '(AA)') 'here', trim(run_directory)
       call set_run            !  make sure we are in ..\RUN directory
       nch_run=lcount(run_directory,50)
 ccc      open(72,file='voacap_dmp.txt')
@@ -240,8 +235,7 @@ c******************************************************
       ierase=0    !  do not erase
       alf='ERASE debug window'
 c jw      open(21,file=run_directory(1:nch_run-3)//'database\debug.txt',status='old',err=101)
-c      nch_run=lcount(root_directory,128)
-      open(21,file=root_directory//'database'//PATH_SEPARATOR//'debug.txt',status='old',err=101)
+      open(21,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'debug.txt',status='old',err=101)
       rewind(21)
       read(21,'(a)') alf
       close(21)
@@ -265,11 +259,10 @@ c jw         window_handle=create_window(title,x_pos,y_pos,xsize,ysize)
 c jw         ier=set_default_window@(window_handle)
 c jw      end if
 c****************************************************************
-      if(iquiet.eq.0) write(*,'('' Executing from dir: '',a)') root_directory(1:nch_run)
-      if(iquiet.eq.0) write(*,'('' Run directory: '',a)') trim(run_directory)     
+      if(iquiet.eq.0) write(*,'('' Executing from dir='',a)') run_directory(1:nch_run)
 c****************************************************************
 c jw      iharris=it_exist(run_directory(1:nch_run-3)//bin_win\anttyp99.exe')
-      inquire(file=root_directory//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
+      inquire(file=run_directory(1:nch_run-3)//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
 c****************************************************************
 c jw      call del_abt     !  delete the voaarea.abt & voacap.abt files
       listing='Y'
@@ -277,7 +270,7 @@ c jw      call del_abt     !  delete the voaarea.abt & voacap.abt files
 c jw      filein=cmnam()
       call get_command_argument(argCtr, filein)
       argCtr = argCtr + 1 !jw
-ccc      write(*,'('' filein='',a)') filein
+      write(*,'('' filein='',a)') filein
       if(filein(1:1).eq.' ') filein='voacapx.dat'
 c jw      call lcase(filein,20)
       if(filein(1:5).eq.'area ' .or. filein(1:4).eq.'inv ') then ! area coverage
@@ -292,7 +285,7 @@ c jw         filein=cmnam()
          call get_command_argument(argCtr, filein) ! jw
          argCtr = argCtr + 1 !jw
 c        Check the area input file exists and is readable
-         inquire(file=trim(root_directory)//PATH_SEPARATOR//'areadata'//PATH_SEPARATOR//filein, exist=doesit)
+         inquire(file='../areadata/'//filein, exist=doesit)
          if(.NOT.doesit) goto 944
 c jw         call lcase(filein,20)
 ccc         write(*,'('' filein='',a)') filein
@@ -300,7 +293,7 @@ ccc         write(*,'('' filein='',a)') filein
 c jw            call seconds_since_1980@(start_time)    !  use to calc time
             iarea_batch=iarea_batch+1
 c jw            open(61,file=run_directory(1:nch_run)//'\'//filein, status='old',err=920)
-            open(61,file=trim(root_directory)//PATH_SEPARATOR//filein, status='old',err=920)
+            open(61,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein, status='old',err=920)
             rewind(61)
             call count_batch(61,narea_batch)  !  count # files to process
             read(61,'(a)',end=999) filein
@@ -416,7 +409,8 @@ ccc50    inquire(file=filein,exist=doesit)   !  if file does not exist, quit
 c jw      doesit=fexists@(
 c jw     +     run_directory(1:nch_run)//'\'//filein(1:nch_in),
 c jw     +     error_code)   !  if file does not exist, quit
-      inquire(file=filein,exist=doesit)
+      write(*,'(''opening file='',a)') filein
+      inquire(file=trim(run_directory)//PATH_SEPARATOR//filein,exist=doesit)
       if(.NOT.doesit) go to 950
       if(iquiet.eq.0) then
          if(filein(1:7).eq.'voacapw') write(*,51) 'WANTED  '
@@ -441,7 +435,7 @@ c***********************************************************
 ccc      write(*,'(''listing, areach='',a,1h:,a)') listing,areach
 ccc      write(*,'(''opening file='',a)') filein
       open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,STATUS='OLD', iostat=ios,err=944)
-ccc      write(*,'(''file opened'')')
+      write(*,'(''file opened'')')
       rewind(lu5)
       ndistance=1
       if(fileout(1:11).eq.'VOACAPD.OUT' .or.
@@ -733,13 +727,13 @@ c
 c--------------------------------------------------------------
 c###set_magnetic_pole.for
       SUBROUTINE set_magnetic_pole
-      use crun_directory
 c         This sets the location of the geomagnetic north pole
 c         The default is (78.5N, 69.0W) = (78.5, -69.0)
       use voacapl_defs
+      use crun_directory
       common /Cnorth_pole/ g_magnetic_lat,g_magnetic_lon  !  magnetic north pole
-c jw      common /crun_directory/ run_directory
-c jw         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       data lu/21/
 
       nch_run=lcount(run_directory,50)
@@ -790,3 +784,4 @@ c----------------------------------------------------------------------
       print *, ' voacapl -v (prints the version number)'
       print *, ' voacapl -h (prints this help message)'
       end
+
