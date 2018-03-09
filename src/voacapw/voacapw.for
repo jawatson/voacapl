@@ -191,6 +191,7 @@ c jw      call ucase(run,nch)
 C******************************************************************
 C Process posix type commands that appear before then run directory
 C******************************************************************
+      run_directory = ""
       do command=1, COMMAND_ARGUMENT_COUNT()
         if (c_arg(1:1).ne.'-') exit
 
@@ -208,6 +209,8 @@ C******************************************************************
            else
                write(*, '(AA)') "Invalid absorption mode: ", c_arg(19:19)
            end if
+        else if (c_arg(1:10).eq.'--run-dir=') then
+            run_directory = c_arg(11:len(trim(c_arg)))
         else
            write(*, '(AA)') "Option not recognised: ", c_arg
         end if
@@ -225,8 +228,10 @@ c      nch=len(trim(c_arg))
       inquire(file=trim(c_arg)//'/.', exist=doesit)
       if (.not. doesit) goto 941
 
-      run_directory=trim(c_arg)//PATH_SEPARATOR//'run'
-      write(*, '(AA)') 'here', trim(run_directory)
+      root_directory=trim(c_arg)
+      if (len(trim(run_directory)).eq.0) then
+        run_directory=trim(root_directory)//PATH_SEPARATOR//'run'
+      end if
       call set_run            !  make sure we are in ..\RUN directory
       nch_run=lcount(run_directory,50)
 ccc      open(72,file='voacap_dmp.txt')
@@ -235,7 +240,7 @@ c******************************************************
       ierase=0    !  do not erase
       alf='ERASE debug window'
 c jw      open(21,file=run_directory(1:nch_run-3)//'database\debug.txt',status='old',err=101)
-      open(21,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'debug.txt',status='old',err=101)
+      open(21,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'debug.txt',status='old',err=101)
       rewind(21)
       read(21,'(a)') alf
       close(21)
@@ -259,10 +264,11 @@ c jw         window_handle=create_window(title,x_pos,y_pos,xsize,ysize)
 c jw         ier=set_default_window@(window_handle)
 c jw      end if
 c****************************************************************
-      if(iquiet.eq.0) write(*,'('' Executing from dir='',a)') run_directory(1:nch_run)
+      if(iquiet.eq.0) write(*,'('' Root Directory: '',a)') root_directory
+      if(iquiet.eq.0) write(*,'('' Run Directory: '',a)') run_directory
 c****************************************************************
 c jw      iharris=it_exist(run_directory(1:nch_run-3)//bin_win\anttyp99.exe')
-      inquire(file=run_directory(1:nch_run-3)//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
+      inquire(file=trim(root_directory)//PATH_SEPARATOR//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
 c****************************************************************
 c jw      call del_abt     !  delete the voaarea.abt & voacap.abt files
       listing='Y'
@@ -285,7 +291,7 @@ c jw         filein=cmnam()
          call get_command_argument(argCtr, filein) ! jw
          argCtr = argCtr + 1 !jw
 c        Check the area input file exists and is readable
-         inquire(file='../areadata/'//filein, exist=doesit)
+         inquire(file=trim(root_directory)//PATH_SEPARATOR//'areadata'//PATH_SEPARATOR//filein, exist=doesit)
          if(.NOT.doesit) goto 944
 c jw         call lcase(filein,20)
 ccc         write(*,'('' filein='',a)') filein
@@ -293,7 +299,7 @@ ccc         write(*,'('' filein='',a)') filein
 c jw            call seconds_since_1980@(start_time)    !  use to calc time
             iarea_batch=iarea_batch+1
 c jw            open(61,file=run_directory(1:nch_run)//'\'//filein, status='old',err=920)
-            open(61,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein, status='old',err=920)
+            open(61,file=trim(run_directory)//PATH_SEPARATOR//filein, status='old',err=920)
             rewind(61)
             call count_batch(61,narea_batch)  !  count # files to process
             read(61,'(a)',end=999) filein
@@ -322,9 +328,9 @@ ccc         write(*,'(''before areamap, filein='',a)') filein
          call areamap(areach,filein,fileout,area_meth)
          filein='voaareax.da1'
 c jw         fileout='..\AREADATA\'
-         fileout='..'//PATH_SEPARATOR//'areadata'//PATH_SEPARATOR
+         fileout=trim(root_directory)//PATH_SEPARATOR//'areadata'//PATH_SEPARATOR
 c jw         if(areach.eq.'I') fileout='..\AREA_INV\'
-         if(areach.eq.'I') fileout='..'//PATH_SEPARATOR//'area_inv'//PATH_SEPARATOR
+         if(areach.eq.'I') fileout=trim(root_directory)//PATH_SEPARATOR//'area_inv'//PATH_SEPARATOR
       else if(filein(1:6).eq.'batch ') then     !  Batch point-to-point
          areach='B'
 c jw         file_batch=cmnam()       !  is this "new" Special batch?
@@ -338,7 +344,7 @@ c jw         fileout=cmnam()
          if(fileout(1:1).eq.' ') fileout='voacapb.out'
          nch_out=lcount(fileout,64)
 c jw         call erase@(run_directory(1:nch_run)//'\'//fileout(1:nch_out),istat)   !  delete any previous file
-         call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_out), istat)
+         call unlink(trim(run_directory)//PATH_SEPARATOR//fileout(1:nch_out), istat)
 ccc         write(*,'('' after erase, istat='',i5)') istat
 c jw         if(istat.ne.0 .and. iquiet.eq.0) then
 c jw            call dos_error_message@(istat,message)
@@ -373,7 +379,7 @@ C                THIS IS THE USER-GENERATED INPUT FILE
 40    continue
 ccc      write(*,'(''after 40, area='',a)') areach
       if(areach.eq.'A' .or. areach.eq.'I') then  !  get real file name of output
-         open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,STATUS='OLD',iostat=ios,err=942)
+         open(LU5,file=trim(run_directory)//PATH_SEPARATOR//filein,STATUS='OLD',iostat=ios,err=942)
          rewind(lu5)
          read(lu5,'(20x,a)') areafile
          close(lu5)
@@ -385,18 +391,18 @@ ccc         write(*,'(''areafile='',a)') areafile
          fileout(nch+1:nch+nch2)=areafile(1:nch2)
       else if(listing.eq.'B') then           !  Initialize batch processing
          call read_asc('VOACAP',*999)  !read pt-to-pt common from VOACAPW.ASC
-         open(38,file=run_directory(1:nch_run)//PATH_SEPARATOR//'voacap.cir',
+         open(38,file=trim(run_directory)//PATH_SEPARATOR//'voacap.cir',
      +        status='old',err=999)
          rewind(38)
          read(38,'(a)',err=999) dum     !  skip 1st record
-         if(iquiet.eq.0)
-     +   write(*,'('' Output is being written to: '',a,/)')
-     +                 fileout(1:nch_out)
+         if(iquiet.eq.0) then
+             write(*,'('' Output is being written to: '',a,/)') trim(fileout)
+         end if
          icircuit=0
          call batch(38,'VOACAP',filein,icircuit,*999)
       else if(listing.eq.'S') then           !  New SPECIAL batch
          nch_batch=lcount(file_batch,64)
-         open(38,file=run_directory(1:nch_run)//PATH_SEPARATOR//file_batch(1:nch_batch),status='old',err=999)
+         open(38,file=trim(run_directory)//PATH_SEPARATOR//file_batch(1:nch_batch),status='old',err=999)
          if(iquiet.eq.0)
      +   write(*,'('' Output is being written to: '',a,/)')
      +                 fileout(1:nch_out)
@@ -434,7 +440,7 @@ c jw               call window_update@(alf_fileout)
 c***********************************************************
 ccc      write(*,'(''listing, areach='',a,1h:,a)') listing,areach
 ccc      write(*,'(''opening file='',a)') filein
-      open(LU5,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,STATUS='OLD', iostat=ios,err=944)
+      open(LU5,file=trim(run_directory)//PATH_SEPARATOR//filein,STATUS='OLD', iostat=ios,err=944)
       write(*,'(''file opened'')')
       rewind(lu5)
       ndistance=1
@@ -445,7 +451,7 @@ ccc      write(*,'(''opening file='',a)') filein
      +   fileout(1:11).eq.'voacapt.out') ntime=1       !  plot vs time
       if(areach.eq.'B' .or. areach.eq.'S') then        !  batch, use APPEND
 c jw         open(LU6,file=run_directory(1:nch_run)//'\'//fileout, status='APPEND')
-         open(LU6,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout, access='APPEND')
+         open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
 c jw         formfeed=''
          formfeed='\n\f'
       else if(fileout(1:2).eq.'..') then
@@ -453,55 +459,53 @@ c jw         formfeed=''
 ccc         write(*,'('' opening area file='',a)')
 ccc     +                 run_directory(1:nch_run-3)//fileout(4:nchf)
 ccc         write(*,'(''areafile='',a)') areafile
-         open(LU6,file=run_directory(1:nch_run-3)//fileout(4:nchf),
-     +           iostat=ios,err=946)
+         open(LU6,file=trim(root_directory)//fileout(4:nchf), iostat=ios,err=946)
          rewind(lu6)
          formfeed=' '
       else if(append.eq.'a') then
 c jw         open(LU6,file=run_directory(1:nch_run)//'\'//fileout,status='APPEND')
-         open(LU6,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout, access='APPEND')
+         open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
 c jw         formfeed=''
          formfeed='\n\f'
 ccc         write(*,'('' file opened OK'')')
       else
 ccc         write(*,'('' opening file='',a)')
 ccc     +                 run_directory(1:nch_run)//'\'//fileout
-         open(LU6,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
+         open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
          rewind(lu6)
          formfeed=' '
       end if
 ccc      write(*,'('' opening LU15/scratch'')')
 cccc      open(LU15,status='scratch')
-      open(LU15,file=run_directory(1:nch_run)//PATH_SEPARATOR//'lu15_voa.tmp', iostat=ios,err=960)
+      open(LU15,file=trim(run_directory)//PATH_SEPARATOR//'lu15_voa.tmp', iostat=ios,err=960)
 ccc      write(*,'('' opening LU35/scratch'')')
 cccc      open(LU35,status='scratch')
-      open(LU35,file=run_directory(1:nch_run)//PATH_SEPARATOR//'lu35_voa.tmp', iostat=ios,err=962)
+      open(LU35,file=trim(run_directory)//PATH_SEPARATOR//'lu35_voa.tmp', iostat=ios,err=962)
       REWIND LU15
       REWIND LU35
 c***********************************************************
       if(ndistance.gt.1) then
-         OPEN(48,file=run_directory(1:nch_run)//PATH_SEPARATOR//'voacapd.idx')
+         OPEN(48,file=trim(run_directory)//PATH_SEPARATOR//'voacapd.idx')
          rewind(48)
 c jw         call erase@(run_directory(1:nch_run)//'\VOACAPD.DST',istat)
-         call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//'voacapd.dst',istat)
-         OPEN(49,file=run_directory(1:nch_run)//PATH_SEPARATOR//'voacapd.dst',
+         call unlink(trim(run_directory)//PATH_SEPARATOR//'voacapd.dst',istat)
+         OPEN(49,file=trim(run_directory)//PATH_SEPARATOR//'voacapd.dst',
      +        access='direct',form='unformatted',recl=108)
       end if
       if(ntime.ne.0) then
-         OPEN(48,file=run_directory(1:nch_run)//PATH_SEPARATOR//'voacapt.idx')
+         OPEN(48,file=trim(run_directory)//PATH_SEPARATOR//'voacapt.idx')
          rewind(48)
 c jw         call erase@(run_directory(1:nch_run)//'\VOACAPT.DST',istat)
-         call unlink(run_directory(1:nch_run)//PATH_SEPARATOR//'voacap.dst',istat)
-         OPEN(49,file=run_directory(1:nch_run)//PATH_SEPARATOR//'voacap.dst',
+         call unlink(trim(run_directory)//PATH_SEPARATOR//'voacap.dst',istat)
+         OPEN(49,file=trim(run_directory)//PATH_SEPARATOR//'voacap.dst',
      +        access='direct',form='unformatted',recl=96)
       end if
 c***********************************************************
-      open(21,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'version.'//
-     +     COMPILER,status='old',iostat=ios,err=964)
+      open(21,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'version.'//COMPILER,status='old',iostat=ios,err=964)
       rewind(21)
       read(21,'(8x,a)') VERSN
 c.....Modify the VERSN string if we have a user defined mode.
-      if (ABSORPTION_MODE.ne." ") then
+      if (len(trim(ABSORPTION_MODE))>0) then
           VERSN = VERSN(1:7)//ABSORPTION_MODE
       end if
 
@@ -596,7 +600,7 @@ c*****itshfbc directory not found
       call exit(1) ! Exit if we can't find the right file.
 
 c*****P2P prediction input file not found
-942   write(*,'('' Error: The specified input file was not found: '',a)') run_directory(1:nch_run)//PATH_SEPARATOR//filein
+942   write(*,'('' Error: The specified input file was not found: '',a)') trim(run_directory)//PATH_SEPARATOR//filein
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:942'')')
 c      call exit(1) ! Exit if we can't find the right file.
@@ -621,7 +625,7 @@ c*****Missing or unreadable area data input file
       call exit(1) ! Exit if we can't find the right file.
 
 c*****Error opening output file
-946   write(*,'('' Error opening output file : '',a)') run_directory(1:nch_run-3)//fileout(4:nchf)
+946   write(*,'('' Error opening output file : '',a)') trim(root_directory)//fileout(4:nchf)
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:946'')')
       write(ci,'(I3)') ios
@@ -630,7 +634,7 @@ c*****Error opening output file
       call exit(1) ! Exit if we can't find the right file.
 
 c*****Error opening output file
-948   write(*,'('' Error opening output file : '',a)') run_directory(1:nch_run)//'/'//fileout
+948   write(*,'('' Error opening output file : '',a)') trim(run_directory)//PATH_SEPARATOR//fileout
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:948'')')
       write(ci,'(I3)') ios
@@ -639,7 +643,7 @@ c*****Error opening output file
       call exit(1) ! Exit if we can't find the right file.
 
 c****Error opening the scratch file
-960   write(*,'('' Error opening temporary scratch file : '',a)') run_directory(1:nch_run)//PATH_SEPARATOR//'lu15_voa.tmp'
+960   write(*,'('' Error opening temporary scratch file : '',a)') trim(run_directory)//PATH_SEPARATOR//'lu15_voa.tmp'
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:960'')')
       write(ci,'(I3)') ios
@@ -648,7 +652,7 @@ c****Error opening the scratch file
       call exit(1) ! Exit if we can't find the right file.
 
 c****Error opening the scratch file
-962   write(*,'('' Error opening file : '',a)') run_directory(1:nch_run)//PATH_SEPARATOR//'lu35_voa.tmp'
+962   write(*,'('' Error opening file : '',a)') trim(run_directory)//PATH_SEPARATOR//'lu35_voa.tmp'
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:962'')')
       write(ci,'(I3)') ios
@@ -657,7 +661,7 @@ c****Error opening the scratch file
       call exit(1) ! Exit if we can't find the right file.
 
 c****Error opening the vesion file
-964   write(*,'('' Error opening file : '',a)') run_directory(1:nch_run-3)//'database/version.'//COMPILER
+964   write(*,'('' Error opening file : '',a)') trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'version.'//COMPILER
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:964'')')
       write(ci,'(I3)') ios
@@ -739,8 +743,7 @@ c         character run_directory*50
       nch_run=lcount(run_directory,50)
 c***********************************************************
 c          read the user values from ..\run\north_pole.txt
-      open(lu,file=run_directory(1:nch_run-3)//
-     +   'run'//PATH_SEPARATOR//'north_pole.txt',status='old',err=200)
+      open(lu,file=trim(run_directory)//PATH_SEPARATOR//'north_pole.txt',status='old',err=200)
       rewind(lu)
       read(lu,*,err=150) glat,glon
       close(lu)
@@ -751,8 +754,7 @@ c***********************************************************
 150   close(lu)
 c          if user values do not exist,
 c          read the default values from ..\database\north_pole.txt
-200   open(lu,file=run_directory(1:nch_run-3)//
-     +   'database'//PATH_SEPARATOR//'north_pole.txt',status='old',err=300)
+200   open(lu,file=trim(root_directory)//'database'//PATH_SEPARATOR//'north_pole.txt',status='old',err=300)
       rewind(lu)
       read(lu,*,err=250) glat,glon
       close(lu)

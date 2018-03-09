@@ -27,7 +27,7 @@ ccc      nch=len_trim(alf)
          return
       end if
       nch_run=lcount(run_directory,50)
-      open(lu,file=run_directory(1:nch_run-3)//'antennas'//PATH_SEPARATOR//alf(1:nch),status='old',iostat=ios,err=900)
+      open(lu,file=trim(root_directory)//PATH_SEPARATOR//'antennas'//PATH_SEPARATOR//alf(1:nch),status='old',iostat=ios,err=900)
       rewind(lu)
       read(lu,'(a)',err=910) description
       read(lu,*,err=910) n
@@ -63,7 +63,7 @@ ccc      nch=len_trim(alf)
 ccc         open(13,status='scratch',access='direct',form='unformatted',
 ccc     +                recl=91*4)
 c          Windows-95 cannot open SCRATCH files
-         open(13,file=run_directory(1:nch_run)//PATH_SEPARATOR//'type13.tmp',
+         open(13,file=trim(run_directory)//PATH_SEPARATOR//'type13.tmp',
      +        access='direct',form='unformatted',recl=91*4)
          do 170 iang=0,359
          read(lu,'(9x,10f7.3)') gains
@@ -72,7 +72,7 @@ c          Windows-95 cannot open SCRATCH files
 ccc         open(14,status='scratch',
 ccc     +        access='direct',form='unformatted',recl=92*4)
 c          Windows-95 cannot open SCRATCH files
-         open(14,file=run_directory(1:nch_run)//PATH_SEPARATOR//'type14.tmp',
+         open(14,file=trim(run_directory)//PATH_SEPARATOR//'type14.tmp',
      +        access='direct',form='unformatted',recl=92*4)
          do 180 ifreq=1,30
          read(lu,'(2x,f6.1,(t10,10f7.3))') eff,gains
@@ -82,7 +82,7 @@ c          Windows-95 cannot open SCRATCH files
       close(lu)
 ccc      call antinit2      !  initialize CCIR antenna routines
       return
-900   write(*,901) ios,run_directory(1:nch_run-3)//'antennas'//PATH_SEPARATOR//alf(1:nch)
+900   write(*,901) ios,trim(root_directory)//PATH_SEPARATOR//'antennas'//PATH_SEPARATOR//alf(1:nch)
 901   format(' Error=',i5,' OPENing antenna file=',a,1h.)
       write(*,'('' nch='',i5)') nch
       write(*,'('' nc1='',i5,''  filename='',a)') nc1,filename(1:nc1)
