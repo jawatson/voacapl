@@ -1,5 +1,7 @@
 ## Changelog
 ### v0.7.3 (In Progress)
+* Added support for the --run-dir and --root-dir command line arguments to permit specifying the location of the and root directories respectively.  This was requested by Jari to keep user's files separate when running in a server environment.
+* Added the --absorption-mode command line parameter to permit the absorption mode to be specified from the command line (W = normal code, I = use old IONCAP absorption model, A = use Alex's changes with normal absorption or a = use Alex's changes with IONCAP absorption).
 * Added invcon.for to the build.  This file was accidentally omitted from previous builds.
 * Adds anttype99 to the build.  This is derived from the anttype90 code published with voacap and supports Harris type 99 antenna files.  No type 99 files are provided with this distribution.
 
