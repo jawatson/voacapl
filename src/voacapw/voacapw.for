@@ -449,7 +449,7 @@ ccc      write(*,'(''opening file='',a)') filein
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
          formfeed='\n\f'
       else
-         write(*, '(''opening file'',a)') trim(run_directory)//PATH_SEPARATOR//fileout
+         write(*, '('' Opening output file: '',a)') trim(run_directory)//PATH_SEPARATOR//fileout
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
          rewind(lu6)
          formfeed=' '
