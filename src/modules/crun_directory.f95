@@ -1,7 +1,8 @@
 module crun_directory
     implicit none
-    character(len=128) :: root_directory
-    character(len=128) :: run_directory
-    character(len=128) :: area_directory
-    character(len=128) :: area_inv_directory
+    integer, parameter :: VOA_PATH_LEN = 128
+    character(len=VOA_PATH_LEN) :: root_directory
+    character(len=VOA_PATH_LEN) :: run_directory
+    character(len=VOA_PATH_LEN) :: area_directory
+    character(len=VOA_PATH_LEN) :: area_inv_directory
 end module crun_directory
