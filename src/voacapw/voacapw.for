@@ -173,18 +173,9 @@ c set the argument and file number counters to 1
 c******************************************************
       argCtr = 1
       fileNumCtr = 1
-
-c******************************************************
-c jw      permission=.true.        !  ignore underflows
-ccc      permission=.false.
-c jw      call permit_underflow@(permission)
-c******************************************************
-c jw      run=cmnam()
       call get_command_argument(argCtr, c_arg) !jw
       argCtr = argCtr + 1
       nch=lenchar(c_arg)
-c jw      if(nch.le.3) go to 930
-c jw      call ucase(run,nch)
 C******************************************************************
 C Process posix type commands that appear before then run directory
 C******************************************************************
@@ -269,7 +260,7 @@ c jw         ier=set_default_window@(window_handle)
 c jw      end if
 c****************************************************************
       if(iquiet.eq.0) write(*,'('' Root Directory: '',a)') trim(root_directory)
-      if(iquiet.eq.0) write(*,'('' Run Directory: '',a)') trim(run_directory)
+      if(iquiet.eq.0) write(*,'('' Run Directory:  '',a)') trim(run_directory)
       
 c****************************************************************
 c jw      iharris=it_exist(run_directory(1:nch_run-3)//bin_win\anttyp99.exe')
