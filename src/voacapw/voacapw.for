@@ -179,8 +179,12 @@ c******************************************************
 C******************************************************************
 C Process posix type commands that appear before then run directory
 C******************************************************************
+c If a run direcory is specified then we'll use this for all 
+c volatile data.
+c******************************************************************
       run_directory = ""
       area_directory = ""
+      area_inv_directory = ""
       do command=1, COMMAND_ARGUMENT_COUNT()
         if (c_arg(1:1).ne.'-') exit
 
@@ -200,8 +204,10 @@ C******************************************************************
            end if
         else if (c_arg(1:10).eq.'--run-dir=') then
             run_directory = c_arg(11:len(trim(c_arg)))
-        else if (c_arg(1:11).eq.'--area-dir=') then
-            area_directory = c_arg(12:len(trim(c_arg)))
+            area_directory = c_arg(11:len(trim(c_arg)))
+            area_inv_directory = c_arg(11:len(trim(c_arg)))
+c        else if (c_arg(1:11).eq.'--area-dir=') then
+c            area_directory = c_arg(12:len(trim(c_arg)))
         else
            write(*, '(AA)') "Option not recognised: ", c_arg
         end if
@@ -221,7 +227,9 @@ c      nch=len(trim(c_arg))
 
       root_directory=trim(c_arg)
       if (len(trim(run_directory)).eq.0) then
-        run_directory=trim(root_directory)//PATH_SEPARATOR//'run'
+          run_directory=trim(root_directory)//PATH_SEPARATOR//'run'
+          area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
+          area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
       end if
       
       inquire(file=trim(run_directory)//'/.', exist=doesit)
@@ -279,10 +287,6 @@ c jw      call lcase(filein,20)
          areach='A'
          if(filein(1:1).eq.'i') areach='I'    !  inverse area coverage
 
-         if (len(trim(area_directory))==0) then
-            area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
-            area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
-         end if
 c jw This test seems redundant as we check for the file just a few
 c    lines below       
 c jw        inquire(file=trim(area_directory)//'/.', exist=doesit)
