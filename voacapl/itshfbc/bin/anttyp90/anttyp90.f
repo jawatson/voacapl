@@ -22,21 +22,32 @@ C***********************************************************************
      +                  xfqs,xfqe,designfreq,antfile,
      +                  beammain,offazim,cond,diel,
      +                  gain(91)
+      character(len=120)  :: run_directory, root_directory, arg
       character anttype*10,antname*70,antfile*24
 
       character (len=80) :: filename, gainfile
 
-      character (len=50) :: run_directory
       character (len=1) :: mode
       
 C.....START OF PROGRAM
-      call GET_COMMAND_ARGUMENT(1, run_directory) !jw
-c      write(*,'('' Run Directory      : '',a)') trim(run_directory)
-      nch_run=len(trim(run_directory))
-      if(nch_run.lt.3) go to 930
-      
-      call GET_COMMAND_ARGUMENT(2, mode)
-c      write(*,'('' Mode arg           : '',a)') mode
+      mode = " "
+c We need to consider two forms of command args;
+c anttype99 rundir [mode]
+c anttype99 rundir rootdir [mode]
+      call GET_COMMAND_ARGUMENT(1, run_directory)
+      if (COMMAND_ARGUMENT_COUNT().eq.1) then
+          root_directory = run_directory(1:len(trim(run_directory))-3)
+      else if (COMMAND_ARGUMENT_COUNT().eq.2) then
+          call GET_COMMAND_ARGUMENT(2, arg)
+          if (len(trim(arg)).eq.1) then
+             call GET_COMMAND_ARGUMENT(2, mode)
+          else
+              call GET_COMMAND_ARGUMENT(2, root_directory)
+          end if
+      else if (COMMAND_ARGUMENT_COUNT().eq.3) then
+          call GET_COMMAND_ARGUMENT(2, root_directory)
+          call GET_COMMAND_ARGUMENT(3, mode)
+      end if
 
       open(21,file=run_directory(1:nch_run)//'/anttyp90.dat', status='old',err=900)
       rewind(21)
@@ -47,14 +58,13 @@ c      write(*,'('' Mode arg           : '',a)') mode
       read(21,*,err=920) beammain     !  main beam (deg from North)
       read(21,*,err=920) offazim      !  off azimuth (deg from North)
       close(21)
-      nch=len(trim(antfile))
-      filename=run_directory(1:nch_run-3)//'antennas/'//antfile(1:nch)
 
+      filename=trim(root_directory)//'/antennas/'//trim(antfile)
       lua=42
       call ant90_read(filename,21,lua,*910)
       diel=parms(3)         !  dielectric constant
       cond=parms(4)         !  conductivity
-      write(gainfile,1) run_directory(1:nch_run),idx
+      write(gainfile,1) trim(run_directory),idx
 1     format(a,5h/gain,i2.2,4h.dat)
       open(22,file=gainfile)
       rewind(22)
@@ -100,13 +110,13 @@ c****************************************************************
 c****************************************************************
       go to 999
 c****************************************************************
-900   write(*,901) run_directory(1:nch_run)//'/anttyp90.dat' !jw
+900   write(*,901) trim(run_directory)//'/anttyp90.dat' !jw
 901   format(' In anttyp90, could not OPEN file=',a)
       stop 'OPEN error in anttyp90 at 900'
 910   write(*,911) filename
 911   format(' In anttyp90, error READing file=',a)
       stop 'READ error in anttyp90 at 910'
-920   write(*,921) run_directory(1:nch_run)//'/anttyp90.dat' !jw
+920   write(*,921) trim(run_directory)//'/anttyp90.dat' !jw
 921   format(' In anttyp90, error READing file=',a)
       stop 'READ error in anttyp90 at 920'
 c***********************************************************************
