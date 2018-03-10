@@ -46,10 +46,10 @@ ccc      if(method.eq.'A') method='a'
       methodX=method
       if(methodX.eq.'I') methodX='A'
 c****************************************************************
-      if(iquiet.eq.0) write(*,'('' OPENing file='',a)') filename
+      if(iquiet.eq.0) write(*,'('' Opening input file:  '',a)') trim(run_directory)//PATH_SEPARATOR//filename
 ccc      write(*,'('' OPENing file='',a)') filename
-      nch_run=lcount(run_directory,50)
-      open(21,file=run_directory(1:nch_run)//PATH_SEPARATOR//filename,
+c      nch_run=lcount(run_directory,50)
+      open(21,file=trim(run_directory)//PATH_SEPARATOR//filename,
      +     status='old',err=900)
       rewind(21)
 c          read once to fill freqarea array
@@ -118,7 +118,7 @@ ccc      write(*,'('' alf='',a)') alf
 3        format(10x,4i5,f10.3,1x,a21,1x,f5.1,f10.4)
          if(itr.eq.2 .and. rgain.ne.0.) design_freq=rgain   ! fix isotrope gain
          write(fileant,'(4hgain,i2.2,4h.dat)') idx
-         open(22,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileant,
+         open(22,file=trim(run_directory)//PATH_SEPARATOR//fileant,
      +        form='formatted')
          rewind(22)
          fs=minfreq
