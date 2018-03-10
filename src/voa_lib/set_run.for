@@ -31,7 +31,7 @@ c jw      call ucase(tmp,nch)                       !  convert to UPPER case
          go to 900
 10    continue
 c 900   call attach@(run_directory,error_code)    !  reset to the RUN directory
-      write(*, "(AA)") 'hello', trim(run_directory)
+ccc      write(*, "(A)") trim(run_directory)
 900   call chdir(trim(run_directory),error_code)    !  reset to the RUN directory
       return
       end
