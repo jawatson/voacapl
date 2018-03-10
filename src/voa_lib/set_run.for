@@ -7,7 +7,6 @@ c jw         character run_directory*50
 c jw      integer*2 error_code
       integer error_code
       character tmp*50,subs(12)*10
-      write(*, '(AA)') 'here1', trim(run_directory)
 c jw TODO reinsert the path sep parameter below
 c      data subs/'\antennas\','\areadata\','\BIN_WIN\' ,'\coeffs\'  ,
 c     +          '\database\','\geocity\' ,'\geonatio\','\geostate\',
