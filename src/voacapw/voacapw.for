@@ -461,7 +461,7 @@ c TODO I think we no longer need the first '..' as paths are now fully defined
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
          formfeed='\n\f'
       else
-         write(*, '('' Opening output file: '',a)') trim(run_directory)//PATH_SEPARATOR//fileout
+         if(iquiet.eq.0) write(*, '('' Opening output file: '',a)') trim(trim(run_directory)//PATH_SEPARATOR//fileout)
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
          rewind(lu6)
          formfeed=' '
