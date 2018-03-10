@@ -28,7 +28,8 @@ c jw      character tns*1,tew*1,pns*1,pew*1,alf*80,sufix*4,path*5,coeffs*4
       character(len=5) :: sufix
       character recfile*21,xmtrfile*21,cirafz*30
 c      character system_type*4,beam_alf*5,card*90,data_dir*9
-      character system_type*4,beam_alf*5,data_dir*9
+      character system_type*4,beam_alf*5
+      character(len=VOA_PATH_LEN) :: data_dir 
       character(len=max(12+MAX_AREA_MONTHS*7, 90)) :: card
       character(len=20) :: fmt_str
 
@@ -38,14 +39,10 @@ c jw      data system_type/'DOS '/
 c jw      call DOScolr                      !  read color table
 c jw      call WINcolr                      !  read Windows color table
 
-      data_dir='areadata'//PATH_SEPARATOR
-      if(area.eq.'I') data_dir='area_inv'//PATH_SEPARATOR
+      data_dir=trim(area_directory)//PATH_SEPARATOR
+      if(area.eq.'I') data_dir=trim(area_inv_directory)//PATH_SEPARATOR
 
-      nch_run=lcount(run_directory,50)
-ccc      write(*,'(''OPENing:'',a)') 
-ccc     +     run_directory(1:nch_run-3)//data_dir//filename
-c jw      open(29,file=run_directory(1:nch_run-3)//data_dir//filename,status='old',iostat=ios,err=900)
-      open(29,file=trim(area_directory)//PATH_SEPARATOR//filename,status='old',iostat=ios,err=900)
+      open(29,file=trim(data_dir)//filename,status='old',iostat=ios,err=900)
       rewind(29)
       cirafz='      '
 800   read(29,'(a)',end=890) card
@@ -151,8 +148,8 @@ c********************************************
          nmonths=1                       !  only 1 plot for map only
          model='      '                  !  map only, no calculation model
       end if
-      nch=lcount(filename,30)
-      grid_file=run_directory(1:nch_run-3)//data_dir//filename(1:nch-2)//'g?'
+c      nch=lcount(filename,30)
+      grid_file=trim(root_directory)//data_dir//filename(1:nch-2)//'g?'
       nchg=lcount(grid_file,70)
       do 500 ii=1,MAX_AREA_MONTHS        !  create a file for each plot
 c jw      call yieldit                   !  yield for windows control
@@ -164,7 +161,8 @@ c jw      call erase@(fileout,error_code)!  delete file first
 c jw      call erase@(grid_file,error_code)!  delete *.vg? files
       call unlink(grid_file,error_code)    !  delete *.vg? files
       if(ii.gt.nmonths) go to 500
-      open(29,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout)
+c      open(29,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout)
+      open(29,file=trim(run_directory)//PATH_SEPARATOR//fileout)
       rewind(29)
       write(29,1) model,filename
 1     format('COMMENT   ',a6,4x,a)
@@ -192,7 +190,7 @@ c jw      call erase@(grid_file,error_code)!  delete *.vg? files
 c******************************************************************
       if(model.eq.'VOACAP' .or. model.eq.'ICEPAC') then
 c             Copy defaults from VOACAP.DEF
-         open(32,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'voacap.def',
+         open(32,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'voacap.def',
      +        status='old',err=100)
 90       read(32,'(a)',end=99) alf
          nch=lcount(alf,80)
@@ -306,7 +304,7 @@ c          negative beam_main is for NON-terminated horizontal rhombics
 500   close(29)
       return
 c***************************************************
-900   write(*,901) ios,run_directory(1:nch_run-3)//data_dir//filename
+900   write(*,901) ios,data_dir//filename
 901   format('In areamap, err=',i5,' Could not OPEN file:',a)
       END
 * -------------------------------------------------------------------- *
@@ -315,20 +313,18 @@ c***************************************************
       use crun_directory
       dimension areafreqs(11)
       character filename*24
-c jw      common /crun_directory/ run_directory
-c jw        character run_directory*50
       areafreqs(1)=Freq
       nfreqs=1
       if(Freq.gt..5) return
 c           get frequencies from areafreq.dat
-      nch_run=lcount(run_directory,50)
-      open(41,file=run_directory(1:nch_run)//PATH_SEPARATOR//'areafreq.dat',
+c      nch_run=lcount(run_directory,50)
+      open(41,file=trim(run_directory)//PATH_SEPARATOR//'areafreq.dat',
      +     status='old',err=100)
-      filename='..'//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'areafreq.dat'
+      filename=trim(run_directory)//PATH_SEPARATOR//'areafreq.dat'
       go to 110
-100   open(41,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'areafreq.dat',
+100   open(41,file=trim(root_directory)//'database'//PATH_SEPARATOR//'areafreq.dat',
      +     status='old',err=200)
-      filename='..'//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'areafreq.dat'
+      filename=trim(root_directory)//'database'//PATH_SEPARATOR//'areafreq.dat'
 110   rewind(41)
       read(41,*) areafreqs
       close(41)

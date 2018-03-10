@@ -276,25 +276,34 @@ ccc      write(*,'('' filein='',a)') filein
       if(filein(1:1).eq.' ') filein='voacapx.dat'
 c jw      call lcase(filein,20)
       if(filein(1:5).eq.'area ' .or. filein(1:4).eq.'inv ') then ! area coverage
+         areach='A'
+         if(filein(1:1).eq.'i') areach='I'    !  inverse area coverage
+
          if (len(trim(area_directory))==0) then
             area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
             area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
          end if
-         if(iquiet.eq.0) write(*,'('' Area Directory: '',a)') trim(area_directory)
-         inquire(file=trim(area_directory)//'/.', exist=doesit)
-         if (.not. doesit) goto 947
-         areach='A'
-         if(filein(1:1).eq.'i') areach='I'    !  inverse area coverage
+c jw This test seems redundant as we check for the file just a few
+c    lines below       
+c jw        inquire(file=trim(area_directory)//'/.', exist=doesit)
+c jw        if (.not. doesit) goto 947
+
 c jw         area_meth=cmnam()
 c jw         if(area_meth.eq.' ') area_meth='c'
          call get_command_argument(argCtr, area_meth) ! jw
          argCtr = argCtr + 1 !jw
-         if(LEN_TRIM(area_meth) == 0) area_meth='c'
+         if(LEN_TRIM(area_meth) == 0) area_meth='c' ! calc
 c jw         filein=cmnam()
          call get_command_argument(argCtr, filein) ! jw
          argCtr = argCtr + 1 !jw
 c        Check the area input file exists and is readable
-         inquire(file=trim(area_directory)//PATH_SEPARATOR//filein, exist=doesit)
+         if (areach == "I") then
+            if(iquiet.eq.0) write(*,'('' Area Inv Directory: '',a)') trim(area_inv_directory)
+            inquire(file=trim(area_inv_directory)//PATH_SEPARATOR//filein, exist=doesit)
+         else 
+            if(iquiet.eq.0) write(*,'('' Area Directory: '',a)') trim(area_directory)
+            inquire(file=trim(area_directory)//PATH_SEPARATOR//filein, exist=doesit)
+         end if
          if(.NOT.doesit) goto 944
 c jw         call lcase(filein,20)
 ccc         write(*,'('' filein='',a)') filein
@@ -315,10 +324,9 @@ c jw            open(61,file=run_directory(1:nch_run)//'\'//filein, status='old'
 ccc         write(*,'(''before areamap, filein='',a)') filein
          call areamap(areach,filein,fileout,area_meth)
          filein='voaareax.da1'
-c jw         fileout='..\AREADATA\'
+
          fileout=trim(area_directory)//PATH_SEPARATOR
-c jw         if(areach.eq.'I') fileout='..\AREA_INV\'
-         if(areach.eq.'I') fileout=trim(area_inv_directory)
+         if(areach.eq.'I') fileout=trim(area_inv_directory)//PATH_SEPARATOR
 c.....End of area processing
       else if(filein(1:6).eq.'batch ') then     !  Batch point-to-point
          areach='B'
@@ -378,7 +386,6 @@ ccc      write(*,'(''after 40, area='',a)') areach
          nch3=len(trim(filein))
          areafile(nch2-2:nch2)='vg'//filein(nch3:nch3)
          fileout(nch+1:nch+nch2)=areafile(1:nch2)
-         write(*, '(A)') fileout
       else if(listing.eq.'B') then           !  Initialize batch processing
          call read_asc('VOACAP',*999)  !read pt-to-pt common from VOACAPW.ASC
          open(38,file=trim(run_directory)//PATH_SEPARATOR//'voacap.cir',
@@ -417,14 +424,14 @@ ccc      write(*,'(''opening file='',a)') filein
 c***********************************************************
       if(iquiet.eq.0) then
          if(listing.eq.'A') then
-            write(*,'('' Area filein ='',a)') filein
-            write(*,'('' fileout='',a)') fileout
+            write(*,'('' Area filein ='',a)') trim(filein)
+            write(*,'('' fileout='',a)') trim(fileout)
             if(iarea_batch.ne.0) then
                alf_fileout=fileout
-c jw               call window_update@(alf_fileout)
             end if
          else if(listing.eq.'I') then
-            write(*,'('' Inverse Area filein ='',a)') filein
+            write(*,'('' Inverse Area filein ='',a)') trim(filein)
+            write(*,'('' fileout='',a)') trim(fileout)
          end if
       end if
 c***********************************************************
@@ -441,7 +448,8 @@ ccc      write(*,'(''opening file='',a)') filein
       if(areach.eq.'B' .or. areach.eq.'S') then        !  batch, use APPEND
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
          formfeed='\n\f'
-      else if((fileout(1:2).eq.'..').or.(listing.eq.'A'))then !area files
+c TODO I think we no longer need the first '..' as paths are now fully defined
+      else if((fileout(1:2).eq.'..').or.(listing.eq.'A').or.(listing.eq.'I'))then !area / inv_area files
          open(LU6,file=fileout, iostat=ios,err=946)
          rewind(lu6)
          formfeed=' '
@@ -594,7 +602,7 @@ c*****Area prediction input file not found
       call exit(1) ! Exit if we can't find the right file.
 
 c*****Missing or unreadable area data input file
-944   write(*,'('' Error: The specified input file was not found: '',a)') '../areadata/'//filein
+944   write(*,'('' Error: The specified input file was not found: '',a)') filein
       write(*,'('' Refer to the man page ("man voacapl") for help.'')')
       write(*, '('' VOACAPW:'')')
       call exit(1) ! Exit if we can't find the right file.
@@ -666,12 +674,7 @@ c******************************************************************
          iarea_batch=iarea_batch+1
          if(iquiet.eq.0) write(*,39) iarea_batch,narea_batch,filein
          write(alf_iarea_batch,'(i4)') iarea_batch
-c jw         call window_update@(alf_iarea_batch)
          write(alf_iarea_batch,'(i4)') iarea_batch
-c jw         call seconds_since_1980@(end_time)    !  use to calc time
-c jw         elapsed=end_time-start_time
-c jw         write(alf_elapsed_time,'(f8.1)') elapsed/60.
-c jw         call window_update@(alf_elapsed_time)
          fileout='voaareax'
 ccc         write(*,'(''BEFORE areamap, filein='',a)') filein
 ccc         write(*,'(''areach='',a)') areach
@@ -679,8 +682,7 @@ ccc         write(*,'(''areach='',a)') areach
 ccc         areach=area
          filein='voaareax.da1'
          fileout=trim(area_directory)//PATH_SEPARATOR
-c TODO in the following line we should be using area_inv as the area directory
-         if(areach.eq.'I') fileout=trim(area_directory)//PATH_SEPARATOR
+         if(areach.eq.'I') fileout=trim(area_inv_directory)//PATH_SEPARATOR
          go to 40      !  begin next area calculation
 999   continue
       if(iarea_batch.ne.0) then      !  batch area finish
