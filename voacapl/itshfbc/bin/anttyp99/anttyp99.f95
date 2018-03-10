@@ -24,7 +24,7 @@ PROGRAM anttyp99
     real, dimension(91) :: gain
     character(len=24)   :: antfile
     character(len=80)   :: filename, gainfilename
-    character(len=120)  :: run_directory, root_directory
+    character(len=120)  :: run_directory, root_directory, arg
     character(len=1)    :: mode
     integer             :: idx, iel, iazim, ifreq
     integer, parameter  :: dat_file_un = 21
@@ -47,11 +47,23 @@ PROGRAM anttyp99
       
 !...START OF PROGRAM
 
-! TODO handle the input args a little more flexibly to 
-! accomodat eeither 2 or 3 args.
-    call GET_COMMAND_ARGUMENT(1, run_directory)
-    call GET_COMMAND_ARGUMENT(2, root_directory)
-    call GET_COMMAND_ARGUMENT(3, mode)
+! We need to consider two forms of command args;
+! anttype99 rundir [mode]
+! anttype99 rundir rootdir [mode]
+    if (COMMAND_ARGUMENT_COUNT().eq.1) then
+        call GET_COMMAND_ARGUMENT(1, run_directory)
+        root_directory = run_directory(1:len(trim(run_directory))-3)
+    else if (COMMAND_ARGUMENT_COUNT().eq.2) then
+        call GET_COMMAND_ARGUMENT(2, arg)
+        if (len(trim(arg)).eq.1) then
+            call GET_COMMAND_ARGUMENT(2, mode)
+        else
+            call GET_COMMAND_ARGUMENT(2, root_directory)
+        end if
+    else if (COMMAND_ARGUMENT_COUNT().eq.3) then
+            call GET_COMMAND_ARGUMENT(2, root_directory)
+            call GET_COMMAND_ARGUMENT(3, mode)
+    end if
 
     open(dat_file_un,file=trim(run_directory)//'/anttyp99.dat', position='rewind', status='old',err=900)
     read(dat_file_un,*,err=920) idx          !  antenna index #, GAINxx.dat
