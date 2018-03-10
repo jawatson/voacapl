@@ -46,12 +46,12 @@ PROGRAM anttyp99
     logical, parameter  :: HARRIS_LOWER_LIMIT = .true.
       
 !...START OF PROGRAM
-
+    mode = " "
 ! We need to consider two forms of command args;
 ! anttype99 rundir [mode]
 ! anttype99 rundir rootdir [mode]
+    call GET_COMMAND_ARGUMENT(1, run_directory)
     if (COMMAND_ARGUMENT_COUNT().eq.1) then
-        call GET_COMMAND_ARGUMENT(1, run_directory)
         root_directory = run_directory(1:len(trim(run_directory))-3)
     else if (COMMAND_ARGUMENT_COUNT().eq.2) then
         call GET_COMMAND_ARGUMENT(2, arg)
@@ -64,7 +64,6 @@ PROGRAM anttyp99
             call GET_COMMAND_ARGUMENT(2, root_directory)
             call GET_COMMAND_ARGUMENT(3, mode)
     end if
-
     open(dat_file_un,file=trim(run_directory)//'/anttyp99.dat', position='rewind', status='old',err=900)
     read(dat_file_un,*,err=920) idx          !  antenna index #, GAINxx.dat
     read(dat_file_un,'(a)',err=920) antfile  !  antenna file name
