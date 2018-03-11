@@ -487,8 +487,8 @@ c jw         call erase@(run_directory(1:nch_run)//'\VOACAPD.DST',istat)
          OPEN(48,file=trim(run_directory)//PATH_SEPARATOR//'voacapt.idx')
          rewind(48)
 c jw         call erase@(run_directory(1:nch_run)//'\VOACAPT.DST',istat)
-         call unlink(trim(run_directory)//PATH_SEPARATOR//'voacap.dst',istat)
-         OPEN(49,file=trim(run_directory)//PATH_SEPARATOR//'voacap.dst',
+         call unlink(trim(run_directory)//PATH_SEPARATOR//'voacapt.dst',istat)
+         OPEN(49,file=trim(run_directory)//PATH_SEPARATOR//'voacapt.dst',
      +        access='direct',form='unformatted',recl=96)
       end if
 c***********************************************************
