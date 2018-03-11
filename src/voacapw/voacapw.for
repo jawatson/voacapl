@@ -179,7 +179,7 @@ c******************************************************
 C******************************************************************
 C Process posix type commands that appear before then run directory
 C******************************************************************
-c If a run direcory is specified then we'll use this for all 
+c If a run direcory is specified then we'll use this for all
 c volatile data.
 c******************************************************************
       run_directory = ""
@@ -231,11 +231,12 @@ c      nch=len(trim(c_arg))
           area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
           area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
       end if
-      
+
       inquire(file=trim(run_directory)//'/.', exist=doesit)
       if (.not. doesit) goto 947
-        
-      call set_run            !  make sure we are in ..\RUN directory
+!     set_run is no longer required now that we're using absolute file paths
+!     TODO Look at replaceing set_run with something that performs a few sanity checks.
+!      call set_run            !  make sure we are in ..\RUN directory
       nch_run=lcount(run_directory,50)
 ccc      open(72,file='voacap_dmp.txt')
 ccc      rewind(72)
@@ -256,20 +257,10 @@ ccc     +        'database\round.txt',status='old',err=102)
 ccc      close(21)
 ccc      iround=1  !  do round
 ccc102   continue
-c******************************************************
-c jw      if(iquiet.eq.0) then
-c jw         title='VOACAP output for:'
-c jw         xsize=GetSystemMetrics(SM_CXSCREEN)
-c jw         ysize=GetSystemMetrics(SM_CYSCREEN)/3
-c jw         x_pos=0
-c jw         y_pos=0
-c jw         window_handle=create_window(title,x_pos,y_pos,xsize,ysize)
-c jw         ier=set_default_window@(window_handle)
-c jw      end if
 c****************************************************************
       if(iquiet.eq.0) write(*,'('' Root Directory: '',a)') trim(root_directory)
       if(iquiet.eq.0) write(*,'('' Run Directory:  '',a)') trim(run_directory)
-      
+
 c****************************************************************
 c jw      iharris=it_exist(run_directory(1:nch_run-3)//bin_win\anttyp99.exe')
       inquire(file=trim(root_directory)//PATH_SEPARATOR//'bin_win'//PATH_SEPARATOR//'anttyp99.exe', exist=iharris)
@@ -288,7 +279,7 @@ c jw      call lcase(filein,20)
          if(filein(1:1).eq.'i') areach='I'    !  inverse area coverage
 
 c jw This test seems redundant as we check for the file just a few
-c    lines below       
+c    lines below
 c jw        inquire(file=trim(area_directory)//'/.', exist=doesit)
 c jw        if (.not. doesit) goto 947
 
@@ -304,7 +295,7 @@ c        Check the area input file exists and is readable
          if (areach == "I") then
             if(iquiet.eq.0) write(*,'('' Area Inv Directory: '',a)') trim(area_inv_directory)
             inquire(file=trim(area_inv_directory)//PATH_SEPARATOR//filein, exist=doesit)
-         else 
+         else
             if(iquiet.eq.0) write(*,'('' Area Directory: '',a)') trim(area_directory)
             inquire(file=trim(area_directory)//PATH_SEPARATOR//filein, exist=doesit)
          end if
@@ -402,7 +393,7 @@ ccc      write(*,'(''after 40, area='',a)') areach
          icircuit=0
          call batch(38,'VOACAP',filein,icircuit,*999)
       else if(listing.eq.'S') then           !  New SPECIAL batch
-c         nch_batch=lcount(file_batch,64)
+!         nch_batch=lcount(file_batch,64)
          open(38,file=trim(run_directory)//PATH_SEPARATOR//trim(file_batch),status='old',err=999)
          if(iquiet.eq.0)
      +   write(*,'('' Output is being written to: '',a,/)')
@@ -428,14 +419,14 @@ ccc      write(*,'(''opening file='',a)') filein
 c***********************************************************
       if(iquiet.eq.0) then
          if(listing.eq.'A') then
-            write(*,'('' Area filein ='',a)') trim(filein)
-            write(*,'('' fileout='',a)') trim(fileout)
+            write(*,'('' Area Input File: '',a)') trim(filein)
+            write(*,'('' Area Output File: '',a)') trim(fileout)
             if(iarea_batch.ne.0) then
                alf_fileout=fileout
             end if
          else if(listing.eq.'I') then
-            write(*,'('' Inverse Area filein ='',a)') trim(filein)
-            write(*,'('' fileout='',a)') trim(fileout)
+            write(*,'('' Inverse Area Input File: '',a)') trim(filein)
+            write(*,'('' Inverse Area Output File: '',a)') trim(fileout)
          end if
       end if
 c***********************************************************
@@ -452,18 +443,20 @@ ccc      write(*,'(''opening file='',a)') filein
       if(areach.eq.'B' .or. areach.eq.'S') then        !  batch, use APPEND
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
          formfeed='\n\f'
-c TODO I think we no longer need the first '..' as paths are now fully defined
-      else if((fileout(1:2).eq.'..').or.(listing.eq.'A').or.(listing.eq.'I'))then !area / inv_area files
-         open(LU6,file=fileout, iostat=ios,err=946)
-         rewind(lu6)
+! TODO I think we no longer need the first '..' as paths are now fully defined
+! The following branch used to include (fileout(1:2).eq.'..').or.
+      else if((listing.eq.'A').or.(listing.eq.'I'))then ! area inv_area
+         write(*, '(A)') " *On branch 1"
+         open(LU6,file=fileout, iostat=ios, position='rewind', err=946)
          formfeed=' '
       else if(append.eq.'a') then
+         write(*, '(A)') " *On branch 2"
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
          formfeed='\n\f'
-      else
+      else !p2p, distance
+         write(*, '(A)') " *On branch 3"
          if(iquiet.eq.0) write(*, '('' Opening output file: '',a)') trim(trim(run_directory)//PATH_SEPARATOR//fileout)
-         open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios,err=948)
-         rewind(lu6)
+         open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios, position='rewind', err=948)
          formfeed=' '
       end if
 ccc      write(*,'('' opening LU15/scratch'')')
@@ -780,4 +773,3 @@ c----------------------------------------------------------------------
       print *, ' voacapl -v (prints the version number)'
       print *, ' voacapl -h (prints this help message)'
       end
-
