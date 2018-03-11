@@ -393,7 +393,7 @@ ccc      write(*,'(''after 40, area='',a)') areach
          icircuit=0
          call batch(38,'VOACAP',filein,icircuit,*999)
       else if(listing.eq.'S') then           !  New SPECIAL batch
-c         nch_batch=lcount(file_batch,64)
+!         nch_batch=lcount(file_batch,64)
          open(38,file=trim(run_directory)//PATH_SEPARATOR//trim(file_batch),status='old',err=999)
          if(iquiet.eq.0)
      +   write(*,'('' Output is being written to: '',a,/)')
