@@ -234,8 +234,9 @@ c      nch=len(trim(c_arg))
 
       inquire(file=trim(run_directory)//'/.', exist=doesit)
       if (.not. doesit) goto 947
-
-      call set_run            !  make sure we are in ..\RUN directory
+!     set_run is no longer required now that we're using absolute file paths
+!     TODO Look at replaceing set_run with something that performs a few sanity checks.
+!      call set_run            !  make sure we are in ..\RUN directory
       nch_run=lcount(run_directory,50)
 ccc      open(72,file='voacap_dmp.txt')
 ccc      rewind(72)
@@ -418,14 +419,14 @@ ccc      write(*,'(''opening file='',a)') filein
 c***********************************************************
       if(iquiet.eq.0) then
          if(listing.eq.'A') then
-            write(*,'('' Area filein ='',a)') trim(filein)
-            write(*,'('' fileout='',a)') trim(fileout)
+            write(*,'('' Area Input File: '',a)') trim(filein)
+            write(*,'('' Area Output File: '',a)') trim(fileout)
             if(iarea_batch.ne.0) then
                alf_fileout=fileout
             end if
          else if(listing.eq.'I') then
-            write(*,'('' Inverse Area filein ='',a)') trim(filein)
-            write(*,'('' fileout='',a)') trim(fileout)
+            write(*,'('' Inverse Area Input File: '',a)') trim(filein)
+            write(*,'('' Inverse Area Output File: '',a)') trim(fileout)
          end if
       end if
 c***********************************************************
