@@ -10,7 +10,6 @@ libvoa_a_SOURCES =  dazel1.for\
 	lcount.for\
 	lenchar.for\
 	rblankc.for\
-	set_run.for\
 	suffix.for\
 	pwrcut.for
 
