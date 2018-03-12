@@ -134,8 +134,8 @@ libvoa_a_LIBADD =
 am_libvoa_a_OBJECTS = dazel1.$(OBJEXT) deg2chr.$(OBJEXT) \
 	doscolr.$(OBJEXT) icoldos.$(OBJEXT) col_dos.$(OBJEXT) \
 	wincolr.$(OBJEXT) chardeg.$(OBJEXT) lcount.$(OBJEXT) \
-	lenchar.$(OBJEXT) rblankc.$(OBJEXT) set_run.$(OBJEXT) \
-	suffix.$(OBJEXT) pwrcut.$(OBJEXT)
+	lenchar.$(OBJEXT) rblankc.$(OBJEXT) suffix.$(OBJEXT) \
+	pwrcut.$(OBJEXT)
 libvoa_a_OBJECTS = $(am_libvoa_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -296,7 +296,6 @@ libvoa_a_SOURCES = dazel1.for\
 	lcount.for\
 	lenchar.for\
 	rblankc.for\
-	set_run.for\
 	suffix.for\
 	pwrcut.for
 
