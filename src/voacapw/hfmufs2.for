@@ -80,7 +80,7 @@ c*******************************************************
 20    nfreqs=nfreqs-1
       meth=method
       if(mspec.eq.121) meth=30
-      if(ndistance.ne.1 .and. iquiet.eq.0) then
+      if(iquiet.eq.0) then
           write(*,21)meth,mspec,IMON(MONTH),nint(SSN),(frel(if),if=1,nfreqs)
 21        format(' Method',2i4,1x,a3,i4,'ssn  Freqs=',11f5.1)
       end if  
