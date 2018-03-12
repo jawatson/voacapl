@@ -2,7 +2,8 @@ c###hfmufs2.for
       SUBROUTINE HFMUFS2(fileout,*)   !  for vs DISTANCE & vs TIME plots
       use crun_directory
       use cversn
-      character fileout*64,alf*4
+! TODO Do we need fileout any more?
+      character fileout*64
       common /cdistance/ idistance,ndistance,ihr    !  plot vs distance
       common /ctime/ ntime                          !  plot vs time
       common /cnfreqs/ nfreqs
@@ -45,8 +46,8 @@ c jw         character VERSN*8
       COMMON/TON/ADJ,ADS,GNOS,GOT,REL,SL,SLS,SPR,SU,SUS
      A ,XNOISE,ZNOISE,NF
       COMMON /CON /D2R, DCL, GAMA, PI, PI2, PIO2, R2D, RZ, VOFL
+      common /cQUIET/ iquiet
 c------------------------------------------------------------------------
-      iquiet=0
 C.....START OF PROGRAM
 C.....SET THE LOGICAL UNITS FOR SYSTEM INPUT AND OUTPUT FILES.
 C     THE USER MUST INCLUDE AN "AUXIN" AND/OR AN "AUXOUT" CARD IF THE
@@ -79,8 +80,11 @@ c*******************************************************
 20    nfreqs=nfreqs-1
       meth=method
       if(mspec.eq.121) meth=30
-      write(*,21)meth,mspec,IMON(MONTH),nint(SSN),(frel(if),if=1,nfreqs)
-21    format(' Method',2i4,1x,a3,i4,'ssn  Freqs=',11f5.1)
+      if(ndistance.ne.1 .and. iquiet.eq.0) then
+          write(*,21)meth,mspec,IMON(MONTH),nint(SSN),(frel(if),if=1,nfreqs)
+21        format(' Method',2i4,1x,a3,i4,'ssn  Freqs=',11f5.1)
+      end if  
+
 c*****************************************************************
       if(ndistance.ne.1) then       !  plots vs DISTANCE
          write(48,'(i5,'' distances'')') ndistance
@@ -92,7 +96,6 @@ c*****************************************************************
      +              'SIGLW SIGUP SNRLW SNRUP TGAIN RGAIN SNRxx DBM   ')
          if(iquiet.eq.0) then
             write(*,'('' Calculating Distance plot'')')
-c jw            call soua@(' UT[')
             write(*,"(a)",advance='no') " UT["
          end if
       end if
@@ -106,9 +109,7 @@ c jw            call soua@(' UT[')
       DO 405 ihr = 1,nhours         !  put hour as outside loop
       JT=ihours(ihr)
       if(ndistance.ne.1 .and. iquiet.eq.0) then
-         write(alf,'(i3)') JT
-c jw         call soua@(alf)
-         write(*,"(a)",advance='no') alf
+         write(*,"(i3)",advance='no') JT
       end if
       do 400 idistance=1,ndistance
       if(idistance.eq.1) then
@@ -199,7 +200,7 @@ ccc      write(*,601) meth,method,mspec,gcdkm,gcdlng
 ccc601   format('601=',3i5,2f10.2)
       WRITE(LUO,1504) VERSN
  1504 FORMAT(1H ,'*****END OF RUN*****',5X,'VOACAP ',a8)
-      write(*,"(a)") " ]" ! Close the progress display and newline
+      if(iquiet.eq.0) write(*,"(a)") " ]" ! Close the progress display and newline
       RETURN
       END
 C--------------------------------
