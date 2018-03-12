@@ -102,13 +102,16 @@ c*****************************************************************
       if(ntime.ne.0) then       !  plots vs TIME
          write(48,'(i2,11f7.3)') nfreqs,(frel(i),i=1,nfreqs)
          write(48,103)
-         if(iquiet.eq.0) write(*,'('' Calculating Time plot'')')
+         if(iquiet.eq.0) then
+             write(*,'('' Calculating Time plot'')')
+             write(*,"(a)",advance='no') " UT["
+         end if
       end if
       rlat_dist=rlat
       rlon_dist=rlong
       DO 405 ihr = 1,nhours         !  put hour as outside loop
       JT=ihours(ihr)
-      if(ndistance.ne.1 .and. iquiet.eq.0) then
+      if(iquiet.eq.0) then
          write(*,"(i3)",advance='no') JT
       end if
       do 400 idistance=1,ndistance
