@@ -110,7 +110,8 @@ c jw      integer*2 istat
       common /ctime/ ntime                          !  plot vs time
       common /cCIRAF_TP/ nTP,idx_TP(911)
       character cmnam*64,title*80,ich*1,area_meth*1,dum*1
-      character message*80,c_arg*50,PROGRAM*300
+      character message*80, PROGRAM*300
+      character(len=VOA_PATH_LEN+15) :: c_arg
       logical*1 doesit
       logical*1 fexists
 C  PROGRAM VERSION NUMBER, PROGRAM CONTROL VARIABLES
@@ -231,7 +232,7 @@ c      nch=len(trim(c_arg))
           area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
           area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
       end if
-
+      write(*, '(aa)') "1. ", run_directory
       inquire(file=trim(run_directory)//'/.', exist=doesit)
       if (.not. doesit) goto 947
 !     set_run is no longer required now that we're using absolute file paths
