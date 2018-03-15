@@ -35,7 +35,7 @@ program dst2ascii
     character(4) :: xmode
     character(120) :: RUN_DIR
     character(len=1), parameter :: PATH_SEPARATOR ='/'
-    character(len=128) :: idx_path, dst_path
+    character(len=128) :: idx_path, dst_path, asc_path
 
     num_args = command_argument_count()
 
@@ -43,9 +43,11 @@ program dst2ascii
         call get_command_argument(1, data_dir_path)
         idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
         dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
+        asc_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.asc'
     else
         idx_path = 'voacapd.idx'
         dst_path = 'voacapd.dst'
+        asc_path = 'voacapd.asc'
     end if
 
     inquire(file=idx_path, exist=file_exists)
@@ -83,7 +85,7 @@ program dst2ascii
     HOURBLK = NUMDIST * NUMFREQ
 
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
-    open(ASC_FILE,file=trim(data_dir_path)//PATH_SEPARATOR//'voacapd.asc')
+    open(ASC_FILE,file=asc_path)
     rewind(ASC_FILE)
 
     do utcPtr = 1, NUMHOUR

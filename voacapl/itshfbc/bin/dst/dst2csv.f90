@@ -36,7 +36,7 @@ program dst2csv
     character(4) :: xmode
     character(120) :: RUN_DIR
     character(len=1), parameter :: PATH_SEPARATOR ='/'
-    character(len=128) :: idx_path, dst_path
+    character(len=128) :: idx_path, dst_path, csv_path
 
     num_args = command_argument_count()
 
@@ -44,9 +44,11 @@ program dst2csv
         call get_command_argument(1, data_dir_path)
         idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
         dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
+        csv_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.csv'
     else
         idx_path = 'voacapd.idx'
         dst_path = 'voacapd.dst'
+        csv_path = 'voacapd.csv'
     end if
 
     inquire(file=idx_path, exist=file_exists)
@@ -84,7 +86,7 @@ program dst2csv
     HOURBLK = NUMDIST * NUMFREQ
 
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
-    open(CSV_FILE,file=trim(data_dir_path)//PATH_SEPARATOR//'voacapd.csv')
+    open(CSV_FILE,file=csv_path)
     rewind(CSV_FILE)
     write(CSV_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&
         DBU,SDBW,NDBW,SNR,RPWRG,REL,MPROB,SPRB,SIGLW,SIGUP,SNRLW,SNRUP,TGAIN,RGAIN,SNRxx,DBM"
