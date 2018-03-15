@@ -39,7 +39,7 @@ program dst2csv
     character(len=128) :: idx_path, dst_path
 
     num_args = command_argument_count()
-    
+
     if (num_args == 1) then
         call get_command_argument(1, itshfbc_path)
         idx_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.idx'
@@ -48,7 +48,7 @@ program dst2csv
         idx_path = 'voacapd.idx'
         dst_path = 'voacapd.dst'
     end if
-    
+
     inquire(file=idx_path, exist=file_exists)
     if (.not.file_exists) then
         write(*,'(''Unable to open IDX file : '',a)') idx_path
@@ -86,7 +86,7 @@ program dst2csv
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
     open(CSV_FILE,file='voacapd.csv')
     rewind(CSV_FILE)
-    write(CSV_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS, &
+    write(CSV_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&
         DBU,SDBW,NDBW,SNR,RPWRG,REL,MPROB,SPRB,SIGLW,SIGUP,SNRLW,SNRUP,TGAIN,RGAIN,SNRxx,DBM"
 
     do utcPtr = 1, NUMHOUR
