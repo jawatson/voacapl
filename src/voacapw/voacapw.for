@@ -232,7 +232,6 @@ c      nch=len(trim(c_arg))
           area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
           area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
       end if
-      write(*, '(aa)') "1. ", run_directory
       inquire(file=trim(run_directory)//'/.', exist=doesit)
       if (.not. doesit) goto 947
 !     set_run is no longer required now that we're using absolute file paths
