@@ -22,7 +22,7 @@ program dst2csv
     real :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     real :: TGAIN, RGAIN, SNRxx, DBM
     integer :: num_args
-    character(len=128) :: itshfbc_path = ""
+    character(len=128) :: data_dir_path = ""
     integer :: ios
     integer :: NUMDIST, NUMFREQ, NUMHOUR
     real, dimension(1 : 25) :: FREQS
@@ -41,9 +41,9 @@ program dst2csv
     num_args = command_argument_count()
 
     if (num_args == 1) then
-        call get_command_argument(1, itshfbc_path)
-        idx_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.idx'
-        dst_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.dst'
+        call get_command_argument(1, data_dir_path)
+        idx_path = trim(data_dir_path)//'voacapd.idx'
+        dst_path = trim(data_dir_path)//'voacapd.dst'
     else
         idx_path = 'voacapd.idx'
         dst_path = 'voacapd.dst'

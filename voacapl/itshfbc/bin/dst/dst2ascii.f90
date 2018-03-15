@@ -21,7 +21,7 @@ program dst2ascii
     real :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     real :: TGAIN, RGAIN, SNRxx, DBM
     integer :: num_args
-    character(len=128) :: itshfbc_path = ""
+    character(len=128) :: data_dir_path = ""
     integer :: ios
     integer :: NUMDIST, NUMFREQ, NUMHOUR
     real, dimension(1 : 25) :: FREQS
@@ -38,16 +38,16 @@ program dst2ascii
     character(len=128) :: idx_path, dst_path
 
     num_args = command_argument_count()
-    
+
     if (num_args == 1) then
-        call get_command_argument(1, itshfbc_path)
-        idx_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.idx'
-        dst_path = trim(itshfbc_path)//PATH_SEPARATOR//'run'//PATH_SEPARATOR//'voacapd.dst'
+        call get_command_argument(1, data_dir_path)
+        idx_path = trim(data_dir_path)//'voacapd.idx'
+        dst_path = trim(data_dir_path)//'voacapd.dst'
     else
         idx_path = 'voacapd.idx'
         dst_path = 'voacapd.dst'
     end if
-    
+
     inquire(file=idx_path, exist=file_exists)
     if (.not.file_exists) then
         write(*,'(''Unable to open IDX file : '',a)') idx_path
@@ -85,7 +85,7 @@ program dst2ascii
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
     open(ASC_FILE,file='voacapd.asc')
     rewind(ASC_FILE)
-    
+
     do utcPtr = 1, NUMHOUR
         write(ASC_FILE, '(AI2A)') "UTC:", utcPtr, ":00"
         do freqPtr = 1, 8
