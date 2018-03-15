@@ -42,8 +42,8 @@ program dst2csv
 
     if (num_args == 1) then
         call get_command_argument(1, data_dir_path)
-        idx_path = trim(data_dir_path)//'voacapd.idx'
-        dst_path = trim(data_dir_path)//'voacapd.dst'
+        idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
+        dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
     else
         idx_path = 'voacapd.idx'
         dst_path = 'voacapd.dst'
@@ -84,7 +84,7 @@ program dst2csv
     HOURBLK = NUMDIST * NUMFREQ
 
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
-    open(CSV_FILE,file='voacapd.csv')
+    open(CSV_FILE,file=trim(data_dir_path)//PATH_SEPARATOR//'voacapd.csv')
     rewind(CSV_FILE)
     write(CSV_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&
         DBU,SDBW,NDBW,SNR,RPWRG,REL,MPROB,SPRB,SIGLW,SIGUP,SNRLW,SNRUP,TGAIN,RGAIN,SNRxx,DBM"
