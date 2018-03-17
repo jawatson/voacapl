@@ -95,8 +95,9 @@ C MORE COEFICENTS AND TABLES (SEE REDMAP):
       common /Cround/ iround
       common /Careach/ areach
          character areach*1
-      character filein*64,fileout*64,areafile*30
-      character file_batch*64
+c jw      character filein*64,fileout*64,areafile*30
+      character(len=VOA_PATH_LEN+13) :: filein, fileout, areafile, file_batch
+c      character file_batch*64
 c jw      integer*2 istat
       integer istat
       common /cmodel/ model
@@ -446,15 +447,15 @@ ccc      write(*,'(''opening file='',a)') filein
 ! TODO I think we no longer need the first '..' as paths are now fully defined
 ! The following branch used to include (fileout(1:2).eq.'..').or.
       else if((listing.eq.'A').or.(listing.eq.'I'))then ! area inv_area
-         write(*, '(A)') " *On branch 1"
+!         write(*, '(A)') " *On branch 1"
          open(LU6,file=fileout, iostat=ios, position='rewind', err=946)
          formfeed=' '
       else if(append.eq.'a') then
-         write(*, '(A)') " *On branch 2"
+!         write(*, '(A)') " *On branch 2"
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, access='APPEND')
          formfeed='\n\f'
       else !p2p, distance
-         write(*, '(A)') " *On branch 3"
+!         write(*, '(A)') " *On branch 3"
          if(iquiet.eq.0) write(*, '('' Opening output file: '',a)') trim(trim(run_directory)//PATH_SEPARATOR//fileout)
          open(LU6,file=trim(run_directory)//PATH_SEPARATOR//fileout, iostat=ios, position='rewind', err=948)
          formfeed=' '
@@ -689,10 +690,10 @@ ccc         areach=area
             idone=idone-1            !  current one was not done
          end if
          iprocess_ctrl=0
-c jw         call window_update@(iprocess_ctrl)    !  remove process message
-c jw         call seconds_since_1980@(end_time)    !  use to calc time
-c jw         elapsed=end_time-start_time
-         if(iquiet.eq.0) write(*,997) idone,elapsed/60.
+! jw         call window_update@(iprocess_ctrl)    !  remove process message
+! jw         call seconds_since_1980@(end_time)    !  use to calc time
+! jw         elapsed=end_time-start_time
+! jw         if(iquiet.eq.0) write(*,997) idone,elapsed/60.
 997      format(50(1h*),/,
      +          i5,' BATCH Area calculations done.',f10.1,' minutes',/,
      +          50(1h*))
