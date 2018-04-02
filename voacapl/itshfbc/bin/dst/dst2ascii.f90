@@ -26,6 +26,7 @@ program dst2ascii
     integer :: NUMDIST, NUMFREQ, NUMHOUR
     real, dimension(1 : 25) :: FREQS
     integer, dimension(1 : 25) :: hours
+    integer, parameter :: DMP_FILE = 60
     integer, parameter :: IDX_FILE = 70
     integer, parameter :: DST_FILE = 80
     integer, parameter :: ASC_FILE = 90
@@ -90,14 +91,14 @@ program dst2ascii
 
     do utcPtr = 1, NUMHOUR
         write(ASC_FILE, '(AI2A)') "UTC:", utcPtr, ":00"
-        do freqPtr = 1, 8
+        do freqPtr = 1, NUMFREQ
             write(ASC_FILE, '(AF6.3A)') "Freq:", freqs(freqPtr), "MHz"
             write(ASC_FILE, '(A3, A8, 2A10, A5, 23A8)') "id", "gcdkm", "Latitude", "Longitude", "Mode", &
                     "MUF", "FOT", "ANGLE", "DELAY", "VHITE", "MUFday", "LOSS", "DBU", "SDBW", "NDBW", "SNR", &
                     "RPWRG", "REL", "MPROB", "SPRB", "SIGLW", "SIGUP", "SNRLW", "SNRUP", "TGAIN", "RGAIN",  &
                     "SNRxx", "DBM"
             do ptr = NUMDIST-1, 0, -1
-                read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*8)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
+                read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
                     FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
                     NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
                     SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM

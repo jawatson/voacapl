@@ -95,7 +95,7 @@ program dst2csv
         do freqPtr = 1, NUMFREQ
             do ptr = NUMDIST-1, 0, -1
                 id = id + 1
-                read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*8)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
+                read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
                     FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
                     NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
                     SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
