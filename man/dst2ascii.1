@@ -3,73 +3,46 @@
 .\"
 .TH VOACAPL 1 "SEO 2013" Linux "User Manuals"
 .SH NAME
-voacapl \- HF propagation prediction program
+dst2ascii \- Convert DST record files to CSV
 .SH SYNOPSIS
-.B dst2csv
+.B dst2ascii
 \n
-.B dst2csv
+.B dst2ascii
 .B dst_directory
 \n
 .SH DESCRIPTION
 This is a small utility to convert the binary record file produced when performing
-distance calculations to a CSV file for further processing. .SH OPTIONS
+distance calculations to an ASCII file for further analysis.
+\n
+Distance calculations are triggered by performing by using the filenames
+voacapd.dat and voacapd.out for voacap input/output files. e.g.
+\n
+voacapl ~/itshfbc voacapd.dat voacapd.output
+\n
+.SH OPTIONS
 .IP dst_directory
-The loctaion of the .dst file and corresponding .idx file.  The output csv file
+The location of the .dst file and corresponding .idx file.  The output ASCII file
 is saved in this directory.  If this parameter is not specified, the current
 working directory will be used.
 .SH EXAMPLES
-voacapl ~/itshfbc
+dst2ascii
 \n
-Reads the default input file (~/itshfbc/run/voacapx.dat) performs a prediction calculation and saves the results in the default output
-file (~/itshfbc/run/voacapx.out).  In this example, the itshfbc directory is defined as a sub-directory of the users home folder.
-
-voacapl ~/itshfbc infile.dat outfile.out
+Creates an ASCII file (voacapd.asc) using the values found in the voacap.dst and
+voacapd.idx files located in the current working directory.
 \n
-Reads infile.dat and save the results of the calculations in the file outfile.out.  Both of the files should be located in the directory '~/itshfbc/run'.
-
-voacapl --run-dir=/tmp/myrunndir ~/itshfbc infile.dat outfile.out
+dst2ascii my_directory
 \n
-Performs a prediction defined by infile.dat and saves the results of the calculations
-in the file outfile.out.  The input file should be placed in the directory defined by the
-run-dir parameter.
-\n
-voacapl --absorption-mode=a ~/itshfbc infile.dat outfile.out
-\n
-Sets the absorption model used by the prediction to 'a' (Alex's changes with
-IONCAP absorption).  Reads infile.dat and save the results of the calculations
-in the file outfile.out.  Both of the files should be located in the
-directory '~/itshfbc/run'.
+Creates an ASCII file (my_directory/voacapd.asc) using the values found in
+the voacap.dst and voacapd.idx files located in the directory 'my_directory'.
 
-voacapl ~/itshfbc area calc testfile.voa
-
-Performs an area calculation using the file 'testfile.voa' as input.  The output file(s) will be saved as testfile.vg_ in the same directory as testfile.voa.
-
-voacapl ~/itshfbc batch
-
-Performs a batch calculation using the file voacapw.asc as a template file to which the modifications defined in the circuit file (voacap.cir) are applied.
 .SH FILES
-.I itshfbc/
+.I voacapd.dst voacapd.idx
 .RS
-Voacapl requires access to a number of data files found within the 'itshfbc' directory structure.  Input and output files are written to itshfbc/run.
+dst2ascii requires access to the .dst and corresponding index (.idx) files to run.
 
 .SH ENVIRONMENT
-VOACAP does not make use of any environmental variables.
-.SH BUGS
-Performance is unpredictable if the path to the itshfbc directory contains spaces or is more than 52 characters long.  This is a limitation of the legacy DOS based file handling procedures and will be addressed in future versions of voacapl.
+dst2ascii does not make use of any environment variables.
 .SH AUTHOR
-This program was ported to GFortran by James Watson <jimwatson at mac dot com> using code that was originally developed by the NTIA/ITS
-and is currently maintained by Greg Hand.
-.SH "ACKNOWLEDGMENTS"
-VOACAP is an improved and corrected version of IONCAP, retaining all of the theory as put forth by John Lloyd, George Haydon, Donald Lucas
-and Larry Teters in the 1975-1985 time-frame with modifications which were suggested/approved by George Lane, Donald Lucas, George Haydon
-and A. D. Spaulding.  Major improvements in efficiency, coding corrections and ease of understanding the IONCAP program were made by
-Franklin Rhoads of the U.S. Navy Research Laboratory under the sponsorship of the Voice of America (1985-1996). Many of the newer
-features in VOACAP and VOAAREA were designed and implemented by Gregory Hand at the Institute for Telecommunication Sciences who
-created VOAAREA and made many significant improvements to VOACAP.
-
-Porting this program to GFortran would not be possible without the generous help and assistance of Gregory Hand.
-
-Portions of this man page have been reproduced with permission from the www.voacap.com website, maintained by Jari Perkiomaki.
-
+James Watson <jimwatson at mac dot com>.
 .SH "SEE ALSO"
 www.voacap.com
