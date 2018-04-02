@@ -68,7 +68,7 @@ nobase_dist_doc_DATA = \
 	voacapl/itshfbc/news/problems.txt
 
 dist_man_MANS = man/voacapl.1 \
-  man/dst2csv.l \
+  man/dst2csv.1 \
 	man/dst2ascii.1
 
 dist_bin_SCRIPTS = makeitshfbc

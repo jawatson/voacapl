@@ -198,8 +198,7 @@ CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(dist_man_MANS) $(srcdir)/Makefile.in AUTHORS \
-	COPYING ChangeLog INSTALL NEWS README ar-lib compile \
-	install-sh missing
+	COPYING INSTALL NEWS README ar-lib compile install-sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -401,7 +400,10 @@ nobase_dist_doc_DATA = \
 	voacapl/itshfbc/news/hf_parse.txt\
 	voacapl/itshfbc/news/problems.txt
 
-dist_man_MANS = man/voacapl.1
+dist_man_MANS = man/voacapl.1 \
+  man/dst2csv.1 \
+	man/dst2ascii.1
+
 dist_bin_SCRIPTS = makeitshfbc
 nobase_dist_data_DATA = \
 	voacapl/itshfbc/antennas/default/ccir.000 \
@@ -1237,7 +1239,7 @@ install-data-hook:
 	echo "structure in your home directory." &&\
 	echo "***************************************************" &&\
 	echo "" &&\
-	echo "" 
+	echo ""
 
 uninstall-hook:
 	-rm $(DESTDIR)/$(datadir)/voacapl/itshfbc/coeffs/coeff01.bin
