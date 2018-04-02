@@ -11,7 +11,7 @@ SUBDIRS = src/modules\
 	voacapl/itshfbc/bin/anttyp90 \
 	voacapl/itshfbc/bin/anttyp99 \
 	voacapl/itshfbc/bin/dst
-	
+
 dist_doc_DATA = README.md\
 	NEWS\
 	COPYING\
@@ -67,7 +67,9 @@ nobase_dist_doc_DATA = \
 	voacapl/itshfbc/news/hf_parse.txt\
 	voacapl/itshfbc/news/problems.txt
 
-dist_man_MANS = man/voacapl.1
+dist_man_MANS = man/voacapl.1 \
+  man/dst2csv.l \
+	man/dst2ascii.1
 
 dist_bin_SCRIPTS = makeitshfbc
 
@@ -285,7 +287,7 @@ install-data-hook:
 	echo "structure in your home directory." &&\
 	echo "***************************************************" &&\
 	echo "" &&\
-	echo "" 
+	echo ""
 
 uninstall-hook:
 	-rm $(DESTDIR)/$(datadir)/voacapl/itshfbc/coeffs/coeff01.bin
@@ -319,5 +321,3 @@ uninstall-hook:
 	-rm $(DESTDIR)/$(datadir)/voacapl/itshfbc/coeffs/fof2URSI.da
 	-rm $(DESTDIR)/$(datadir)/voacapl/itshfbc/coeffs/fof2URSI.daw
 	-rmdir $(DESTDIR)/$(datadir)/voacapl/itshfbc/coeffs
-
-
