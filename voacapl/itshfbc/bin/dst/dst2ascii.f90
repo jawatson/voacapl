@@ -23,10 +23,11 @@ program dst2ascii
     implicit none
     logical*1 file_exists
     logical*1 :: dump_file = .false.
+    logical*1 :: short_path = .true. ! Short path .dst file are descending
     real :: gcdkm, xlat, xlon, MUF, FOT, ANGLE, DELAY, VHITE, MUFday, LOSS
     real :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     real :: TGAIN, RGAIN, SNRxx, DBM
-    integer :: num_args
+    real :: sample1, sample2
     character(len=128) :: data_dir_path = "."
     integer :: ios
     integer :: NUMDIST, NUMFREQ, NUMHOUR
@@ -102,7 +103,6 @@ program dst2ascii
 
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
 
-
     if (dump_file) then
         open(DMP_FILE,file=dmp_path)
         write(DMP_FILE, '(A5, A8, 2A10, A5, 23A8)') "id", "gcdkm", "Latitude", "Longitude", "Mode", &
@@ -121,9 +121,21 @@ program dst2ascii
         close(DMP_FILE)
     end if
 
-
     open(ASC_FILE,file=asc_path)
     rewind(ASC_FILE)
+
+    read(DST_FILE, rec=1 ) sample1,xlat,xlon,xmode, MUF, &
+        FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+        NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+        SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+
+    read(DST_FILE, rec=1+NUMFREQ) sample2,xlat,xlon,xmode, MUF, &
+        FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+        NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+        SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+
+    if (sample2 .gt. sample1) short_path = .false.
+
 
     do utcPtr = 1, NUMHOUR
         write(ASC_FILE, '(AI2A)') "UTC:", utcPtr, ":00"
@@ -133,15 +145,27 @@ program dst2ascii
                     "MUF", "FOT", "ANGLE", "DELAY", "VHITE", "MUFday", "LOSS", "DBU", "SDBW", "NDBW", "SNR", &
                     "RPWRG", "REL", "MPROB", "SPRB", "SIGLW", "SIGUP", "SNRLW", "SNRUP", "TGAIN", "RGAIN",  &
                     "SNRxx", "DBM"
-            do ptr = NUMDIST-1, 0, -1
-                read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
-                    FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
-                    NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
-                    SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
-                write(ASC_FILE, '(I3, F8.1, 2F10.4, A5, 23F8.3)') NUMDIST-ptr, gcdkm, xlat, xlon, xmode, MUF, FOT, ANGLE, &
-                    DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
-                    SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
-            end do
+            if (short_path) then
+                do ptr = NUMDIST-1, 0, -1
+                    read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
+                        FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+                        NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                        SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+                    write(ASC_FILE, '(I3, F8.1, 2F10.4, A5, 23F8.3)') NUMDIST-ptr, gcdkm, xlat, xlon, xmode, MUF, FOT, ANGLE, &
+                        DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                        SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+                end do
+            else
+              do ptr = 1, NUMDIST
+                  read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+((ptr-1)*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
+                      FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+                      NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                      SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+                  write(ASC_FILE, '(I3, F8.1, 2F10.4, A5, 23F8.3)') ptr, gcdkm, xlat, xlon, xmode, MUF, FOT, ANGLE, &
+                      DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                      SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+              end do
+            end if
         end do
     end do
     close(DST_FILE)

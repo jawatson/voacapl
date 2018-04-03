@@ -23,10 +23,11 @@ program dst2csv
     implicit none
     logical*1 file_exists
     logical*1 :: dump_file = .false.
+    logical*1 :: short_path = .true. ! Short path .dst file are descending
     real :: gcdkm, xlat, xlon, MUF, FOT, ANGLE, DELAY, VHITE, MUFday, LOSS
     real :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     real :: TGAIN, RGAIN, SNRxx, DBM
-    integer :: num_args
+    real :: sample1, sample2
     character(len=128) :: data_dir_path = "."
     integer :: ios
     integer :: NUMDIST, NUMFREQ, NUMHOUR
@@ -120,6 +121,17 @@ program dst2csv
         close(DMP_FILE)
     end if
 
+    read(DST_FILE, rec=1 ) sample1,xlat,xlon,xmode, MUF, &
+        FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+        NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+        SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+
+    read(DST_FILE, rec=1+NUMFREQ) sample2,xlat,xlon,xmode, MUF, &
+        FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+        NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+        SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+
+    if (sample2 .gt. sample1) short_path = .false.
 
     open(CSV_FILE,file=csv_path)
     rewind(CSV_FILE)
@@ -128,17 +140,31 @@ program dst2csv
 
     do utcPtr = 1, NUMHOUR
         do freqPtr = 1, NUMFREQ
-            do ptr = NUMDIST-1, 0, -1
-                id = id + 1
-                read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
-                    FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
-                    NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
-                    SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
-                write(CSV_FILE, '(3(I0,","), F0.3, A, F0.1, A, 2(F0.4,","), A4, 23(",",F0.3))') &
-                    id, hours(utcPtr), freqPtr, FREQS(freqPtr), ",", gcdkm, ",", xlat, xlon, xmode, MUF, FOT, ANGLE, &
-                    DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
-                    SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
-            end do
+            if (short_path) then
+              do ptr = NUMDIST-1, 0, -1
+                  id = id + 1
+                  read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+(ptr*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
+                      FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+                      NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                      SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+                  write(CSV_FILE, '(3(I0,","), F0.3, A, F0.1, A, 2(F0.4,","), A4, 23(",",F0.3))') &
+                      id, hours(utcPtr), freqPtr, FREQS(freqPtr), ",", gcdkm, ",", xlat, xlon, xmode, MUF, FOT, ANGLE, &
+                      DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                      SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+              end do
+            else
+              do ptr = 1, NUMDIST
+                  id = id + 1
+                  read(DST_FILE, rec=((utcPtr-1)*HOURBLK)+((ptr-1)*NUMFREQ)+freqPtr ) gcdkm,xlat,xlon,xmode, MUF, &
+                      FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+                      NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                      SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+                  write(CSV_FILE, '(3(I0,","), F0.3, A, F0.1, A, 2(F0.4,","), A4, 23(",",F0.3))') &
+                      id, hours(utcPtr), freqPtr, FREQS(freqPtr), ",", gcdkm, ",", xlat, xlon, xmode, MUF, FOT, ANGLE, &
+                      DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+                      SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+              end do
+            end if
         end do
     end do
     close(DST_FILE)
