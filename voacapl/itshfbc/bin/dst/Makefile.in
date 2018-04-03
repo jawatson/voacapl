@@ -98,10 +98,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_dst2ascii_OBJECTS = dst2ascii.$(OBJEXT)
+am_dst2ascii_OBJECTS = f90getopt.$(OBJEXT) dst2ascii.$(OBJEXT)
 dst2ascii_OBJECTS = $(am_dst2ascii_OBJECTS)
 dst2ascii_LDADD = $(LDADD)
-am_dst2csv_OBJECTS = dst2csv.$(OBJEXT)
+am_dst2csv_OBJECTS = f90getopt.$(OBJEXT) dst2csv.$(OBJEXT)
 dst2csv_OBJECTS = $(am_dst2csv_OBJECTS)
 dst2csv_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -251,9 +251,13 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_FFLAGS = -w -ffixed-line-length-none
-dst2csv_SOURCES = dst2csv.f90
-dst2ascii_SOURCES = dst2ascii.f90
+AM_FCFLAGS = -cpp -w -ffixed-line-length-none
+dst2csv_SOURCES = f90getopt.f90 \
+      dst2csv.f90
+
+dst2ascii_SOURCES = f90getopt.f90 \
+      dst2ascii.f90
+
 all: all-am
 
 .SUFFIXES:
