@@ -17,16 +17,20 @@
 
 
 program dst2csv
+    use f90getopt
+    implicit none
     logical*1 file_exists
+    logical*1 :: dump_file = .false.
     real :: gcdkm, xlat, xlon, MUF, FOT, ANGLE, DELAY, VHITE, MUFday, LOSS
     real :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     real :: TGAIN, RGAIN, SNRxx, DBM
     integer :: num_args
-    character(len=128) :: data_dir_path = ""
+    character(len=128) :: data_dir_path = "."
     integer :: ios
     integer :: NUMDIST, NUMFREQ, NUMHOUR
     real, dimension(1 : 25) :: FREQS
     integer, dimension(1 : 25) :: hours
+    integer, parameter :: DMP_FILE = 60
     integer, parameter :: IDX_FILE = 70
     integer, parameter :: DST_FILE = 80
     integer, parameter :: CSV_FILE = 90
@@ -36,20 +40,29 @@ program dst2csv
     character(4) :: xmode
     character(120) :: RUN_DIR
     character(len=1), parameter :: PATH_SEPARATOR ='/'
-    character(len=128) :: idx_path, dst_path, csv_path
+    character(len=128) :: idx_path, dst_path, csv_path, dmp_path
 
-    num_args = command_argument_count()
+    ! Define options
+    type(option_s):: opts(2)
+    opts(1) = option_s( "input", .true., 'i' )
+    opts(2) = option_s( "dump", .false., 'd' )
+    ! option definitions
 
-    if (num_args == 1) then
-        call get_command_argument(1, data_dir_path)
-        idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
-        dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
-        csv_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.csv'
-    else
-        idx_path = 'voacapd.idx'
-        dst_path = 'voacapd.dst'
-        csv_path = 'voacapd.csv'
-    end if
+    do
+        select case( getopt( "di:", opts ) )
+            case( char(0) )
+                exit
+            case( 'i' )
+                data_dir_path = optarg
+            case( 'd' )
+                dump_file = .true.
+        end select
+    end do
+
+    idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
+    dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
+    csv_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.csv'
+    dmp_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dmp'
 
     inquire(file=idx_path, exist=file_exists)
     if (.not.file_exists) then
@@ -86,6 +99,26 @@ program dst2csv
     HOURBLK = NUMDIST * NUMFREQ
 
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
+
+
+    if (dump_file) then
+        open(DMP_FILE,file=dmp_path)
+        write(DMP_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&
+            DBU,SDBW,NDBW,SNR,RPWRG,REL,MPROB,SPRB,SIGLW,SIGUP,SNRLW,SNRUP,TGAIN,RGAIN,SNRxx,DBM"
+        do ptr=1, HOURBLK*NUMHOUR
+          read(DST_FILE, rec=ptr) gcdkm,xlat,xlon,xmode, MUF, &
+              FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+              NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+              SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+          write(DMP_FILE, '(I0, A, F0.1, A, 2(F0.4,","), A4, 23(",",F0.3))') &
+              ptr, ",", gcdkm, ",", xlat, xlon, xmode, MUF, FOT, ANGLE, &
+              DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+              SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+        end do
+        close(DMP_FILE)
+    end if
+
+
     open(CSV_FILE,file=csv_path)
     rewind(CSV_FILE)
     write(CSV_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&

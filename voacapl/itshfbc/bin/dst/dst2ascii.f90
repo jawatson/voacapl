@@ -16,12 +16,15 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 program dst2ascii
+    use f90getopt
+    implicit none
     logical*1 file_exists
+    logical*1 :: dump_file = .false.
     real :: gcdkm, xlat, xlon, MUF, FOT, ANGLE, DELAY, VHITE, MUFday, LOSS
     real :: DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, SNRLW, SNRUP
     real :: TGAIN, RGAIN, SNRxx, DBM
     integer :: num_args
-    character(len=128) :: data_dir_path = ""
+    character(len=128) :: data_dir_path = "."
     integer :: ios
     integer :: NUMDIST, NUMFREQ, NUMHOUR
     real, dimension(1 : 25) :: FREQS
@@ -36,20 +39,29 @@ program dst2ascii
     character(4) :: xmode
     character(120) :: RUN_DIR
     character(len=1), parameter :: PATH_SEPARATOR ='/'
-    character(len=128) :: idx_path, dst_path, asc_path
+    character(len=128) :: idx_path, dst_path, asc_path, dmp_path
 
-    num_args = command_argument_count()
+    ! Define options
+    type(option_s):: opts(2)
+    opts(1) = option_s( "input", .true., 'i' )
+    opts(2) = option_s( "dump", .false., 'd' )
+    ! option definitions
 
-    if (num_args == 1) then
-        call get_command_argument(1, data_dir_path)
-        idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
-        dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
-        asc_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.asc'
-    else
-        idx_path = 'voacapd.idx'
-        dst_path = 'voacapd.dst'
-        asc_path = 'voacapd.asc'
-    end if
+    do
+        select case( getopt( "di:", opts ) )
+            case( char(0) )
+                exit
+            case( 'i' )
+                data_dir_path = optarg
+            case( 'd' )
+                dump_file = .true.
+        end select
+    end do
+
+    idx_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.idx'
+    dst_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dst'
+    asc_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.asc'
+    dmp_path = trim(data_dir_path)//PATH_SEPARATOR//'voacapd.dmp'
 
     inquire(file=idx_path, exist=file_exists)
     if (.not.file_exists) then
@@ -86,6 +98,27 @@ program dst2ascii
     HOURBLK = NUMDIST * NUMFREQ
 
     open(DST_FILE,file=dst_path,status='old', form='unformatted',access='direct',recl=108)
+
+
+    if (dump_file) then
+        open(DMP_FILE,file=dmp_path)
+        write(DMP_FILE, '(A3, A8, 2A10, A5, 23A8)') "id", "gcdkm", "Latitude", "Longitude", "Mode", &
+                "MUF", "FOT", "ANGLE", "DELAY", "VHITE", "MUFday", "LOSS", "DBU", "SDBW", "NDBW", "SNR", &
+                "RPWRG", "REL", "MPROB", "SPRB", "SIGLW", "SIGUP", "SNRLW", "SNRUP", "TGAIN", "RGAIN",  &
+                "SNRxx", "DBM"
+        do ptr=1, HOURBLK*NUMHOUR
+          read(DST_FILE, rec=ptr) gcdkm,xlat,xlon,xmode, MUF, &
+              FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
+              NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+              SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+          write(DMP_FILE, '(I3, F8.1, 2F10.4, A5, 23F8.3)') NUMDIST-ptr, gcdkm, xlat, xlon, xmode, MUF, FOT, ANGLE, &
+              DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
+              SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
+        end do
+        close(DMP_FILE)
+    end if
+
+
     open(ASC_FILE,file=asc_path)
     rewind(ASC_FILE)
 
