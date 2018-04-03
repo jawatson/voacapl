@@ -68,13 +68,13 @@ program dst2csv
 
     inquire(file=idx_path, exist=file_exists)
     if (.not.file_exists) then
-        write(*,'(''Unable to open IDX file : '',a)') idx_path
+        write(*,'(''IDX file does not exist : '',a)') idx_path
         stop
     end if
 
     inquire(file=dst_path, exist=file_exists)
     if (.not.file_exists) then
-        write(*,'(''Unable to open DST file : '',a)') dst_path
+        write(*,'(''DST file  does not exist: '',a)') dst_path
         stop
     end if
 
