@@ -8,3 +8,5 @@ dst2csv_SOURCES = f90getopt.f90 \
 
 dst2ascii_SOURCES =  f90getopt.f90 \
       dst2ascii.f90
+
+CLEANFILES = f90getopt.mod
