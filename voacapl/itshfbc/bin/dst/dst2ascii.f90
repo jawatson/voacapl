@@ -15,6 +15,9 @@
 ! You should have received a copy of the GNU General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+! This program uses Hani Andreas Ibrahim's getopt module
+! https://github.com/haniibrahim/f90getopt
+
 program dst2ascii
     use f90getopt
     implicit none
@@ -102,7 +105,7 @@ program dst2ascii
 
     if (dump_file) then
         open(DMP_FILE,file=dmp_path)
-        write(DMP_FILE, '(A3, A8, 2A10, A5, 23A8)') "id", "gcdkm", "Latitude", "Longitude", "Mode", &
+        write(DMP_FILE, '(A5, A8, 2A10, A5, 23A8)') "id", "gcdkm", "Latitude", "Longitude", "Mode", &
                 "MUF", "FOT", "ANGLE", "DELAY", "VHITE", "MUFday", "LOSS", "DBU", "SDBW", "NDBW", "SNR", &
                 "RPWRG", "REL", "MPROB", "SPRB", "SIGLW", "SIGUP", "SNRLW", "SNRUP", "TGAIN", "RGAIN",  &
                 "SNRxx", "DBM"
@@ -111,7 +114,7 @@ program dst2ascii
               FOT, ANGLE, DELAY, VHITE, MUFday, LOSS, DBU, SDBW, &
               NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
               SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
-          write(DMP_FILE, '(I3, F8.1, 2F10.4, A5, 23F8.3)') NUMDIST-ptr, gcdkm, xlat, xlon, xmode, MUF, FOT, ANGLE, &
+          write(DMP_FILE, '(I5, F8.1, 2F10.4, A5, 23F8.3)') ptr, gcdkm, xlat, xlon, xmode, MUF, FOT, ANGLE, &
               DELAY, VHITE, MUFday, LOSS, DBU, SDBW, NDBW, SNR, RPWRG, REL, MPROB, SPRB, SIGLW, SIGUP, &
               SNRLW, SNRUP, TGAIN, RGAIN, SNRxx, DBM
         end do

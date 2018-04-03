@@ -15,6 +15,8 @@
 ! You should have received a copy of the GNU General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+! This program uses Hani Andreas Ibrahim's getopt module
+! https://github.com/haniibrahim/f90getopt
 
 program dst2csv
     use f90getopt
@@ -103,7 +105,7 @@ program dst2csv
 
     if (dump_file) then
         open(DMP_FILE,file=dmp_path)
-        write(DMP_FILE, '(A)') "id,utc,chan,freq,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&
+        write(DMP_FILE, '(A)') "id,gcdkm,Latitude,Longitude,Mode,MUF,FOT,ANGLE,DELAY,VHITE,MUFday,LOSS,&
             DBU,SDBW,NDBW,SNR,RPWRG,REL,MPROB,SPRB,SIGLW,SIGUP,SNRLW,SNRUP,TGAIN,RGAIN,SNRxx,DBM"
         do ptr=1, HOURBLK*NUMHOUR
           read(DST_FILE, rec=ptr) gcdkm,xlat,xlon,xmode, MUF, &
