@@ -14,9 +14,11 @@ c**********************************************************************
       else if(idistance.eq.ndistance) then    !  Set Rx to original Rx
          rlatd=ZTLAT
          rlongd=ZTLON
-      else                               !  interpolate in between
+      else                         !  interpolate in between
          call dazel(0)             !  distance Tx to Rx
-         zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1)
+         zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1) ! zdgc gtreat circle path length
+         print *, npsl
+         print '(A I2 A F8.3)','idistance=', idistance, ', zdgc=', zdgc
          call dazel(1)             !  calc new Rx
          rlatd=ZRLAT
          rlongd=ZRLON
