@@ -20,7 +20,10 @@ c**********************************************************************
          call dazel(0)             !  distance Tx to Rx
          ! Long Path fixes
          if (npsl .eq. 1) then ! Long path
+             print '(A)', "Applying Long path correction..."
              ztaz = ztaz - 180.0
+             if(ztaz.lt.0.) ztaz=ztaz+360. ! Do we need to do this?
+             if(ztaz.gt.360.) ztaz=ztaz-360.
              zdgc = (2.0 * PI * RERTH) - zdgc
          end if
          zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1) ! zdgc GC path length
