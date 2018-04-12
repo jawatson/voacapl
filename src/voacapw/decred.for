@@ -7,6 +7,7 @@ C     THE CARD IMAGES ARE THEN DECODED , PROCESSED AND THE DATA STORED
 C
       use voacapl_defs
       use crun_directory
+      use distance_defs
       character cirafz*30,zones(100)*4
       common /cCIRAF_TP/ nTP,idx_TP(911)
 c jw      common /crun_directory/ run_directory
@@ -184,7 +185,7 @@ ccc      READ(INPUT,1502) NYEAR, (MONTHS(I),I=1,12)
               write(*,'('' * forcing use of URSI coefficients.                   *'')')
               write(*,'('' *******************************************************'')')
             end if
-            coeff='URSI'                  !  daily MUST use URSI            
+            coeff='URSI'                  !  daily MUST use URSI
          end if
       end if
 146   continue
@@ -210,6 +211,9 @@ C***********************************************************************
   230 IF(IWCRD(5).le.0) go to 900
       READ(INPUT,1506) TLATD,ITLAT, TLONGD, ITLONG, RLATD, IRLAT,
      A RLONGD, IRLONG, NPSL
+      if (NPSL .eq. 1) then 
+        long_path = .TRUE.
+      end if
  1506 FORMAT(10X,F5.2,A1,3(F9.2,A1),4X,I5)
       IWCRD(5) = -1
       IF(ITLAT .EQ. IBLANK) GO TO 255
