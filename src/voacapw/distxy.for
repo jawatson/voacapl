@@ -4,6 +4,8 @@
      +              ZTELV,ZRELV,ZD,ZDGC,ZTAKOF,ZRAKOF
       COMMON/CON/D2R,DCL,GAMA,PI,PI2,PIO2,R2D,RZ,VOFL
 c**********************************************************************
+      real, parameter :: RERTH = 6370.0D0
+
       ZTLAT=tlat*R2D
       ZTLON=tlon*R2D
       ZRLAT=rlat_dist*R2D
@@ -16,9 +18,13 @@ c**********************************************************************
          rlongd=ZTLON
       else                         !  interpolate in between
          call dazel(0)             !  distance Tx to Rx
-         zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1) ! zdgc gtreat circle path length
-         print *, npsl
-         print '(A I2 A F8.3)','idistance=', idistance, ', zdgc=', zdgc
+         ! Long Path fixes
+         if (npsl .eq. 1) then ! Long path
+             ztaz = ztaz - 180.0
+             zdgc = (2.0 * PI * RERTH) - zdgc
+         end if
+         zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1) ! zdgc GC path length
+         print '(A I1 A I2 A F10.3)', 'npsl:', npsl, ', idistance=', idistance, ', zdgc=', zdgc
          call dazel(1)             !  calc new Rx
          rlatd=ZRLAT
          rlongd=ZRLON
