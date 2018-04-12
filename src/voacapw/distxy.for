@@ -8,7 +8,6 @@ c**********************************************************************
       real, parameter :: RERTH = 6370.0D0
       ! lp fix
       if (long_path) then
-        print *, 'resetting...'
         npsl = 1.
       else
         npsl = 0.
@@ -29,7 +28,7 @@ c**********************************************************************
          call dazel(0)             !  distance Tx to Rx
          ! Start of long Path fix
          if (long_path) then ! Long path
-             print '(A)', "Applying Long path correction..."
+             !print '(A)', "Applying Long path correction..."
              ztaz = ztaz - 180.
              if(ztaz.lt.0.) ztaz=ztaz+360.
              if(ztaz.gt.360.) ztaz=ztaz-360.
@@ -44,7 +43,7 @@ c**********************************************************************
              zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1) ! zdgc GC path length
          end if
          ! End of long path fix
-         print '(A I1 A I2 A F10.3)', 'npsl:', npsl, ', idistance=', idistance, ', zdgc=', zdgc
+         !print '(A I1 A I2 A F10.3)', 'npsl:', npsl, ', idistance=', idistance, ', zdgc=', zdgc
          call dazel(1)             !  calc new Rx
          rlatd=ZRLAT
          rlongd=ZRLON

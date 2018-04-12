@@ -83,7 +83,7 @@ c*******************************************************
       if(iquiet.eq.0) then
           write(*,21)meth,mspec,IMON(MONTH),nint(SSN),(frel(if),if=1,nfreqs)
 21        format(' Method',2i4,1x,a3,i4,'ssn  Freqs=',11f5.1)
-      end if  
+      end if
 
 c*****************************************************************
       if(ndistance.ne.1) then       !  plots vs DISTANCE
@@ -115,23 +115,24 @@ c*****************************************************************
          write(*,"(i3)",advance='no') JT
       end if
       do 400 idistance=1,ndistance
-      if(idistance.eq.1) then
-         rlatd=rlat_dist/d2r
-         rlongd=rlon_dist/d2r
-      else
-         CALL distxy(idistance,ndistance,tlat,tlong,rlat_dist,rlon_dist,
-     +               npsl,RLATD,RLONGD)
-         tlongdx=tlongd
-         if(tlongdx.lt.0.) tlongdx=tlongdx+360.    !  between 0 & 360
-         if(abs(RLATD-TLATD).lt..02 .and. 
-     +      abs(RLONGD-TLONGDx).le..02) then  !  Tx & Rx cannot be same point
-            RLONGD=TLONGDx+.02
-            if(RLONGD.ge.360.) RLONGD=RLONGD-360.
-         end if
-         RLONG=RLONGD*D2R
-         RLAT =RLATD *D2R
-         if(abs(RLATD).gt.89.9) RLONG=0.    !  at poles, force long=0
+
+      ! Removed the following if clause as this is also checked in distxy.for....
+      !if(idistance.eq.1) then
+      !   rlatd=rlat_dist/d2r
+      !   rlongd=rlon_dist/d2r
+      !else
+      CALL distxy(idistance,ndistance,tlat,tlong,rlat_dist,rlon_dist,npsl,RLATD,RLONGD)
+      tlongdx=tlongd
+      if(tlongdx.lt.0.) tlongdx=tlongdx+360.    !  between 0 & 360
+      if(abs(RLATD-TLATD).lt..02 .and. abs(RLONGD-TLONGDx).le..02) then  !  Tx & Rx cannot be same point
+        RLONGD=TLONGDx+.02
+        if(RLONGD.ge.360.) RLONGD=RLONGD-360.
       end if
+      RLONG=RLONGD*D2R
+      RLAT =RLATD *D2R
+      if(abs(RLATD).gt.89.9) RLONG=0.    !  at poles, force long=0
+      !end if
+
       if(ndistance.eq.1) then
          if(ihr.eq.1) then
             CALL GEOM
