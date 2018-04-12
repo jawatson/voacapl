@@ -18,7 +18,7 @@ c**********************************************************************
          rlongd=ZTLON
       else                         !  interpolate in between
          call dazel(0)             !  distance Tx to Rx
-         ! Long Path fixes
+         ! Start of long Path fix
          if (npsl .eq. 1) then ! Long path
              print '(A)', "Applying Long path correction..."
              ztaz = ztaz - 180.0
@@ -26,6 +26,7 @@ c**********************************************************************
              if(ztaz.gt.360.) ztaz=ztaz-360.
              zdgc = (2.0 * PI * RERTH) - zdgc
          end if
+         ! End of long path fix
          zdgc=zdgc*float(ndistance-idistance)/float(ndistance-1) ! zdgc GC path length
          print '(A I1 A I2 A F10.3)', 'npsl:', npsl, ', idistance=', idistance, ', zdgc=', zdgc
          call dazel(1)             !  calc new Rx
