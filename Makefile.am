@@ -7,6 +7,7 @@ SUBDIRS = src/modules\
 	src/voa_lib\
 	src/wp10dwin\
 	src/voacapw\
+	src/rec533\
 	voacapl/itshfbc/coeffs\
 	voacapl/itshfbc/bin/anttyp90 \
 	voacapl/itshfbc/bin/anttyp99 \

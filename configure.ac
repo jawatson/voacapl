@@ -12,6 +12,7 @@ AC_CONFIG_FILES([
  	src/voa_lib/Makefile
  	src/wp10dwin/Makefile
  	src/voacapw/Makefile
+	src/rec533/Makefile
 	voacapl/itshfbc/coeffs/Makefile
 	voacapl/itshfbc/bin/anttyp90/Makefile
 	voacapl/itshfbc/bin/anttyp99/Makefile
