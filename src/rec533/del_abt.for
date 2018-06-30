@@ -1,8 +1,9 @@
       subroutine del_abt     !  delete the recarea.abt & rec533.abt files
       use voacapl_defs
+      use crun_directory
 c**********************************************************
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       nch_run=lcount(run_directory,50)
 c          make sure the ABORT file is not there
 c      call erase@(run_directory(1:nch_run)//'\recarea.abt',error_code)

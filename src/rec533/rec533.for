@@ -1,23 +1,25 @@
 c# ioncap.f
       subroutine rec533(igraph)
+      use voacapl_defs
+      use crun_directory
 c******************************************************************
 c            this routine executes REC533
 c******************************************************************
       INCLUDE 'ficepac.hdr'
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
 c******************************************************************
       character tns*1,tew*1,rns*1,rew*1,antfile_name*21
       character path(2)*1,coefflist(2)*4
       data path/'S','L'/
       data coefflist/'CCIR','URSI'/
 C******************************************************************
-      nch_run=lcount(run_directory,50)
+c      nch_run=lcount(run_directory,50)
       meth=6     !  force method 6 for all calculations
       if(igraph.eq.0) then
-         open(31,file=run_directory(1:nch_run)//'\'//'rec533x.dat')
+         open(31,file=trim(run_directory)//PATH_SEPARATOR//'rec533x.dat')
       else
-         open(31,file=run_directory(1:nch_run)//'\'//'rec533g.dat')
+         open(31,file=trim(run_directory)//PATH_SEPARATOR//'rec533g.dat')
       end if
       rewind(31)
       write(31,8) meth,ipath-1

@@ -1,4 +1,6 @@
       subroutine antcalc_ciraf(tlat,tlon,rlat,rlon,frel)
+      use voacapl_defs
+      use crun_directory
       dimension frel(*)
 c****************************************************************
 c                         =   = point-to-point method CIRAF case
@@ -9,8 +11,8 @@ c****************************************************************
      +                  beammain( 5),offazim_z( 5),cond( 5),diel( 5),
      +                  array(30,91,12),aeff(30, 5)
       character anttype*10,antname*70,antfile*24
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       common /designfreq/ freqdesign
       common /ccirparm/ parm(20),z6,umax,vmax,giso,
      +                  modegain,gainmax(3,2),gainmaxb(30),antnam

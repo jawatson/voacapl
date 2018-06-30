@@ -1,16 +1,17 @@
       subroutine read_bin(model,*)       !  read common from modelW.BIN
+      use voacapl_defs
+      use crun_directory
       character model*6
 
       INCLUDE 'FICEPAC.hdr'
       INCLUDE 'FICE_SSN.hdr'
       common /cbotlines/ nbotlines,linesbot(14)
       common /ctoplines/ ntoplines,linestop( 7)
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
 c**********************************************************************
       nch_run=lcount(run_directory,50)
-      open(29,file=run_directory(1:nch_run)//'\'//model//'w.bin',
-     +      form='unformatted',status='old',err=999)
+      open(29,file=trim(root_directory)//PATH_SEPARATOR//model//'w.bin', form='unformatted',status='old',err=999)
       rewind(29)
       i999=0
       read(29,err=900) method,methodname,icoeffs,year

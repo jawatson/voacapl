@@ -1,4 +1,6 @@
       subroutine areamap(filename,fileout,meth)
+      use voacapl_defs
+      use crun_directory
 c**********************************************************
 c          Execute with:
 c                call areamap(filename,fileout,meth)
@@ -11,8 +13,8 @@ c                         = 'c' = map with contours
 c                         = 'p' = calculations & printer
 c                         = 's' = calculations & screen plot
 c**********************************************************
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       INCLUDE 'ficearea.hdr'
       character fileout*12,filename*30,ich,meth*1,model*6
       character grid_file*70

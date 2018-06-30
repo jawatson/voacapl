@@ -1,11 +1,13 @@
       function p1240(ssn,month,gmt,plat,plong)
 c          This is Recommendation ITU-R P.1240 Table 2
 c          Ratio of F1 of FOT to operational MUF when determined by an F2-mode
+      use voacapl_defs
+      use crun_directory
       COMMON / CON / D2R, DCL, GAMA, PI, PI2, PIO2, R2D, RZ, VOFL
       COMMON / FILES / LUI,LUO,LU2,LU5,LU6,LU8,LU16,LU61,LU7,LU15
       common /Cp1240/ ionce_p1240,table2(6,8,3,3)  !  (time,latitude,season,ssn)
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       dimension kseason(12)
       data kseason/1,1,2,2,3,3,3,3,2,2,1,1/
       data lu/71/
@@ -16,8 +18,7 @@ c          Ratio of F1 of FOT to operational MUF when determined by an F2-mode
       else if(ionce_p1240.ne.1) then !  read table in once
          ionce_p1240=1
          nch_run=lenchar(run_directory)
-         open(lu,file=run_directory(1:nch_run-3)//'database\p1240.dat',
-     +        status='old',err=900)
+         open(lu,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'p1240.dat',status='old',err=900)
          rewind(lu)
          read(lu,1) alf     !  skip record
 1        format(a)
@@ -34,7 +35,7 @@ c          Ratio of F1 of FOT to operational MUF when determined by an F2-mode
 30       continue
 40       continue
          close(lu)
-      
+
       end if
 
       call get_mid_point(elat,elong)   !  get path midpoint

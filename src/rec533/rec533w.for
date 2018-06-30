@@ -183,7 +183,7 @@ C   COMMONS FROM FTZ CODE
       character areach*1
       character run*50,message*80,PROGRAM*300,alf4*4
       character cmnam*64,title*80,area_meth*1,alf*20,ich*1
-      integer*4 window_handle,error_code
+c      integer*4 window_handle,error_code
 c      integer*2 x_pos,y_pos,xsize,ysize
       integer istat
       character(len=VOA_PATH_LEN+15) :: c_arg
@@ -451,7 +451,7 @@ c         OPEN(LUO,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_
             alf_fileout='..\'//fileout(4:nch_fot)
 c            call window_update@(alf_fileout)
          end if
-         OPEN(LUO,file=run_directory(1:nch_run-3)//fileout(4:nch_fot))
+         OPEN(LUO,file=trim(root_directory)//PATH_SEPARATOR//fileout(4:nch_fot))
          rewind(LUO)
       else
          OPEN(LUO,file=run_directory(1:nch_run)//PATH_SEPARATOR//
@@ -459,8 +459,7 @@ c            call window_update@(alf_fileout)
          rewind(LUO)
       end if
 c***********************************************************
-      open(12,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'version.w32',
-     +     status='old')
+      open(12,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'version.w32', status='old')
       rewind(12)
       read(12,'(a)') VERSN( 8:40)
       close(12)
