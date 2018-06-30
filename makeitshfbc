@@ -12,12 +12,12 @@ SRC_ROOT_DIR=__PREFIX__/share/
 for SUB_DIR in  areadata area_inv run antennas
 do
 	mkdir -p $HOME/itshfbc/$SUB_DIR
-	cp -R $SRC_ROOT_DIR/voacapl/itshfbc/$SUB_DIR/* $HOME/itshfbc/$SUB_DIR 
+	cp -R $SRC_ROOT_DIR/voacapl/itshfbc/$SUB_DIR/* $HOME/itshfbc/$SUB_DIR
 done
 
 
-# The correct place to put the antenna files would be /share/ but this 
-# breaks the voaAntennaWalker until the follow sym links is available 
+# The correct place to put the antenna files would be /share/ but this
+# breaks the voaAntennaWalker until the follow sym links is available
 # on all major distros.
 #
 # Make sym links to read-only antenna files (we can't sym link the directory
@@ -34,7 +34,7 @@ done
 # Make sym links to read-only database files (we can't sym link the directory
 # itself as we need that for local writes to the north_pole.txt file.
 mkdir -p $HOME/itshfbc/database/
-for DATABASE_FILE in cirafp.911 colors.dat colors.win version.win
+for DATABASE_FILE in cirafp.911 colors.dat colors.win version.win fof2var.txt
 do
         if [ ! -f "$HOME/itshfbc/database/$DATABASE_FILE" ]; then
             ln -s $SRC_ROOT_DIR/voacapl/itshfbc/database/$DATABASE_FILE $HOME/itshfbc/database/
