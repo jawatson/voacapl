@@ -1,0 +1,14 @@
+OUTPUT        6    0
+COEFFS    CCIR
+SUNSPOT    100.
+TIME          1   24    1
+MONTH      1994    6
+TRANS     TANGIER, Morocco      35.80N      5.90W  S     D
+RECVR     BELGRADE              44.90N     20.50E  S     D
+SYST          1.0000 3.00    0  0.0
+ANTENNA       1    1    2   30     0.000[DEFAULT\CONST17.VOA  ]  0.0  500.0000
+ANTENNA       2    2    2   30     0.000[DEFAULT\SWWHIP.VOA   ]  0.0    0.0000
+NOIS       -145    1   73   90
+FREQ        6.075  7.200  9.700 11.850 13.700 15.350 17.725 21.650 25.885  0.000
+EXEC
+QUIT
