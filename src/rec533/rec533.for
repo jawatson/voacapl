@@ -1,9 +1,9 @@
 c# ioncap.f
       subroutine rec533(igraph)
 c******************************************************************
-c            this routine executes REC533 
+c            this routine executes REC533
 c******************************************************************
-      INCLUDE 'FICEPAC.HDR'
+      INCLUDE 'ficepac.hdr'
       common /crun_directory/ run_directory
          character run_directory*50
 c******************************************************************

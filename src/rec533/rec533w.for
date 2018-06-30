@@ -4,6 +4,7 @@ c      winapp 100000,160000
 cccD    +               (filein,fileout,areach)
 c      include <windows.ins>
       use voacapl_defs
+      use crun_directory
 
       save
 c***********************************************************************
@@ -183,12 +184,13 @@ C   COMMONS FROM FTZ CODE
       character run*50,message*80,PROGRAM*300,alf4*4
       character cmnam*64,title*80,area_meth*1,alf*20,ich*1
       integer*4 window_handle,error_code
-      integer*2 x_pos,y_pos,xsize,ysize
+c      integer*2 x_pos,y_pos,xsize,ysize
       integer istat
+      character(len=VOA_PATH_LEN+15) :: c_arg
       logical*1 doesit
 c      real*8 start_time,end_time
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       common /cQUIET/ iquiet     !  =1=SILENT
       character alf_narea_batch*4,alf_iarea_batch*4
       character alf_CIRAF*10,alf_NAME*40
@@ -200,20 +202,30 @@ c      real*8 start_time,end_time
       character alf80*80
 c      integer (kind=3) count_underflow
 c      logical (kind=2) permission
+c *******************************************************************
+c Integer added by JW to emulate the function of the cmnam() function
+c using the get_command_argument() function
+c *******************************************************************
+      integer :: argCtr = 1 !jw added by JW to emulate the function of cmnam()
 C ---------------------------------------------------------------------
 c      permission=.true.     !  ignore underflows
 ccc      permission=.false.    !  track underflows
 c      call permit_underflow@(permission)
 C ---------------------------------------------------------------------
 C.....START OF PROGRAM
-      run=cmnam()
+c      run=cmnam()
+      call get_command_argument(argCtr, root_directory)
+      argCtr = argCtr + 1
+
 c      call ucase(run,nch)
-         nch=lcount(run,50)
-         if(nch.lt.3) go to 930
+      nch=lcount(run,50)
+      if(nch.lt.3) go to 930
       iquiet=0
       if(run(1:6).eq.'SILENT') then     !  do not create output window
          iquiet=1
-         run=cmnam()
+c         run=cmnam()
+         call get_command_argument(argCtr, root_directory)
+         argCtr = argCtr + 1
          nch=lcount(run,50)
          if(nch.lt.3) go to 930
       end if
@@ -231,27 +243,38 @@ c         window_handle=create_window(title,x_pos,y_pos,xsize,ysize)
 c         ier= set_default_window@(window_handle)
 c      end if
 c****************************************************************
-      if(run(1:1).eq.' ') run='C:\ITSHFBC'
-      nch=lcount(run,50)
-      run_directory=run(1:nch)//'\RUN'
-      call set_run           !  set to the ..\RUN directory
+#ifdef _WIN32
+      if(run(1:1).eq.' ') root_directory='C:\ITSHFBC'
+#else
+      if(run(1:1).eq.' ') root_directory='~'
+#endif
+c      nch=lcount(run,50)
+      run_directory=trim(root_directory)//PATH_SEPARATOR//'run'
+      area_directory=trim(root_directory)//PATH_SEPARATOR//'areadata'
+      area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
+c      call set_run           !  set to the ..\RUN directory
       nch_run=lcount(run_directory,50)
-      if(iquiet.eq.0)
-     +write(*,'('' Executing from dir='',a)') run_directory(1:nch_run)
+      if(iquiet.eq.0) write(*,'('' Executing from dir='',a)') run_directory(1:nch_run)
 c******************************************************************
       iarea_batch=0
       icancel_batch=0
       iciraf_flag=0
-      filein=cmnam()
+c      filein=cmnam()
+      call get_command_argument(argCtr, filein)
+      argCtr = argCtr + 1
       if(filein(1:1).eq.' ') filein='AREA'
       if(filein(1:1).eq.' ') filein='rec533x.dat'
 c      call lcase(filein,40)
       ndistance=1
       ntime=0
       if(filein(1:5).eq.'area ') then       !  area coverage
-         area_meth=cmnam()
+c         area_meth=cmnam()
+         call get_command_argument(argCtr, area_meth)
+         argCtr = argCtr + 1
          if(area_meth.eq.' ') area_meth='c'
-         filein=cmnam()
+c         filein=cmnam()
+         call get_command_argument(argCtr, filein)
+         argCtr = argCtr + 1
          if(filein.eq.' ') filein='default\def1.rec'
 c         call lcase(filein,40)
          if(filein(1:12).eq.'recareaw.cir') then    !  batch area coverage
@@ -302,8 +325,12 @@ c            call dos_error_message@(istat,message)
          end if
       else if(filein(1:6).eq.'ciraf ') then       !  CIRAF point-to-point
          areach='Z'
-         filein=cmnam()
-         fileout=cmnam()
+c         filein=cmnam()
+         call get_command_argument(argCtr, filein)
+         argCtr = argCtr + 1
+c         fileout=cmnam()
+         call get_command_argument(argCtr, fileout)
+         argCtr = argCtr + 1
          if(filein(1:1).eq.' ') filein='rec533c.dat'
          if(fileout(1:1).eq.' ') fileout='rec533c.out'
 c             !  delete any previous file
@@ -352,7 +379,9 @@ c         call erase@(run_directory(1:nch_run)//'\REC533T.DST',istat)
      +        access='direct',form='unformatted',recl=96)
          fileout='rec533t.out'
       else
-         fileout=cmnam()
+c         fileout=cmnam()
+         call get_command_argument(argCtr, fileout)
+         argCtr = argCtr + 1
          if(fileout(1:1).eq.' ') fileout='rec533x.out'
 c         call lcase(fileout,40)
       end if
@@ -1004,17 +1033,18 @@ C.....CLOSE FILES
 c**************************************************************
 c          do we need to PLOT the result?
 c**************************************************************
-      if(area.eq.'A' .and. (area_meth.eq.'p' .or. area_meth.eq.'s'))then
-         write(*,'('' Plotting:'',a)') filein
-         nchf=lcount(fileout,40)
-         PROGRAM=run_directory(1:nch_run-3)//
-     +            'bin_win\worldwin.exe '//
-     +            run_directory(1:nch_run)//' AREADATA '//
-     +            fileout(13:nchf)//' '//
-     +            area_meth
-         nch=lcount(PROGRAM,300)
-         call gh_exec(PROGRAM,nch,1)      !  execute and wait
-      end if
+c      if(area.eq.'A' .and. (area_meth.eq.'p' .or. area_meth.eq.'s'))then
+c         write(*,'('' Plotting:'',a)') filein
+c         nchf=lcount(fileout,40)
+c         PROGRAM=run_directory(1:nch_run-3)//
+c     +            'bin_win\worldwin.exe '//
+c     +            run_directory(1:nch_run)//' AREADATA '//
+c     +            fileout(13:nchf)//' '//
+c     +            area_meth
+c         nch=lcount(PROGRAM,300)
+c         call gh_exec(PROGRAM,nch,1)      !  execute and wait
+c         call system(trim(PROGRAM))
+c      end if
 c**************************************************************
       if(area.eq.'A') then!  area coverage, are there more files to process?
          ich=filein(nch3:nch3)
@@ -1039,7 +1069,8 @@ c**************************************************************
 920   write(*,901) 'recareaw.cir  for BATCH calculations'
       stop 'OPEN error in rec533w at 920'
 c***********************************************************************
-930   call get_run
+c930   call get_run
+930   continue
       nchd=lenchar(run_directory)
       write(*,'(''run_directory='',a)') run_directory(1:nchd)
       open(71,file=run_directory(1:nchd-3)//'news_win\command.txt',

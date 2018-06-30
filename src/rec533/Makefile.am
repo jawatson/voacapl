@@ -6,6 +6,7 @@ rec533_LDADD = ../hfmufesw/libhfmufesw.a\
     ../modules/libmodules.a
 
 rec533_SOURCES = rec533w.for \
+  rec533.for \
 	blkdat.for \
 	gettr.for \
 	circant.for \

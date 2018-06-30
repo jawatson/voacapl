@@ -1,8 +1,9 @@
-      subroutine harris(jant,fileant,mode,idx,antfile,fs,fe,
-     +                  beam_main,offazim)
+      subroutine harris(jant,fileant,mode,idx,antfile,fs,fe,beam_main,offazim)
+      use crun_directory
+
       CHARACTER fileant*10,antfile*21,mode*1
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       dimension areagain(91)
       character program*300,alf*1,exe*12,dat*12
 
@@ -38,7 +39,9 @@ c           Prepare ANTTYPxx.DAT to communicate with ANTTYPxx.EXE:
 c**********************************************************************
 c          Make sure ANTTYPxx.EXE exists before executing it.
 c**********************************************************************
-      iexe_exist=it_exist(run_directory(1:nch_run-3)//'bin_win\'//exe)
+#ifdef _WIN
+c      iexe_exist=it_exist(run_directory(1:nch_run-3)//'bin_win\'//exe)
+      inquire(file=run_directory(1:nch_run-3)//'bin_win'//PATH_SEPARATOR//exe,exist=iexe_exist)
       if(iexe_exist.ne.1) then    !  antenna program does not exist
          write(*,1) jant,run_directory(1:nch_run-3)//'bin_win\'//exe
 1        format('You are attempting to use an antenna of type=',i4,'.',/
@@ -50,10 +53,13 @@ c**********************************************************************
 c**********************************************************************
 C        Call ANTTYPxx.EXE to create GAINxx.DAT file:
 C
-      PROGRAM=run_directory(1:nch_run-3)//'bin_win\'//exe//' '//
-     +             run_directory(1:nch_run)//' '//mode
+      PROGRAM=run_directory(1:nch_run-3)//'bin_win\'//exe//' '//run_directory(1:nch_run)//' '//mode
+#else
+      PROGRAM=exe//' '//trim(run_directory)//' '//trim(root_directory)//' '//mode
+#endif
       nch=lcount(PROGRAM,300)
-      call gh_exec(PROGRAM,nch,1)   !  execute and wait for ANTTYPxx.EXE
+c      call gh_exec(PROGRAM,nch,1)   !  execute and wait for ANTTYPxx.EXE
+      call system(PROGRAM)  !  execute and wait for ANTTYPxx.EXE
 
       if(mode.eq.' ') return     !  point-to-point is done
 
