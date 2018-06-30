@@ -175,6 +175,7 @@ nobase_dist_data_DATA = \
 	voacapl/itshfbc/database/version.w32\
 	voacapl/itshfbc/database/version.win\
 	voacapl/itshfbc/database/voacap.def\
+	voacapl/itshfbc/database/fof2var.txt\
 	voacapl/itshfbc/geocity/africa.geo\
 	voacapl/itshfbc/geocity/caribean.geo\
 	voacapl/itshfbc/geocity/ciraf.geo\
