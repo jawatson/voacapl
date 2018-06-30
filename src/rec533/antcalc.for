@@ -1,5 +1,6 @@
-      subroutine antcalc
-     +               (filename,method)
+      subroutine antcalc(filename,method)
+      use crun_directory
+      use voacapl_defs
 c****************************************************************
 c          Execute with:
 c             antcalc filename method
@@ -10,8 +11,8 @@ c                method   = a = area coverage method
 c                         =   = point-to-point method
 c****************************************************************
       common /cQUIET/ iquiet     !  =1=SILENT
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       common /designfreq/ freqdesign
       common /ccirparm/ parm(20),z6,umax,vmax,giso,
      +                  modegain,gainmax(3,2),gainmaxb(30),antnam
@@ -42,9 +43,8 @@ c****************************************************************
 ccc      if(method.eq.'A') method='a'
 c****************************************************************
 ccc      write(*,'('' OPENing file='',a)') filename
-      nch_run=lcount(run_directory,50)
-      open(21,file=run_directory(1:nch_run)//'\'//filename,
-     +     status='old',err=900)
+c      nch_run=lcount(run_directory,50)
+      open(21,file=trim(run_directory)//PATH_SEPARATOR//filename,status='old',err=900)
       rewind(21)
 c          read once to fill freqarea array
       do 505 i=1,11
@@ -101,9 +101,8 @@ c          read once to fill freqarea array
      +               antfile,beam_main,rgain
 3        format(10x,4i5,f10.3,1x,a21,1x,f5.1,f10.4)
          if(itr.eq.2 .and. rgain.ne.0.) design_freq=rgain   ! fix isotrope gain
-         write(fileant,'(4hGAIN,i2.2,4h.DAT)') idx
-         open(22,file=run_directory(1:nch_run)//'\'//fileant,
-     +        form='formatted')
+         write(fileant,'(4hgain,i2.2,4h.dat)') idx
+         open(22,file=trim(run_directory)//PATH_SEPARATOR//fileant,form='formatted')
          rewind(22)
          fs=minfreq
          fe=maxfreq

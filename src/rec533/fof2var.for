@@ -11,6 +11,8 @@ ccc100   continue
 ccc      end
 c------------------------------------------------------------
       subroutine read_fof2_var(lu)    !  read the foF2 variability tables
+      use crun_directory
+      use voacapl_defs
       character alf*80
       dimension var(24,19,18)
 c*************************************************************************
@@ -24,12 +26,11 @@ c          3 = SSN  1=<50  2=50to100  3=>100
 c          3 = season  1=winter(11,12,1,2)  2=equinox  3=summer(5,6,7,8)
 c*************************************************************************
       equivalence (var,dl_fof2)
-      common /crun_directory/ run_directory
-         character run_directory*50
-      nch_run=lenchar(run_directory)
+c      common /crun_directory/ run_directory
+c         character run_directory*50
+c      nch_run=lenchar(run_directory)
 
-      open(lu,file=run_directory(1:nch_run-3)//'database\fof2var.txt',
-     +        status='old')
+      open(lu,file=trim(root_directory)//PATH_SEPARATOR//'database'//PATH_SEPARATOR//'fof2var.txt',status='old')
       rewind(lu)
       read(lu,'(a)') alf    !  skip header record
       do 20 itab=1,18       !  18 tables
@@ -47,7 +48,7 @@ ccc      write(*,'(i2,1h=,a)') itab,alf(1:nch)
 c------------------------------------------------------------
       subroutine get_fof2_var(xlt,xlat,month,ssn,dl_v,du_v)
 c          This is ITU-R P.1239
-c             
+c
 c          given:
 c                xlt   = local time
 c                xlat  = latitude degrees (+=North, -=South)

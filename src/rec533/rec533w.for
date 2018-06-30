@@ -254,7 +254,9 @@ c      nch=lcount(run,50)
       area_inv_directory=trim(root_directory)//PATH_SEPARATOR//'area_inv'
 c      call set_run           !  set to the ..\RUN directory
       nch_run=lcount(run_directory,50)
-      if(iquiet.eq.0) write(*,'('' Executing from dir='',a)') run_directory(1:nch_run)
+c      if(iquiet.eq.0) write(*,'('' Executing from dir='',a)') run_directory(1:nch_run)
+      if(iquiet.eq.0) write(*,'('' Root Directory: '',a)') trim(root_directory)
+      if(iquiet.eq.0) write(*,'('' Run Directory:  '',a)') trim(run_directory)
 c******************************************************************
       iarea_batch=0
       icancel_batch=0
@@ -262,7 +264,7 @@ c******************************************************************
 c      filein=cmnam()
       call get_command_argument(argCtr, filein)
       argCtr = argCtr + 1
-      if(filein(1:1).eq.' ') filein='AREA'
+c      if(filein(1:1).eq.' ') filein='AREA'
       if(filein(1:1).eq.' ') filein='rec533x.dat'
 c      call lcase(filein,40)
       ndistance=1
@@ -280,7 +282,7 @@ c         call lcase(filein,40)
          if(filein(1:12).eq.'recareaw.cir') then    !  batch area coverage
 c            call seconds_since_1980@(start_time)    !  use to calc time
             iarea_batch=iarea_batch+1
-            open(61,file=run_directory(1:nch_run)//'\'//filein,
+            open(61,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,
      +              status='old',err=920)
             rewind(61)
             call count_batch(61,narea_batch)  !  count # files to process
@@ -314,7 +316,7 @@ c         call areamap(filein,fileout,area_meth)
          fileout='rec533b.out'
          nch_out=lcount(fileout,64)
 c             !  delete any previous file
-c         call erase@(run_directory(1:nch_run)//'\'//fileout(1:nch_out),istat)
+c         call erase@(run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_out),istat)
          call unlink(trim(run_directory)//PATH_SEPARATOR//trim(fileout), istat)
 
          if(istat.ne.0 .and. iquiet.eq.0) then
@@ -334,7 +336,7 @@ c         fileout=cmnam()
          if(filein(1:1).eq.' ') filein='rec533c.dat'
          if(fileout(1:1).eq.' ') fileout='rec533c.out'
 c             !  delete any previous file
-c         call erase@(run_directory(1:nch_run)//'\'//fileout,istat)
+c         call erase@(run_directory(1:nch_run)//PATH_SEPARATOR//fileout,istat)
          call unlink(trim(run_directory)//PATH_SEPARATOR//trim(fileout), istat)
 
 ccc         if(istat.ne.0) then
@@ -342,7 +344,7 @@ ccc            write(*,'('' run_dir='',a)') run_directory
 ccc            call dos_error_message@(istat,message)
 ccc            write(*,'('' istat='',i5,1h=,a)') istat,message
 ccc            write(*,'('' file='',a)') run_directory(1:nch_run)//
-ccc     +                                   '\'//fileout
+ccc     +                                   PATH_SEPARATOR//fileout
 ccc         end if
 
             write(alf_narea_batch,'(i4)') narea_batch
@@ -399,7 +401,7 @@ C.....SET LOGICAL UNIT NUMBERS FOR PRIMARY INPUT(LUI),OUTPUT(LUO)
       LUO=LU6
 C.....
 40    if(area.eq.'A') then              !  area coverage calculations
-         OPEN(LUI,file=run_directory(1:nch_run)//'\'//filein,
+         OPEN(LUI,file=run_directory(1:nch_run)//PATH_SEPARATOR//filein,
      +        STATUS='OLD',FORM='FORMATTED')
          rewind(LUI)
          read(LUI,'(20x,a)') areafile     !  get real file name of output
@@ -411,7 +413,7 @@ C.....
          fileout(nch+1:nch+nch2)=areafile(1:nch2)
       else if(area.eq.'B') then              !  Batch point-to-point
          call read_asc('REC533',*999)   !  read pt-pt common from REC533W.ASC
-         open(38,file=run_directory(1:nch_run)//'\'//'rec533.cir',
+         open(38,file=run_directory(1:nch_run)//PATH_SEPARATOR//'rec533.cir',
      +        status='old',err=999)
          rewind(38)
          read(38,'(a)',err=999) dum     !  skip 1st record
@@ -426,7 +428,7 @@ C.....OPEN FILE FOR SUPPLEMENTARY OUTPUT TO VDU
       ICON=0
 c****************************************************************
 50    nch_inp=lcount(filein,40)
-c      doesit=fexists@(run_directory(1:nch_run)//'\'//filein(1:nch_inp),error_code)
+c      doesit=fexists@(run_directory(1:nch_run)//PATH_SEPARATOR//filein(1:nch_inp),error_code)
       inquire(file=trim(run_directory)//PATH_SEPARATOR//trim(filein),exist=doesit)
 
       if(.NOT.doesit) go to 950      !  if it does not exist, quit
@@ -436,12 +438,12 @@ c****************************************************************
          write(*,'('' Area filein ='',a)') filein
       end if
       nch_inp=lcount(filein,40)
-      OPEN(LUI,FILE=run_directory(1:nch_run)//'\'//filein(1:nch_inp),
+      OPEN(LUI,FILE=run_directory(1:nch_run)//PATH_SEPARATOR//filein(1:nch_inp),
      +     STATUS='OLD',FORM='FORMATTED',err=900)
       nch_fot=lcount(fileout,40)
       if(fileout(1:11).eq.'REC533B.OUT' .or. fileout(1:11).eq.'rec533b.out') then     !  batch, use APPEND
-c         OPEN(LUO,file=run_directory(1:nch_run)//'\'//fileout(1:nch_fot),status='APPEND')
-         OPEN(LUO,file=run_directory(1:nch_run)//'\'//fileout(1:nch_fot),access='APPEND')
+c         OPEN(LUO,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_fot),status='APPEND')
+         OPEN(LUO,file=run_directory(1:nch_run)//PATH_SEPARATOR//fileout(1:nch_fot),access='APPEND')
       else if(fileout(1:2).eq.'..') then
          write(*,'('' Area fileout='',a)')
      +                 run_directory(1:nch_run-3)//fileout(4:nch_fot)
@@ -452,12 +454,12 @@ c            call window_update@(alf_fileout)
          OPEN(LUO,file=run_directory(1:nch_run-3)//fileout(4:nch_fot))
          rewind(LUO)
       else
-         OPEN(LUO,file=run_directory(1:nch_run)//'\'//
+         OPEN(LUO,file=run_directory(1:nch_run)//PATH_SEPARATOR//
      +        fileout(1:nch_fot))
          rewind(LUO)
       end if
 c***********************************************************
-      open(12,file=run_directory(1:nch_run-3)//'database\version.w32',
+      open(12,file=run_directory(1:nch_run-3)//'database'//PATH_SEPARATOR//'version.w32',
      +     status='old')
       rewind(12)
       read(12,'(a)') VERSN( 8:40)
@@ -609,11 +611,11 @@ ccc         write(luo,'(''after distxy, rlongd='',f8.3)') rlongd
 ccc      end if
 c***************************************************************
 c          check to see if we should abort processing
-c      doesit=fexists@(run_directory(1:nch_run)//'\'//'rec533.abt',error_code)
+c      doesit=fexists@(run_directory(1:nch_run)//PATH_SEPARATOR//'rec533.abt',error_code)
       inquire(file=trim(run_directory)//PATH_SEPARATOR//'rec533.abt', exist=doesit)
 
       if(doesit) then     !  file exists, abort processing
-c         call erase@(run_directory(1:nch_run)//'\'//'rec533.abt',istat)   !  delete file first
+c         call erase@(run_directory(1:nch_run)//PATH_SEPARATOR//'rec533.abt',istat)   !  delete file first
          call unlink(trim(run_directory)//PATH_SEPARATOR//'rec533.abt', istat)
 
          iabort=1         !  indicate we have aborted batch processing

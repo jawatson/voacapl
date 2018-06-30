@@ -1,5 +1,7 @@
 c###redmap.for
       SUBROUTINE REDMAP(lu2,month,ssn)
+      use voacapl_defs
+      use crun_directory
 C.....VERSION 09.01.90
 C     THIS ROUTINE READS THE IONOSPHERIC LONG TERM DATA BASE FILE
       INTEGER*4 IDA(10)
@@ -9,8 +11,8 @@ C.....COEFFICIENTS FOR CRITICAL FREQUENCY FOF2 AND M(3000)F2
       DIMENSION XF2COF(13,76,2),XFM3CF(9,49,2)
       EQUIVALENCE (XF2COF(1,1,1),XFM3CF(1,1,1))
 c*****************************************************************
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       common /ccoeff/ coeff
       character coeff*4
       CHARACTER foF2_name*12,coeff_name*12
@@ -19,7 +21,7 @@ c*****************************************************************
       if(coeff.ne.'URSI') coeff='CCIR'    !  default id CCIR
 c          read the foF2 coefficients (CCIR or URSI88)
       write(foF2_name,'(4hfof2,a4,4h.daw)') coeff
-      OPEN(lu2,FILE=run_directory(1:nch_run-3)//'coeffs\'//foF2_name,
+      OPEN(lu2,FILE=run_directory(1:nch_run-3)//'coeffs'//PATH_SEPARATOR//foF2_name,
      +       status='old',form='unformatted',access='direct',recl=7904,
      +       err=900)
       read(lu2,rec=month) XF2COF
@@ -33,7 +35,7 @@ C.....FOR FOF2 ONLY SET MAX. VALUE OF SUNSPOT NO. TO 150
 c*****************************************************************
 c          read the rest of the coefficients
       write(coeff_name,'(5hcoeff,i2.2,5hw.bin)') MONTH
-      OPEN(lu2,FILE=run_directory(1:nch_run-3)//'coeffs\'//coeff_name,
+      OPEN(lu2,FILE=run_directory(1:nch_run-3)//'coeffs'//PATH_SEPARATOR//coeff_name,
      +       status='old',form='unformatted',err=910)
       rewind(lu2)
       READ(lu2) IDA,IDA,IDA,IFA,IMA,IDA
@@ -47,10 +49,10 @@ c*****************************************************************
       DO 270 J=1,49
 270   FM3COF(I,J)=(XFM3CF(I,J,1)*ssn100+XFM3CF(I,J,2)*SSN)/100.
       RETURN
-900   write(*,901) run_directory(1:nch_run-3)//'coeffs\'//fof2_name
+900   write(*,901) run_directory(1:nch_run-3)//'coeffs'//PATH_SEPARATOR//fof2_name
 901   format(' Could not OPEN file=',a)
       stop 'OPEN error in redmap at 900'
-910   write(*,901) run_directory(1:nch_run-3)//'coeffs\'//coeff_name
+910   write(*,901) run_directory(1:nch_run-3)//'coeffs'//PATH_SEPARATOR//coeff_name
       stop 'OPEN error in redmap at 910'
       END
 c-------------------------------------------------------------

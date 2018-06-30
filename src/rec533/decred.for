@@ -1,5 +1,7 @@
 c###decred.for
       SUBROUTINE DECRED
+      use voacapl_defs
+      use crun_directory
 C.....VERSION 10.APRIL.92
 C     THIS SUBROUTINE CALLS FUNCTION MONITR TO READ THE CONTROL CARDS
 C     THE CARD IMAGES ARE THEN DECODED , PROCESSED AND THE DATA STORED
@@ -11,8 +13,8 @@ C     NO. OF OUTPUT TYPES CURRENTLY =6
       CHARACTER*40 VERSN
       CHARACTER*85 INPUT
       character gainfile*10
-      common /crun_directory/ run_directory
-         character run_directory*50
+c      common /crun_directory/ run_directory
+c         character run_directory*50
       common /ccoeff/ coeff
       character coeff*4
       common /C_digital/ idigital,A_ratio,Tw,Fw
@@ -318,9 +320,8 @@ C ----------------------------------------------------------------------
          pwrdba(iantr)=30. + 10.*alog10(pwrkw(iantr))     !  convert to dB
       end if
       numants=iantr
-      write(gainfile,'(4hGAIN,i2.2,4h.DAT)') iantr
-      open(lu26,file=run_directory(1:nch_run)//'\'//gainfile,
-     +     status='old',form='formatted',err=9900)
+      write(gainfile,'(4hgain,i2.2,4h.dat)') iantr
+      open(lu26,file=trim(run_directory)//PATH_SEPARATOR//gainfile,status='old',form='formatted',err=9900)
       rewind(lu26)
       read(lu26,782) anttype(iantr),antname(iantr)
 782   format(a10,a70)
@@ -388,7 +389,7 @@ C ----------------------------------------------------------------------
 C.....A "(BLANK)" CARD ACTS AS A "DO-NOTHING" CARD AND IS IGNORED
   870 CONTINUE
 ccc   if(input(1:4).eq.'COMM') write(lu16,'(1x,a)') input  !  comment card
-      if(input(1:14).eq.'COMMENT   FREQ') 
+      if(input(1:14).eq.'COMMENT   FREQ')
      +       write(lu16,'(1x,a)') input  !  freq comment card for perform2
       GO TO 90
 C.....END OF NAMES
