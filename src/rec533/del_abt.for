@@ -1,5 +1,5 @@
       subroutine del_abt     !  delete the recarea.abt & rec533.abt files
-      use rec533_defs
+      use voacapl_defs
 c**********************************************************
       common /crun_directory/ run_directory
          character run_directory*50

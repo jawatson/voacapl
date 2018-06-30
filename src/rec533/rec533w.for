@@ -3,7 +3,7 @@ c      winapp 100000,160000
       PROGRAM REC533w
 cccD    +               (filein,fileout,areach)
 c      include <windows.ins>
-      use rec533_defs
+      use voacapl_defs
 
       save
 c***********************************************************************
