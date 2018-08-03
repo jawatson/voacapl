@@ -1,4 +1,4 @@
-AC_INIT([voacapl], [0.7.4], [jwatson@neomailbox.ch])
+AC_INIT([voacapl], [0.7.5], [jwatson@neomailbox.ch])
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_F77([gfortran])
