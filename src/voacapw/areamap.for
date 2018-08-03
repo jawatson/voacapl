@@ -29,7 +29,7 @@ c jw      character tns*1,tew*1,pns*1,pew*1,alf*80,sufix*4,path*5,coeffs*4
       character recfile*21,xmtrfile*21,cirafz*30
 c      character system_type*4,beam_alf*5,card*90,data_dir*9
       character system_type*4,beam_alf*5
-      character(len=VOA_PATH_LEN) :: data_dir 
+      character(len=VOA_PATH_LEN) :: data_dir
       character(len=max(12+MAX_AREA_MONTHS*7, 90)) :: card
       character(len=20) :: fmt_str
 
@@ -64,7 +64,7 @@ c          read COLOR & CITYNAME whether OLD or NEW format
 805      read (29,806) parms(i),nlevels(i),
      +             (ishades(j,i),conlevels(j,i),j=1,nlevels(i))
 806      format(10x,a,i4,10(i3,1x,f7.2))
-      else if(card(1:10).eq.'Transmit :' .or. 
+      else if(card(1:10).eq.'Transmit :' .or.
      +        card(1:10).eq.'Receive  :') then
          tlatdeg=card(11:20)
          tlondeg=card(21:30)
@@ -153,10 +153,15 @@ c      nch=lcount(filename,30)
       nchg=lcount(grid_file,70)
       do 500 ii=1,MAX_AREA_MONTHS        !  create a file for each plot
 c jw      call yieldit                   !  yield for windows control
-      write(sufix,'(3h.da,i1)') ii
-      call suffix(fileout,12,sufix,4)    !  append suffix
+      if (ii <= 9) then
+        write(sufix,'(3h.da,i1)') ii
+        call suffix(fileout,12,sufix,4)    !  append suffix
+      else
+        write(sufix,'(3h.da,i2)') ii
+        call suffix(fileout,13,sufix,5)    !  append suffix
+      endif
 c jw      call erase@(fileout,error_code)!  delete file first
-      call unlink(fileout,error_code)    !  delete file first
+      call unlink(trim(run_directory)//PATH_SEPARATOR//fileout,error_code)    !  delete file first
       grid_file(nchg:nchg)=sufix(4:4)
 c jw      call erase@(grid_file,error_code)!  delete *.vg? files
       call unlink(grid_file,error_code)    !  delete *.vg? files
