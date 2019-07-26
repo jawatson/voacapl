@@ -3,7 +3,7 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
 !   external antenna calculations:
 !   If outside frequency range, gain=-99.9 returned.
 !   If ELEVATION angle or AZIMUTH angle in error, return 1
-    use Cant99 
+    use Cant99
     implicit none
     real, intent(in)    :: freq, azimuth, elev
     real                :: gain, efficiency
@@ -54,7 +54,7 @@ subroutine ant99_calc(freq,azimuth,elev,gain,efficiency,*)
 999 return 1
 end
 !------------------------------------------------------
-      
+
 function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1) result(g)
     implicit none
     real, intent(in)    :: azimuth
@@ -65,7 +65,7 @@ function ant99_gain(ifreq,azimuth,elev,luaa,ifreq1,gain1) result(g)
     real                :: g, gain1
     real                :: ant99_interp
     dimension gain1(91,360)
-    real bad    
+    real bad
     data bad/-99998./
     g=-99.9
     if(ifreq.ne.ifreq1) read(luaa,rec=ifreq) gain1
@@ -139,13 +139,13 @@ subroutine ant99_read(filename, lu, lua,*)
     use Cant99
     implicit none
     integer :: lu, lua
-    integer :: i, iaz, iel, ios, nch, nparms 
+    integer :: i, iaz, iel, ios, nch, nparms
     integer, dimension(360) :: iazimuth
     real :: g, bad
     character filename*(*)
     character(len=80) :: alf
 
-    
+
     data bad/-99999./
     filenam=filename
     nch=len(trim(filename))
@@ -172,10 +172,12 @@ subroutine ant99_read(filename, lu, lua,*)
 21      format(' Reading frequency #',i3,'=',f8.3,' MHz')
 	    dbi(nfreq)=0.
 	    eff(nfreq)=0.
-	    do 30 iaz=1,360
+	    do iaz=1,360
 	        iazimuth(iaz)=0
-	    do 30 iel=1,91
-30          gain1(iel,iaz)=bad         !  dummy value
+	        do iel=1,91
+              gain1(iel,iaz)=bad         !  dummy value
+          end do
+      end do
     else if(alf(1:9).eq.'normalize') then
 	    read(alf(10:),*) dbi(nfreq)
     else if(alf(1:18).eq.'antenna_efficiency') then
@@ -184,16 +186,16 @@ subroutine ant99_read(filename, lu, lua,*)
 	    do 40 iaz=1,360
 	        if(iazimuth(iaz).eq.0 .or. iazimuth(iaz).eq.7) go to 40
 	        write(*,51) filename(1:nch)
-	        write(*,31) 
+	        write(*,31)
 31          format(' For any AZIMUTH ANGLE defined, the ELEVATION'&
             ' ANGLES 0 and 90 MUST be defined.')
 	        write(*,'('' AZIMUTH ANGLE='',i5,'' in error.'')') iaz
 	        go to 900
 40      continue
 	    write(lua,rec=nfreq,iostat=ios,err=920) gain1
-    else if(alf(1:8).eq.'matching') then 
+    else if(alf(1:8).eq.'matching') then
         ! ignore this record
-    else if(alf(1:10).eq.'          ') then    
+    else if(alf(1:10).eq.'          ') then
         !  comment record
     else                                       !  must be a data record
 	    read(alf,*) iaz,iel,g
