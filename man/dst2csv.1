@@ -7,8 +7,9 @@ dst2csv \- Convert DST record files to CSV
 .SH SYNOPSIS
 .B dst2csv
 \n
-.B dst2csv
-.B dst_directory
+.B dst2csv -i dst_directory
+\n
+.B dst2csv -d -i dst_directory
 \n
 .SH DESCRIPTION
 This is a small utility to convert the binary record file produced when performing
@@ -30,10 +31,15 @@ dst2csv
 Creates a CSV files (voacapd.csv) using the values found in the voacap.dst and
 voacapd.idx files located in the current working directory.
 \n
-dst2csv my_directory
+dst2csv -i my_directory
 \n
-Creates a CSV files (my_directory/voacapd.csv) using the values found in the
+Creates a CSV file (my_directory/voacapd.csv) using the values found in the
 voacap.dst and voacapd.idx files located in the directory 'my_directory'.
+\n
+dst2csv -d -i my_directory
+\n
+Creates a CSV file (my_directory/voacapd.csv) using the values found in the
+voacap.dst and voacapd.idx files and a 'dump' file (my_directory/voacapd.dmp)
 
 .SH FILES
 .I voacapd.dst voacapd.idx
