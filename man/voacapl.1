@@ -8,20 +8,20 @@ voacapl \- HF propagation prediction program
 .B voacapl [\-s --silent --run-dir=directory_path --absorption-mode=mode]
 .B voacap_directory
 .I [inputfile]
-\n
+.br
 .B voacapl [\-s --silent --run-dir=directory_path --absorption-mode=mode]
 .B voacap_directory
 .I [inputfile outputfile]
-\n
+.br
 .B voacapl [\-s --silent --run-dir=directory_path --absorption-mode=mode]
 .I voacap_directory
 .B area calc
 .I [areafile]
-\n
+.br
 .B voacapl [\-s]
 .I voacap_directory
 .B batch
-\n
+.br
 .B voacapl \-v
 .SH DESCRIPTION
 An implementation of VOACAP, the NTIA/ITS professional HF propagation prediction
@@ -29,10 +29,10 @@ program, originally developed for the Voice of America (VOA).   VOACAP reads an
 input file and writes point-to-point path or area prediction data to an output
 file(s). 'voacapl' is a version of the original source that has been modified
 to enable compilation using GCC/GFortran.
-\n
+.br
 Only changes required to enable compilation using GCC have been made, the
 underlying prediction algorithms remain unchanged.
-\n
+.br
 Voacapl input/output files follow exactly the same format as VOACAP and are not described here.  Details of these file formats may be found at www.voacap.com.
 .SH OPTIONS
 .IP -s
@@ -48,7 +48,7 @@ concurrently and to facilitate clean-up after performing a prediction.
 .IP --absorption-mode
 Used to specify the absorption mode that should be used for the prediction, overriding
 the value defined in version.w32.  Valid values are 'W' (normal), 'I' (IONCAP),
-'A' (Alex's modifications with normal absorption) and 'a' (Alex's changes with
+\(aqA' (Alex's modifications with normal absorption) and 'a' (Alex's changes with
 IONCAP absorption).
 .IP voacap_directory
 Specifies the path to the itshfbc directory, e.g. '~/itshfbc/' or '/usr/share/itshfbc'.  Read/write access is required to the sub-directories below itshfbc.
@@ -64,22 +64,22 @@ operation of the VOAAREA operation.  voacapl currently only supports the 'calc' 
 File containing the input data for an area calculation.  The path to the areafile must be given relative to the 'itshfbc/areadata/' directory.
 .SH EXAMPLES
 voacapl ~/itshfbc
-\n
+.br
 Reads the default input file (~/itshfbc/run/voacapx.dat) performs a prediction calculation and saves the results in the default output
 file (~/itshfbc/run/voacapx.out).  In this example, the itshfbc directory is defined as a sub-directory of the users home folder.
 
 voacapl ~/itshfbc infile.dat outfile.out
-\n
+.br
 Reads infile.dat and save the results of the calculations in the file outfile.out.  Both of the files should be located in the directory '~/itshfbc/run'.
 
 voacapl --run-dir=/tmp/myrunndir ~/itshfbc infile.dat outfile.out
-\n
+.br
 Performs a prediction defined by infile.dat and saves the results of the calculations
 in the file outfile.out.  The input file should be placed in the directory defined by the
 run-dir parameter.
-\n
+.br
 voacapl --absorption-mode=a ~/itshfbc infile.dat outfile.out
-\n
+.br
 Sets the absorption model used by the prediction to 'a' (Alex's changes with
 IONCAP absorption).  Reads infile.dat and save the results of the calculations
 in the file outfile.out.  Both of the files should be located in the
