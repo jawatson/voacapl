@@ -6,20 +6,20 @@
 dst2csv \- Convert DST record files to CSV
 .SH SYNOPSIS
 .B dst2csv
-\n
+.br
 .B dst2csv -i dst_directory
-\n
+.br
 .B dst2csv -d -i dst_directory
-\n
+.br
 .SH DESCRIPTION
 This is a small utility to convert the binary record file produced when performing
 distance calculations to a CSV file for further processing.
-\n
+.br
 Distance calculations are triggered by performing by using the filenames
 voacapd.dat and voacapd.out for voacap input/output files. e.g.
-\n
+.br
 voacapl ~/itshfbc voacapd.dat voacapd.out
-\n
+.br
 .SH OPTIONS
 .IP dst_directory
 The location of the .dst file and corresponding .idx file.  The output csv file
@@ -27,17 +27,17 @@ is saved in this directory.  If this parameter is not specified, the current
 working directory will be used.
 .SH EXAMPLES
 dst2csv
-\n
+.br
 Creates a CSV files (voacapd.csv) using the values found in the voacap.dst and
 voacapd.idx files located in the current working directory.
-\n
+.br
 dst2csv -i my_directory
-\n
+.br
 Creates a CSV file (my_directory/voacapd.csv) using the values found in the
 voacap.dst and voacapd.idx files located in the directory 'my_directory'.
-\n
+.br
 dst2csv -d -i my_directory
-\n
+.br
 Creates a CSV file (my_directory/voacapd.csv) using the values found in the
 voacap.dst and voacapd.idx files and a 'dump' file (my_directory/voacapd.dmp)
 

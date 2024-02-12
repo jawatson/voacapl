@@ -6,19 +6,19 @@
 dst2ascii \- Convert DST record files to CSV
 .SH SYNOPSIS
 .B dst2ascii
-\n
+.br
 .B dst2ascii
 .B dst_directory
-\n
+.br
 .SH DESCRIPTION
 This is a small utility to convert the binary record file produced when performing
 distance calculations to an ASCII file for further analysis.
-\n
+.br
 Distance calculations are triggered by performing by using the filenames
 voacapd.dat and voacapd.out for voacap input/output files. e.g.
-\n
+.br
 voacapl ~/itshfbc voacapd.dat voacapd.output
-\n
+.br
 .SH OPTIONS
 .IP dst_directory
 The location of the .dst file and corresponding .idx file.  The output ASCII file
@@ -26,12 +26,12 @@ is saved in this directory.  If this parameter is not specified, the current
 working directory will be used.
 .SH EXAMPLES
 dst2ascii
-\n
+.br
 Creates an ASCII file (voacapd.asc) using the values found in the voacap.dst and
 voacapd.idx files located in the current working directory.
-\n
+.br
 dst2ascii my_directory
-\n
+.br
 Creates an ASCII file (my_directory/voacapd.asc) using the values found in
 the voacap.dst and voacapd.idx files located in the directory 'my_directory'.
 
