@@ -202,7 +202,7 @@ c******************************************************************
            if (scan("WIAa", c_arg(19:19))>0) then
                ABSORPTION_MODE=c_arg(19:19)
            else
-               write(*, '(AA)') "Invalid absorption mode: ", c_arg(19:19)
+               write(*, '(A, A)') "Invalid absorption mode: ", c_arg(19:19)
            end if
         else if (c_arg(1:10).eq.'--run-dir=') then
             run_directory = c_arg(11:len(trim(c_arg)))
@@ -211,7 +211,7 @@ c******************************************************************
 c        else if (c_arg(1:11).eq.'--area-dir=') then
 c            area_directory = c_arg(12:len(trim(c_arg)))
         else
-           write(*, '(AA)') "Option not recognised: ", c_arg
+           write(*, '(A, A)') "Option not recognised: ", c_arg
         end if
 
         call get_command_argument(argCtr, c_arg)
