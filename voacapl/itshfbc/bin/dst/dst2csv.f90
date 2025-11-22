@@ -79,17 +79,17 @@ program dst2csv
 
     open(IDX_FILE, file=idx_path, status='old')
     ! Read the number of distances
-    read(IDX_FILE, '(I5A)') NUMDIST, index_buffer
+    read(IDX_FILE, '(I5, A)') NUMDIST, index_buffer
 
     ! Read the frequencies
-    read(IDX_FILE, '(I2A)') NUMFREQ, index_buffer
+    read(IDX_FILE, '(I2, A)') NUMFREQ, index_buffer
     do freqPtr = 1, NUMFREQ
         offset = 1 + (7*(freqPtr-1))
         read(index_buffer((offset): (offset+7)), '(F7.3)') FREQS(freqPtr)
     end do
 
     ! Read the hours
-    read(IDX_FILE, '(I3A)') NUMHOUR, index_buffer
+    read(IDX_FILE, '(I3, A)') NUMHOUR, index_buffer
     do ptr = 1, NUMHOUR
         offset = 1 + (3*(ptr-1))
         read(index_buffer((offset): (offset+3)), '(I3)') hours(ptr)
